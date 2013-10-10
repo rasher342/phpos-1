@@ -1,6 +1,6 @@
 PHPOS Web Operating System
 ====
-<b>http://www.phpos.pl</b><br>
+<b>http://www.phpos.pl</b>  <b>Online demo: http://www.demo.phpos.pl</b><br>
 <b>Last version: 1.0.0 beta</b>
 <table>
 <tr>
