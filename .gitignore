@@ -1,3 +1,11 @@
+web/home/*
+web/temp/*
+_phpos/config/database.php
+_phpos/config/installed.php
+_phpos/config/security_key.php
+_phpos/logs/*
+
+
 #################
 ## Eclipse
 #################
