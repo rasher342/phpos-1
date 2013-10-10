@@ -957,25 +957,65 @@ if(!defined('PHPOS'))	die();
 	
 	
 	
+
+	
 	// AFTER INSTALL START DATA
-	$txt['after_install_msg_title'] = 'Wiadomość powitalna';
-	$txt['after_install_msg_body'] = '<p>Welcome in the PHPOS Web Operating System.</p>
-	<p>This is a test message.</p>
-	<p>As you see, PHPOS has private messages feature.</p>
+	$txt['after_install_msg_title'] = 'Welcome message';
+	$txt['after_install_msg_body'] = '<p>Welcome in PHPOS.</p>
+	<p>This is the test message.</p>
+	<p>As you see - PHPOS have private messages system.</p>
+	<p>Users can sending and receiving message.</p>
 	<p><strong>Enjoy!</strong></p>';
 	
-	$txt['after_install_group_name'] = 'Testowa grupa';
-	$txt['after_install_group_desc'] = 'To jest Twoja pierwsza grupa robocza';
+	$txt['after_install_group_name'] = 'Test group';
+	$txt['after_install_group_desc'] = 'This is you first workgroup';
 	
-	$txt['after_install_shortcut_phpos_www'] = 'Strona domowa PHPOS';
-	$txt['after_install_shortcut_frame_wiki'] = 'Aplikacja w oknie - Wikipedia';
+	$txt['after_install_shortcut_phpos_www'] = 'PHPOS Home Website';
+	$txt['after_install_shortcut_frame_wiki'] = 'Webapp in a window - Wikipedia.org';
 	$txt['after_install_shortcut_link_barok'] = 'Barok 3D Engine';
-	$txt['after_install_shortcut_yt_militia'] = 'Autor PHPOS-a vs. Robocain - YouTube';
-	$txt['after_install_folder_links'] = 'Linki testowe';
-	$txt['after_install_readme_title'] = 'Czytaj.txt';
-	$txt['after_install_readme_file'] = '<p><strong>Your version of PHPOS was succesfuly installed :)</strong></p>
-	<p>This is the test document.</p>
-	<p>As you see you are opened PHPOS Notepad by only clicking on text document.</p>
-	<p><strong>This is the power of PHPOS API.</strong></p>';
+	$txt['after_install_shortcut_yt_militia'] = 'PHPOS\'s author vs. Robocain - YouTube';
+	$txt['after_install_folder_links'] = 'Test links';
+	$txt['after_install_readme_title'] = 'Readme.txt';
+	$txt['after_install_readme_file'] = '<p><strong>Your version of PHP was succesfuly installed on this server. :)</strong></p>
+	<p>This is a test document.</p>
+	<p>As you see - PHPOS have filestem API to reading and saving files.</p>
+	<p><strong>This is the power of PHPOS :).</strong></p>';
+	
+	$txt['notepad_app_title'] = 'Notepad';
+	$txt['langs_tray_title'] = 'Change language';
+	$txt['wallpaper_tray_title'] = 'Change wallpaper';
+	
+	$txt['uploading'] = 'Sending file. Please wait...';
+	$txt['uploaded'] = 'File was uploaded on server';
+	$txt['upload_here'] = 'Upload here';
+	
+	$txt['app_notepad_new'] = 'New document';
+	$txt['save'] = 'Save';
+	$txt['save_as'] = 'Save as';
+	$txt['open'] = 'Open';
+	$txt['app_notepad_new_unsaved'] = 'New unsaved document';
+	
+	$txt['filesystem'] = 'Filesystem';
+	$txt['last_mod'] = 'Latest modification';
+	
+	$txt['file_saved'] = 'File was saved';
+	
+	$txt['fs_local_files'] = 'Local files';
+	$txt['fs_db_mysql'] = 'Database';
+	$txt['fs_ftp'] = 'FTP connection';
+	$txt['fs_cloud'] = 'Cloud';
+	$txt['renamed'] = 'Name was changed';
+	$txt['folder_created'] = 'New folder was created';
+	$txt['file_deleted'] = 'File/folder was deleted';
+	$txt['file_pasted'] = 'Pasted from clipboard';
+	$txt['copied_to_clip'] = 'Copied to clipboard';
+	$txt['cutted_to_clip'] = 'Pasted from clipboard';
+	$txt['wait_for_download'] = 'Please wait. Downloading...';
+	$txt['lib_temp'] = 'Temp files';
+	$txt['start_ip'] = 'Server IP';
+	$txt['start_db'] = 'Database';
+	
+	
+	
 	
 ?>
