@@ -1,0 +1,471 @@
+body,td,th {
+	font-family: Arial,Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	text-shadow: #000 0.1em 0.1em 0.2em;
+	height:100%;	
+}
+html,body {
+	height:100%;	
+	min-height:100%;
+}
+a:link {
+	color: #FFF;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #FFF;
+}
+a:hover {
+	text-decoration: none;
+	color: #CFF;
+}
+a:active {
+	text-decoration: none;
+	color: #FFF;
+}
+body {
+	background-image: url(../../wallpapers/InstallerWallpaper.jpg);
+	margin:0;		
+	padding:0;
+	background-repeat: no-repeat;
+	background-attachment:fixed;		
+}
+textarea {
+	font-family: Arial,Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #3e3e3e;
+	padding:20px;
+}
+select {
+	font-family: Arial,Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	background-color: #1a1a2a;
+	border:1px solid #FFF;
+	padding:10px;
+}
+
+#main {
+	width:100%;
+	margin-top:10px;
+	position:relative;
+}
+#step_body {		
+	width:600px;
+	height:300px auto;
+	margin:auto;
+	display:none;		
+}
+#step_form {
+	width:500px;
+	padding:0;
+	padding-bottom:20px;
+	margin:0;
+	float:left;	
+}	
+#form_title {
+	padding-top:30px;
+	height:50px;
+	color: #c6c6c6;
+}
+
+#title {
+	font-size:22px;
+	padding-top:30px;
+	padding-bottom:30px;
+	border-bottom: 2px dotted silver;
+}
+#title img {
+	display: inline-block;
+	vertical-align:middle;
+	padding-right:10px;
+}
+#installer_title {
+	position:fixed;
+	left:30px;
+	bottom:50px;
+	padding-top:10px;		
+	height:50px;		
+}
+
+#installer_title .title {	
+	font-size:24px;
+	color: #c6c6c6;
+	margin:0;
+	text-shadow: none;
+}	
+#installer_title .version {	
+	margin-top:1px;
+	font-size:14px;
+	color: #787878;
+}	
+
+/* left steps */
+#install_step {
+	position:fixed;
+	top:10px;
+	left:10px;
+	height:60px;
+	padding:20px;	
+}
+#install_step .step_title {
+	font-size:24px;
+}
+#install_step .step_desc {
+	font-size:12px;
+	color:silver;
+}
+#install_step .step_list {
+	margin-top:60px;
+	margin-left:30px;
+	font-size:12px;
+	color:silver;
+}
+#install_step .step_list .step {
+	font-weight:bold;
+}
+#install_step .step_list .step_active {
+	font-weight:bold;
+	color: #FFF;
+}
+#install_step .step_list .desc {
+	color: #616759;
+}
+#install_step .step_list .desc_active {	
+	color: #FFF;
+	font-size:18px;	
+}
+#install_step .step_list .desc_active img{	
+	display:inline-block;
+	vertical-align: middle;
+	margin-right:10px;
+}
+#installer_footer{
+	position:fixed;
+	text-align:right;	
+	bottom: 0px;
+	right:30px;	
+	height:50px;	
+	color:silver;		
+}
+#phpos_login {	
+}
+
+/* FORMS */
+.form_area_row {
+	padding:10px;
+}
+.form_area_row_header {
+	padding:10px;
+}
+.form_area_row_title {
+	clear:both;
+	font-size:24px;
+}
+.form_area_row_chmod_url {
+	color:silver;
+	font-size:12px;
+}
+.input_row_mouseleave {
+	border:1px solid transparent;
+	border-bottom:1px dotted silver;	
+}
+.input_row_mouseenter {
+	border:1px dotted silver;	
+	background-image:url(windows/installer_row_bg.png);	
+}
+
+/* input */
+.input {		
+	padding:4px;
+	padding-left:12px;
+	padding-right:4px;
+	width:250px;
+	height:35px;
+}
+.input_mouseleave{
+	background-color:#1a1a2a;
+	border:1px solid #FFF;
+	color:#FFF;	
+}
+.input_mouseenter {
+	background-color:#393959;	
+	border:1px solid #FFF;
+	color:#FFF;
+}
+.input_mouseclick {
+	background-color:#FFF;		
+	border:1px solid #000;
+	color:#000;
+}	
+
+/* form area, divs */
+.form_area_left {
+	float:left;
+	width:200px;
+	padding-top:3px;
+	vertical-align: middle;
+}
+.form_area_right {
+	float:left;
+	width:200px;
+	padding-top:3px;
+	vertical-align: middle;
+}
+.form_area_status {
+	float:left;
+	width:auto;		
+	text-align:right;
+	vertical-align: middle;
+}
+.form_area_status img {
+	height:20px;
+}
+.form_area_tip {
+	color: silver;
+	padding-top:5px;
+	padding-left:5px;
+	width:auto;
+}
+.input_area {
+	background:none;
+	background-image: url(windows/form_logininput_bg.png);
+	height:15px;
+	padding:3px;
+	border:1px solid #000;
+	font-size:12px;
+}	
+.input_error {
+	background-color:#780002;
+}
+
+/* license */
+#license {
+	width:530px;
+	height:300px;
+	border: 1px solid #000;
+	background-color: #FFF;
+}
+#license_checkbox {
+	display:inline-block;
+	vertical-align:middle;
+	padding-right:5px;
+}
+
+
+/* table */
+.table_area_left {
+	float:left;
+	width:100px;
+	padding-top:3px;
+	vertical-align: middle;
+}
+.table_area_right {
+	float:left;
+	width:320px;
+	padding-top:3px;
+	vertical-align: middle;
+}
+.table_area_status {
+	float:left;
+	width:50px;		
+	text-align:right;
+	vertical-align: middle;
+}
+.table_area_status img {
+	height:20px;
+}
+.table_area_tip {
+	color: silver;
+	padding-left:5px;
+	width:auto;
+}
+
+/* reinstall */	
+.reinstall_btn {
+	display:inline-block;
+	vertical-align: middle;
+	bottom:20px;
+	right:250px;
+	width: 200px;
+	height:60px;		
+	text-align: left;	
+}
+.reinstall_btn p {
+	padding-left:60px;
+	padding-top:10px;
+	font-weight:bold;	
+}
+.btn_mouseleave_reinstall {			
+	background-image: url(windows/installer_btn_reinstall.png);
+}
+.btn_mouseenter_reinstall {			
+	background-image: url(windows/installer_btn_reinstall_over.png);
+	cursor:pointer;
+}
+
+
+/* BUTTONS */
+.next_step_btn {
+	display:inline-block;
+	vertical-align: middle;
+	bottom:20px;
+	right:20px;
+	width: 200px;
+	height:60px;		
+	text-align: left;	
+}
+.next_step_btn p {
+	padding-left:20px;
+	padding-top:10px;
+	font-weight:bold;		
+}	
+.prev_step_btn {
+	display:inline-block;
+	vertical-align: middle;
+	bottom:20px;
+	right:250px;
+	width: 200px;
+	height:60px;		
+	text-align: left;	
+}
+.prev_step_btn p {
+	padding-left:60px;
+	padding-top:10px;
+	font-weight:bold;	
+}	
+.btn_mouseleave_prev {			
+	background-image: url(windows/login_prev.png);
+}
+.btn_mouseenter_prev {			
+	background-image: url(windows/login_prev_over.png);
+	cursor:pointer;
+}
+.btn_mouseleave_next {			
+	background-image: url(windows/login_next.png);
+}
+.btn_mouseenter_next {			
+	background-image: url(windows/login_next_over.png);
+	cursor:pointer;
+}
+
+
+/* logo */
+#phpos_desktop_logo {
+	position:fixed;
+	z-index:99999999;
+	width: 150px;
+	padding:20px;
+	height: auto;
+	top:20px;
+	right:20px;
+	background-image:url('../../logo_bg.png');
+	border:1px solid silver;
+	text-align:center;
+	color:#FFF;	
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}
+#phpos_desktop_logo img{
+	width:120px;
+}
+
+/*  lang */
+.phpos_tray_item {
+	position:fixed;
+	width:170px;
+	height:30px;
+	bottom:15px;
+	font-size:10px;
+	left:30px;
+	display:inline-block;
+	vertical-align:middle;	
+	z-index: 9999999;	
+}
+.phpos_tray_item span {
+	color: silver;
+	display:inline-block;
+	vertical-align:middle;	
+}
+.phpos_tray_item img {
+	height:30px;
+	width:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item_mouseleave {
+}
+.phpos_tray_item_mouseenter {
+	cursor:pointer;	
+	text-shadow: none;	
+}
+
+
+/* error msg */	
+#error_message {
+	border: 1px solid #FFF;
+	background-color: #780002;
+	margin:20px;
+	width:100%;
+	height:30px auto;
+	text-align:center;
+	display: none;		
+}
+#error_message img{
+	display:inline-block;
+	vertical-align: middle;
+}
+#error_message p {
+	color: #FFF;
+	margin-top:7px;
+	display:inline-block;
+	vertical-align: middle;
+}	
+
+/* info */
+.info {
+	margin-top:20px;
+	margin-bottom:20px;
+	padding:15px;	
+	width:100% auto;
+	min-height:50px;			
+}
+.info img{
+	width:50px;		
+	vertical-align:middle;
+	border: none;
+	padding-right:10px;
+}
+.info .img {
+	float:left;
+	width:100px;
+}
+.info .msg {
+	float:left;
+	width:350px;
+	font-size:12px;
+	color:#e8e8e8;
+}
+.status_info {
+	margin-top:5px;
+	margin-bottom:5px;
+	padding:5px;
+	padding-left:15px;
+	border:1px solid #FFF;
+	width:100% auto;
+	min-height:30px;	
+	vertical-align:middle;		
+	background-image:url(windows/login_form_bg.png);		
+}
+.status_info img{
+	width:30px;		
+	vertical-align:middle;
+	border: none;
+	display:inline-block;
+	padding-right:10px;
+}
+.status_info span {	
+	display:inline-block;		
+	padding-left:50px;
+}

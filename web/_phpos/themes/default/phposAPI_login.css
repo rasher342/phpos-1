@@ -1,0 +1,210 @@
+body,td,th {
+	font-family: Arial,Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	height:100%;	
+}
+html,body {
+	height:100%;	
+	min-height:100%;	
+}
+body {
+	background-image: url(../../wallpapers/win1.jpg);
+	margin:0;		
+	padding:0;
+	background-repeat: no-repeat;
+	background-attachment:fixed;		
+}
+a:link {
+	color: #FFF;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #FFF;
+}
+a:hover {
+	text-decoration: none;
+	color: #CFF;
+}
+a:active {
+	text-decoration: none;
+	color: #FFF;
+}
+
+#main {
+	width:100%;
+	padding-top:200px;	
+	position:relative;
+}
+
+/* FORM */
+#login_form {		
+	background-image:url(windows/login_form_bg.png);	
+	width:600px;
+	height:300px;
+	margin:auto;	
+	display:none;
+}
+#form_img {
+	width:256px;
+	padding:0;
+	margin:0;
+	float:left;
+}
+#form_form {
+	width:344px;
+	padding:0;
+	margin:0;
+	float:left;	
+}	
+#form_title {
+	padding-top:30px;
+	height:50px;
+	color: #c6c6c6;
+}
+#phpos_login {		
+}
+#phpos_login  .form_area_row {
+	padding-top:10px;
+}
+.input_row_mouseleave {
+}
+.input_row_mouseenter {
+}
+#input_login {	
+	padding:4px;
+	padding-left:4px;
+	padding-right:4px;
+	width:150px;
+	height:25px;
+}
+#input_password {	
+	padding:4px;
+	padding-left:4px;
+	padding-right:4px;
+	width:150px;
+	height:25px;
+}	
+.input_mouseleave{
+	background-color:#1a1a2a;
+	border:1px solid #FFF;
+	color:#FFF;	
+}
+.input_mouseenter {
+	background-color:#393959;	
+	border:1px solid #FFF;
+	color:#FFF;
+}
+.input_mouseclick {
+	background-color:#FFF;		
+	border:1px solid #000;
+	color:#000;
+}	
+#phpos_login  .form_area_row .form_area_title {
+	float:left;
+	width:100px;
+	padding-top:3px;
+}
+#phpos_login  .form_area_row .form_area_input {
+	float:left;
+	width:200px;
+}
+#phpos_login .form_login_btn {
+	position: absolute;
+	bottom:20px;
+	right:20px;
+	width: 200px;
+	height:60px;		
+}
+.input_area {
+	background:none;
+	background-image: url(windows/form_logininput_bg.png);
+	height:15px;
+	padding:3px;
+	border:1px solid #000;
+	font-size:12px;
+}
+.form_login_btn p {
+	padding-left:20px;
+	padding-top:10px;
+	font-weight:bold;	
+}
+
+/* BTN */
+.btn_mouseleave {			
+	background-image: url(windows/login_next.png);
+}
+.btn_mouseenter {			
+	background-image: url(windows/login_next_over.png);
+	cursor:pointer;
+}
+
+/* LOGO */	
+#phpos_desktop_logo {
+	position:fixed;
+	z-index:99999999;
+	width: 150px;
+	padding:20px;
+	height: auto;
+	top:20px;
+	right:20px;
+	background-image:url('../../logo_bg.png');
+	border:1px solid silver;
+	text-align:center;
+	color:#FFF;	
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}
+#phpos_desktop_logo img{
+	width:120px;
+}
+
+
+/*  lang */
+.phpos_tray_item {
+	position:absolute;
+	width:170px;
+	height:30px;
+	bottom:1px;
+	font-size:10px;
+	left:1px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item span {
+	color: silver;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item img {
+	height:30px;
+	width:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item_mouseleave {
+}
+.phpos_tray_item_mouseenter {
+	cursor:pointer;		
+}
+
+/* MSG */
+.msg_no_error {
+	border: 2px solid #FFF;
+}
+.msg_error {
+	border: 8px solid #780002;		
+}
+#error_message {
+	border: 1px solid #FFF;
+	background-color: #780002;
+	margin-top:30px;
+	margin-left:20px;
+	width:auto;
+	height:30px auto;
+	text-align:center;		
+}
+#error_message p {
+	color: #FFF;
+	margin-top:7px;
+}	

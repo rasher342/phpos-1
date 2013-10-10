@@ -1,0 +1,31 @@
+.header_info_name {	
+	font-weight: normal;
+}
+
+.header_info_value {
+font-weight:bold;
+	color: #52575a;
+
+}
+
+.header_info_header {
+	font-weight:bold;
+	color:black;
+}
+
+.app_taskmanager_toolbar {
+	width:100% auto; 
+	font-family: Arial; 
+	font-size:11px; 
+	color:#9a9a9a
+}
+
+.app_taskmanager_toolbar_icons {
+	float:left;
+	width:55%
+}
+
+#app_taskmanager_header_info_content {
+	float:left;
+	width:15%
+}
