@@ -129,7 +129,7 @@ echo $layout->subtitle(txt('cp_updater_download_last'), ICONS.'download.png');
 echo $layout->txtdesc(txt('cp_updater_desc_download'));
 
 echo $layout->button(txt('cp_updater_download_btn_www'),'window.open(\''.PHPOS_ONLINE.'?v=download\', \'_blank\')','download1'); 
-echo $layout->button(txt('cp_updater_download_btn_git'),'window.open(\''.PHPOS_GITHUB.'\', \'_blank\')','download1');
+echo $layout->button(txt('cp_updater_download_btn_git'),'window.open(\'https://github.com/phpos/phpos/archive/release.zip\', \'_blank\')','download1');
 echo $layout->tbl_start();
 echo $layout->head(array('' => '50%', 'Link' => '50%'));
 echo $layout->row(array(txt('updater_tray_visit_www'), '<a href="'.PHPOS_ONLINE.'" target="_blank">'.PHPOS_ONLINE.'</a>'));

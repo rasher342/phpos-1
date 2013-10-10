@@ -14,7 +14,7 @@
 if(!defined('PHPOS'))	die();	
 
 
-		echo '<a href="#" title="ssss" rel="tooltip">aaaaaaaaaaaaaaaaaaaaaaaa</a>';
+	
 		echo $layout->title(txt('messager_section_new_desc'));   
 		
 		$my_app->set_param('msg_id', null);	

@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.0.0, 2013.10.10
  
 **********************************
 */
@@ -24,17 +24,19 @@ if(!defined('PHPOS'))	die();
 	$multiple_windows = true;	
 	
 	
-	$version = '1.0';
-	$build = '13.10.02';
-	$author = 'PHPOS / Marcin Szczyglinski';
-	$website = 'http://phpos.rox.pl';
+	$version = '1.0.0 beta';
+	$build = '2013.10.10';
+	$author = 'Marcin Szczyglinski';
+	$website = 'http://www.phpos.pl';
+	$github = 'https://github.com/phpos/phpos/';
 	$email = 'szczyglis83@gmail.com';
 	
 	$title = 'Messenger';
 	$icon = 'msg3.png';
 	
 	$actions['index'] = array(		
-		'access_level' => 1
+		'access_level' => 1,
+		'name' => 'Messages',
 	);
 	
 	$section['new'] = array(		

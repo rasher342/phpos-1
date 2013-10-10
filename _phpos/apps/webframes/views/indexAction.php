@@ -25,13 +25,6 @@ $layout = new phpos_layout; ?>
 
 <?php
 
-	if($my_app->get_param('first_time') !== null);	
-	{
-		echo $layout->txtdesc(txt('iframe_warn_sandbox'));
-		$my_app->set_param('first_time', null);	
-		cache_param('first_time');	
-	}
-
 	if(!empty($url)) 
 	{
 		echo '<iframe sandbox="allow-same-origin allow-scripts allow-popups allow-forms"

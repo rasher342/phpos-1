@@ -1,0 +1,29 @@
+Licencja MIT (MIT)
+
+Prawa autorskie (c) 2013 PHPOS Group Marcin Szczyglinski
+
+Produkt jest całkowicie darmowy w użyciu, nie można pobierać opłat za jego użytkowanie.
+
+Uwaga:
+Produkt zawiera pewne biblioteki osób trzecich, które objęte są swoimi własnymi licencjami, jak np. framework "easyui", którego licencja nie obejmuje komercyjnego wykorzystywania. Wszelkie komercyjne licencje zostaną zakupione w przyszłości - jeśli chcesz, aby produkt się rozwijał możesz wspomóc go finansowo. Dodatkowo - pewne elementy, takie jak np. grafiki mogą być objęte prawami autorskimi przez ich twórców. Pewne graficzne elementy interfejsu są własnością Microsoft Corporation i wchodzą w skład systemów Windows.
+ 
+Niniejszym gwarantuje się, bez opłat, że każda osoba która wejdzie w posiadanie kopii tego 
+oprogramowania i związanych z nim plików dokumentacji (dalej „Oprogramowanie”) może 
+wprowadzać do obrotu Oprogramowanie bez żadnych ograniczeń, w tym bez ograniczeń 
+prawa do użytkowania, kopiowania, modyfikowania, łączenia, publikowania, 
+dystrybuowania i sublicencjonowania ,a także 
+zezwalania osobie, której Oprogramowanie zostało dostarczone czynienia tego samego, z 
+zastrzeżeniem następujących warunków: 
+ 
+Powyższa nota zastrzegająca prawa autorskie oraz niniejsza nota zezwalająca muszą zostać 
+włączone do wszystkich kopii lub istotnych części Oprogramowania. 
+ 
+OPROGRAMOWANIE JEST DOSTARCZONE TAKIM, JAKIE JEST, BEZ JAKIEJKOLWIEK GWARANCJI, 
+WYRAŹNEJ LUB DOROZUMIANEJ, NIE WYŁĄCZAJĄC GWARANCJI PRZYDATNOŚCI HANDLOWEJ LUB 
+PRZYDATNOŚCI DO OKREŚLONYCH CELÓW A TAKŻE BRAKU WAD PRAWNYCH. W ŻADNYM 
+PRZYPADKU TWÓRCA LUB POSIADACZ PRAW AUTORSKICH NIE MOŻE PONOSIĆ 
+ODPOWIEDZIALNOŚCI Z TYTUŁU ROSZCZEŃ LUB WYRZĄDZONEJ SZKODY A TAKŻE ŻADNEJ INNEJ 
+ODPOWIEDZIALNOŚCI CZY TO WYNIKAJĄCEJ Z UMOWY, DELIKTU, CZY JAKIEJKOLWIEK INNEJ 
+PODSTAWY POWSTAŁEJ W ZWIĄZKU Z OPR
+
+Kontakt z autorem: szczyglis83@gmail.com
