@@ -1,0 +1,1574 @@
+body,td,th {
+	font-family: Arial,Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #333;
+	height:100%;		
+}
+html,body {
+	height:100%;	
+	min-height:100%;	
+}
+img {
+	border: none;
+}
+
+body {
+	background-color: #000;
+	margin:0;
+	padding:20px;		
+}
+
+a:link {
+	color: #33334f;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #33334f;
+}
+a:hover {
+	text-decoration: underline;
+	color: #b8226f;
+}
+a:active {
+	text-decoration: none;
+	color: #33334f;
+}
+form, input,select, textarea {
+ font-family: Arial; 
+ font-size:13px;
+ padding:4px;
+}	
+select {		
+	padding:5px;
+	padding-left:4px;
+	padding-right:4px;
+	width:250px;
+	height:auto;
+	font-size:12px;
+}	
+
+/* ====== DEBUGGER ====== */
+#phpos_debugger {
+	z-index:99999; 
+	background-color: #fff; 
+	background:solid
+}
+#phpos_debugger_data {
+	padding:10px;
+	font-size:13px;
+}
+.api_debug_title {
+	font-weight:bold;
+	color: green;
+}
+.api_debug_value {
+	font-weight:bold;
+	color: red;
+}
+.api_debug_subtitle {
+	color: #d5d5d5;
+	margin-bottom:10px;
+	font-size:18px;
+}
+#api_debug_container {
+	padding:20px; 
+	border:2px solid red;
+}
+
+	
+/* ====== LAYOUT TABLE ====== */	
+#api_win_table {
+}
+#api_win_table tr td {
+	//background-color: #d5d5d5;
+}
+#api_win_table .header td {
+	background-color: #aacffe;
+	color: #fff;
+	font-size:12px;
+	padding: 4px;
+}
+#api_win_table .row1 td {
+	background-color: #eef4ff;	
+	padding: 4px;
+}
+#api_win_table .row2 td {
+	background-color: #fff;	
+	padding: 4px;
+}
+
+
+/* ====== ICONS ====== */
+.icon_over {
+	padding:4px;	
+	border: 1px solid #4c7994;	
+	background-image: url(icons/api_icon_div_mouseover_bg.png);
+	text-align:center;
+}
+.icon_out {	
+	padding:4px;
+	border: 1px solid transparent;	
+}
+.icon_click {	
+	border: 1px solid #4c7994;	
+	padding:4px;
+	background-image: url(icons/api_icon_div_mouseclick_bg.png);	
+}
+.icon_over a {
+	color:#fff;
+}
+.icon_click a {
+	color:#fff;
+}
+.icon_out a {
+	color:#fff;
+}
+
+.phpos_icon {
+	overflow: hidden;
+	word-wrap: break-word;
+	font-size:11px;
+}
+.phpos_icon a{
+	text-decoration:none;
+}
+.phpos_icon_mouseover {
+	padding:4px;
+	background-image: url(icons/icon_mouseenter_bg.png);
+	-moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+	text-align:center;
+	box-shadow: 0px 0px 0px 8px rgba(130,130,130,0.5); 
+}
+.phpos_icon_mouseover a {	
+}
+.phpos_icon_mouseout {	
+	padding:4px;
+	border: 1px solid transparent;	
+}
+.phpos_icon_mouseclick {
+	padding:4px;	
+	background-color: #ededed;
+	-moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+	text-align:center;
+	box-shadow: 0px 0px 0px 8px rgba(90,90,90,0.5); 	
+}
+.phpos_icon_mouseclick a {
+	color:#000;	
+	text-shadow: #d5d5d5 0.2em 0.2em 0.2em;
+}
+
+/* WINDOW ICONS */
+.phpos_icon_window_size_medium {
+	width:100px;
+	height:90px auto;
+	max-height:90px;
+	display:inline-block; 
+	text-align:center;	
+	vertical-align:top;	
+}
+.phpos_icon_window_size_medium  img {
+	height: 50px;
+	border: none;
+}
+.phpos_icon_window_size_medium  a {
+	color:#000;	
+}
+.phpos_icon_window_size_small{
+	width:70px;
+	height:50px auto;
+	max-height:60px;
+	font-size:10px;
+	display:inline-block; 
+	text-align:center;	
+	vertical-align:top;	
+}
+.phpos_icon_window_size_small  img {
+	height: 40px;
+	border: none;
+}
+.phpos_icon_window_size_small  a {
+	color:#000;	
+	font-size:10px;
+}
+
+/* DESKTOP ICONS */
+.icon_size_desktop {
+	width:90px;
+	height:70px;
+	display:block; 
+	position:absolute; 
+	text-align:center;	
+}
+.icon_size_desktop img {
+	height: 50px;
+	border: none;
+}
+.phpos_icon_desktop_size_medium {
+	width:100px;
+	height:90px auto;
+	max-height:90px;
+	display:inline-block; 
+	text-align:center;	
+	vertical-align:top;	
+}
+.phpos_icon_desktop_size_medium  img {
+	height: 50px;
+	border: none;
+}
+.phpos_icon_desktop_size_medium  a {
+	color:#fff;	
+	text-shadow: #000 0.2em 0.2em 0.2em ;
+}
+
+
+/* SERVER/EXPLORER ICONS */
+.phpos_server_icon_mouseenter {
+	padding:4px;
+	background-image: url(icons/icon_mouseenter_bg.png);
+	-moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+	text-align:left;
+	box-shadow: 0px 0px 0px 8px rgba(130,130,130,0.5); 
+	cursor:pointer
+}
+.phpos_server_icon_mouseleave {
+	padding:4px;	
+	-moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+	text-align:left;
+	box-shadow: 0px 0px 0px 8px rgba(0,0,0,0); 
+	border-color: transparent;
+}
+.phpos_server_icon_mouseclick {
+	padding:4px;	
+	background-color: #ededed;
+	-moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+	box-shadow: 0px 0px 0px 8px rgba(90,90,90,0.5); 	
+}
+.phpos_server_icon_mouseenter p{
+	color:#1e3287;
+}
+/* ! ====== ICONS ====== */
+
+
+
+/* ====== MENU START ====== */	
+#phpos-menustart_Tasks_container{
+	width:70%; 
+	float:left;
+	vertical-align:top
+}
+#phpos-menustart_container {
+	z-index:99999;
+	height:70px;
+	width:800px;
+	background-color: transparent;
+	background-image:url(startmenu/api_startmenu-bg.png)
+}	
+#phpos-menustart_Button_container {
+	height:auto;
+	width: 80px;
+	float:left;
+	text-align:center;
+	vertical-align:middle
+}
+#phpos-menustart_Desktop_info {
+	position:absolute;
+	right:25px;
+	top:10px;	
+	color:#fff;
+	text-shadow: #000 0.2em 0.2em 0.2em;
+	z-index: 99999999;		
+}
+#phpos-menustart_Desktop_demo {
+	position:absolute;
+	right:25px;
+	text-align:right;
+	top:60px;	
+	color:#fff;
+	text-shadow: #000 0.2em 0.2em 0.2em;
+	z-index: 99999999;		
+}
+#phpos-menustart_Tray_container {
+	width:auto;
+	min-width:250px;
+	float:left;
+	vertical-align:top
+}
+#phpos-menustart_Switch_container {
+	width:auto;
+	min-width:70px;
+	padding-top:10px;
+	float:right;
+	vertical-align:top
+}
+#phpos-menustart_Tasks {
+	margin: 0 auto 0;
+	width:auto;
+	height:auto;
+	min-height:50px;
+	bottom:0px;
+	left:0px;
+	background:none;
+	position:relative
+}
+#phpos-menustart_Window_container {
+	clear:both;		
+}
+#phpos-menustart_WindowApps_container {
+	clear:both;
+	width:300px;
+	height:380px;
+	position:absolute;
+	left:200px;
+	bottom: 200px;
+	background-color:#fff;
+	display: none;
+	-moz-border-radius: 2px 2px 2px 2px;
+	-webkit-border-radius: 2px 2px 2px 2px;
+	border-radius: 2px 2px 2px 2px;
+	box-shadow: 0px 0px 0px 8px rgba(130,130,130,0.5);	
+}
+#phpos-menustart_task_windows {
+	width:200px;
+	height: auto;
+	border:2px solid #d5d5d5;
+	background-color: #ededed;
+	position: absolute;	
+	margin: 5px;		
+}	
+#phpos-menustart_task_windows img {
+	display:inline-block;
+	padding-right:10px;
+	vertical-align:middle;
+	height:25px;
+}
+#phpos-menustart_task_windows div {	
+	padding:10px;	
+	padding-left:15px;	
+	margin:0;
+	border:1px solid transparent;
+	font-weight:bold;
+	color: #313131;
+	cursor:auto;	
+}	
+#phpos-menustart_task_windows div:hover{	
+	background-color: #fff;
+	font-weight:bold;
+	color:#000;
+	cursor:pointer;
+	border:1px solid #000;
+}
+#phpos-menustart_task_windows span {		
+	padding-left:65px;		
+	color: #313131;	
+}	
+.phpos-menustart_TaskItem  {
+	padding:4px;
+	margin:3px;
+	height:30px;
+	width:50px;
+	display:inline-block;
+	-moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;	
+	font-size:14px;
+}	
+.phpos-menustart_TaskItem_mouseout  {	
+	background-color: #ededed;
+	text-align:center;
+	box-shadow: 0px 0px 0px 8px rgba(130,130,130,0.5); 
+	cursor: auto;
+}	
+.phpos-menustart_TaskItem_mouseover  {	
+	background-color: #d5d5d5;
+	text-align:center;
+	box-shadow: 0px 0px 0px 8px rgba(130,130,130,0.5);
+	cursor: pointer;	
+}	
+.phpos-menustart_task_windows_hide {	
+	display:none;	
+}
+.phpos-menustart_task_windows_show {	
+	display:block;	
+}
+
+/* START BUTTON */
+#phpos-menustart_Button_container.wintask-startmenu-task_item {
+	font-weight: bold;	
+}	
+#phpos-menustart_Button_container.start_mouseover {	
+	cursor: pointer;		
+}
+#phpos-menustart_Button_container.start_mouseleave {		
+	background-color: none;
+	cursor: default;
+}
+
+
+/* ====== MENU START - TASKS====== */	
+#phpos-menustart_Tasks .tasks_closeButton {
+	display:inline-block; 
+	width:16px;
+	height:16px;
+	vertical-align: middle
+}	
+#phpos-menustart_Tasks .tasks_closeButton img {
+	display:inline-block; 
+	padding:0;
+	margin:0;
+	border:none
+}	
+#phpos-menustart_Tasks .tasks_windowIcon  {
+	width:16px;
+	height:16px; 
+	padding:0;
+	margin:0;
+	border:none
+}	
+#phpos-menustart_Tasks .tasks_windowTitle {
+	display:inline-block;
+	vertical-align: middle; 
+	padding-left:5px
+}
+
+/* ====== MENU START LAYOUT====== */	
+#phpos_startmenu_layout {
+	width:450px;
+	height:600px;
+	background:transparent;
+}
+#phpos_startmenu_layout_left {
+	width:260px;
+	height:100%;
+	background-color: #fff;
+	padding-top:10px;
+}
+#phpos_startmenu_layout_left .startmenu_left_item {
+	height:20px;	
+	vertical-align: middle;	
+	background:none;	
+}
+#phpos_startmenu_layout_left  .mouseleave {	
+	background:none;	
+}
+#phpos_startmenu_layout_left  .mouseenter {	
+	background-image:url('startmenu/left_item_bg.png');
+	cursor:pointer;
+}
+#phpos_startmenu_layout_left .startmenu_left_item  span {	
+	display:inline-block;
+	vertical-align: middle;
+	padding-left:5px;
+}
+#phpos_startmenu_layout_left .startmenu_left_item  img {	
+	border:none;
+	height:18px;
+	width:18px;
+	display:inline-block;
+	vertical-align: middle;
+	padding-left:5px;
+}
+#phpos_startmenu_layout_right {
+	width:190px;
+	background:transparent;
+	padding:0;
+	margin:0;
+	height:100%;
+	padding-top:20px;
+}
+#phpos_startmenu_layout_right .startmenu_right_item {
+	height:25px;	
+	font-size:11px;
+	color: #fff;
+	padding-top:5px;
+	padding-left:20px;
+	vertical-align: middle;	
+	background:none;	
+}
+#phpos_startmenu_layout_right .startmenu_right_item a {
+	color: #fff;	
+}
+#phpos_startmenu_layout_right  .mouseleave {	
+	background:none;	
+}
+#phpos_startmenu_layout_right  .mouseenter {	
+	background-image:url('startmenu/right_item_bg.png');
+	cursor:pointer;
+}
+#phpos_startmenu_layout_right .user_area {
+	height:130px;
+	text-align: center;
+	background:transparent;
+	padding:0;
+	margin:0;
+	margin-bottom:20px;	
+}
+#phpos_startmenu_layout_right .user_area img {
+	height:70px;
+	max-width:80px;
+	border:2px solid #000;
+}
+#phpos_startmenu_layout_right .user_area .user_name {
+	color:#d5d5d5;
+}
+#phpos_startmenu_layout_right .user_area .user_type {
+	color:#fff;
+}
+#phpos_startmenu_layout_right .user_area .user_ip {
+	color:#d5d5d5;
+}
+#phpos_startmenu_layout_right .separator  {
+	height:20px;
+	width:100px;
+	text-align: center;
+	border-bottom: 1px solid #d5d5d5;
+	margin-bottom:20px;
+}
+
+
+/* ====== MENU START APPS ====== */	
+#phpos_startmenu_layout_apps {
+	width:100%;		
+	background-color: #fff;
+	padding-top:10px;
+}
+#phpos_startmenu_layout_apps .startmenu_app_item {
+	height:20px;	
+	vertical-align: middle;	
+	background:none;	
+}
+#phpos_startmenu_layout_apps  .mouseleave {	
+	background:none;	
+}
+#phpos_startmenu_layout_apps  .mouseenter {	
+	background-image:url('startmenu/left_item_bg.png');
+	cursor:pointer;
+}
+#phpos_startmenu_layout_apps .startmenu_app_item  span {	
+	display:inline-block;
+	vertical-align: middle;
+	font-size: 11px;
+	font-weight:bold;
+	padding-left:5px;
+}
+#phpos_startmenu_layout_apps .startmenu_app_item  img {	
+	border:none;
+	height:20px;
+	width: 20px;
+	display:inline-block;
+	vertical-align: middle;
+	padding-left:5px;
+}
+#phpos_startmenu_layout_footer {
+	height:50px;
+	background-color:#f1f5fb;
+	font-size:10px;
+	color:#808080;
+}
+#phpos_startmenu_layout_footer .column_info_server {
+	display:inline-block;
+	vertical-align:middle;
+	width:33%;
+	max-height:50px;
+	padding-left:10px;
+	padding-top:8px;
+	color: #000;
+}
+
+#phpos_startmenu_layout_footer .column_info_php {
+	display:inline-block;
+	vertical-align:middle;
+	width:33%;
+	max-height:50px;
+	padding-left:10px;
+	padding-top:8px;	
+}
+#phpos_startmenu_layout_footer .column_logout{
+	display:inline-block;
+	border:1px solid #000;
+	vertical-align:bottom;
+	background-image:url('startmenu/logout_bg.png');
+	width:100px;
+	height:20px;
+	max-height:50px;
+	padding-left:0px;
+	padding-top:3px;
+	font-size:11px;
+	text-align: center;
+	color: #fff;
+}
+#phpos_startmenu_layout_footer .mouseenter {
+	background-image:url('startmenu/logout_bg_mouseenter.png');
+	cursor:pointer;
+}
+
+/* ====== MENU START TRAY ====== */	
+.phpos_tray_item {
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item span {
+	color: #fff;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item img {
+	height:30px;
+	width:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_tray_item_mouseleave {
+	border:1px solid transparent;
+}
+.phpos_tray_item_mouseenter {
+	border:1px solid #d5d5d5;
+	cursor:pointer;
+	background-color:#fff;
+}
+.phpos_tray_item_mouseenter span{
+	color:#000;
+}
+
+/* ====== DESKTOP ====== */	
+.desktop_body {		
+	margin:0;
+	padding:20px;
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+}	
+#phpos-desktop_Main {
+	background: none;
+	color:#fff;
+	height:70%;
+}
+#phpos-desktop_WindowsManager {
+	display:none;
+	clear:both
+}
+#phpos-desktop_WallpaperManager {
+	display:none;
+	clear:both
+}
+#api_desktop-debugger-header {
+	z-index:99999;
+	height:40px;
+	width:100% auto;
+	background-color: transparent;
+	background-image:url(common/api_debugger-header-bg.png)
+}
+#api_desktop-debugger-header-data {
+	padding:7px;
+	font-size:10px;
+	text-align:right;	
+}
+
+
+/* ====== WINDOW ====== */	
+#api_window_headermenu_container {
+	width: 100%;
+	height:35px;
+	background-image:url(windows/window_header-menu_bg.png);
+	margin-top: 0;
+	padding-top:4px;
+	resize: both;
+}
+#api_window_header_toolbar_container {
+	width: 100%;
+	height:470px;
+	//background-image:url(windows/window_header-menu_bg.png);
+	margin: 0;
+	padding-top:2px;	
+	resize: both;
+}
+#phpos_window_headermenu_container {
+	width: 100%;
+	height:30px;
+	background-image:url(windows/window_header-menu_bg.png);
+	margin: 0;
+	padding-top:4px;	
+	resize: both;
+	font-family: Verdana; 	
+}
+#phpos_window_headermenu_container span {
+	font-weight:normal; 
+	font-family: Verdana; 
+	font-size:11px
+}
+
+/* ====== MENU START - ICONS ====== */	
+.context-menu-item.icon { 
+	min-height: 18px; 
+	background-repeat: no-repeat; 
+	background-position: 4px 2px; 
+}
+
+
+
+/* ====== EXPLORER ====== */	
+#phpos_explorer_window {
+	width:800px;
+	height:400px;
+	background:transparent;
+}
+#phpos_explorer_header {
+	height:114px;
+	background:transparent;
+}
+
+/* EXPLORER FOOTER */
+#phpos_explorer_footer {
+	height:50px;
+	background-color:#f1f5fb;
+}
+#phpos_explorer_footer a {
+	color: #000;
+}
+#phpos_explorer_footer a:hover{
+	color: blue;
+}
+#phpos_explorer_footer .arrow{
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	height:10px;
+}
+
+#phpos_explorer_left_window {
+	width:250px
+}
+
+/* FILES */
+.phpos_explorer_files_body {
+	width:100% auto;
+	padding:0;
+	margin:0;
+	height:100%;
+}
+#phpos_explorer_files_table_main {
+	height:100%
+}
+#phpos_explorer_files_table_main .td_icons {
+	padding:20px
+}
+#phpos_explorer_files_table_main .icons_contener {
+	width:100% auto; 
+	margin: 0 auto;
+	height: 400px auto; 
+	position:relative; 
+	left:0px; 
+	top:0px;
+	resize:both;
+	display:block
+}
+
+/* EXPLORER TOOLBAR */
+#phpos_explorer_toolbar {
+	height:40px; 
+	padding: 30px;
+	min-width:900px;
+	padding-bottom:5px;
+	background:transparent;
+	background-color: transparent;
+}
+#phpos_explorer_toolbar img {
+	height: 30px;
+	border:none;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* EXPLORER NAVBAR */
+#phpos_explorer_bar_container {	
+	min-height:18px; 
+	max-height:18px; 
+	overflow:hidden; 
+	display:inline-block;
+	vertical-align: middle;
+	padding-bottom:9px;
+}
+#phpos_explorer_address_bar_container .nav_top {
+	padding-left:30px;
+	padding-right: 3px;
+}
+#phpos_explorer_address_bar_container .nav_top_inactive {
+	padding-left:30px;
+	padding-right: 3px;
+}
+#explorer_address_input  {	
+	width:500px;	
+	border:1px solid #000;
+	height:15px;
+	margin:0;
+	padding:5px;	
+}
+#explorer_address_list  {
+	width:500px;
+	font-size:11px;
+	border:1px solid #000;
+	height:15px;
+	margin:0;
+	padding:5px;	
+	overflow:hidden;
+}
+.explorer_address_form {
+	display:inline-block; 
+	vertical-align:middle;
+	margin:0;
+	padding:0;
+	border:none
+}
+.explorer_address_address_input {
+	border:none;
+	display:inline-block;
+	background:none;	
+	width:100%;
+	margin:0;
+	padding:0;	
+}
+.nav_icons_container {
+	display:inline-block;
+	width: 150px;
+	font-size:10px;
+}
+.nav_address_container {
+	display:inline-block;
+	font-size:10px;
+}
+.explorer_bar_mouseover {
+	background-color:#fff;
+}
+.explorer_bar_mouseleave {
+	background-image:url(windows/form_input_bg.png);
+}
+#phpos_explorer_address_bar_container .refresh_icon {
+	display:inline-block;
+	vertical-align: middle;
+	border:none;
+	height:24px;
+}
+.inline_hide {	
+	display: none;
+}
+.inline_show {	
+	display: inline-block;		
+}
+#explorer_address_list .arrow {
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	height:10px;
+}
+#explorer_address_list  .protocol_icon {
+	height:15px;
+	border: none;
+}
+#explorer_address_list a {
+	color: #000;
+}
+#explorer_address_list a:hover{
+	color: blue;
+}
+
+/* EXPLORER UPLOADER */
+#phpos_explorer_bar_container form {
+	display:inline-block; 
+	margin:0;
+	padding:0;
+	border:none;
+	font-size:10px;
+}
+#phpos_explorer_address_bar_container .address_area {
+	float:left;	
+}
+#phpos_explorer_uploader_container {
+	text-align:right; 
+	float:left; 
+	padding-left:40px;
+	overflow: hidden;
+}
+#phpos_explorer_uploader_container .file_input {
+	padding:3px;
+	border:1px solid #d5d5d5; 
+	width: 200px; 
+	background-color:#fff
+}
+#phpos_explorer_uploader_container span {
+	font-weight: bold; 
+	color:#fff
+}
+.phpos_explorer_footer_icon {
+	display:block-inline;
+	vertical-align:middle;
+	padding-top:10px
+}
+
+/* SERVER INFO */
+.phpos_server_info {
+	padding:10px;
+}	
+.phpos_server_info .ip{
+	font-size:16px;
+}	
+/* server icons */
+.phpos_server_icon img{
+	width:50px;
+	display:inline-block;
+	vertical-align:middle;
+}	
+.phpos_server_icon {
+	width:auto;
+	min-width:200px;
+	margin-top:5px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_server_icon p{	
+	padding-left:10px;
+	padding-top:0px;
+	margin-top:0;
+	display:inline-block;
+	vertical-align:top;
+}
+.phpos_server_icon .desc{	
+	color:#949494;
+	display:inline-block;
+	vertical-align:top;
+}
+.phpos_server_icon b {
+	font-size:12px;
+}		
+.phpos_server_cp_link img{
+	width:30px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_server_cp_link span{	
+	display:inline-block;
+	vertical-align:middle;
+}
+.arrow{
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline;
+	vertical-align: middle;
+	height:10px;
+}
+.imgMiddle {
+	display:inline:block;
+	border: none;
+	vertical-align: middle;
+}
+.clear {
+	clear:both;
+}
+
+
+/* ====== LOGO ====== */	
+#phpos_desktop_logo {
+	position:fixed;
+	z-index:99999999;
+	width: 150px;
+	padding:20px;
+	height: auto;
+	top:40px;
+	right:20px;
+	background-image:url('../../logo_bg.png');
+	border:1px solid #d5d5d5;
+	text-align:center;
+	color:#fff;	
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}
+#phpos_desktop_logo img{
+	width:120px;
+}
+
+/* ====== FORMS ====== */	
+.form_area_row {
+	padding:10px;
+	font-size:12px;
+	height:30px auto;
+}	
+.form_area_row_header {
+	padding:10px;
+	font-size:16px;
+	font-weight:bold;
+	color: #696a87;
+}	
+.form_area_row_title {
+	clear:both;
+	font-size:24px;
+}	
+.form_area_row_chmod_url {
+	color:#d5d5d5;
+	font-size:12px;
+}
+.input_row_mouseleave {
+	border:1px solid transparent;
+	border-bottom:1px dotted #d5d5d5;	
+}
+.input_row_mouseenter {
+	border:1px dotted #d5d5d5;	
+	background-color: #e1edf9;	
+}
+
+/* input */
+.input {		
+	padding:5px;
+	padding-left:4px;
+	padding-right:4px;
+	width:250px;
+	height:15px;
+	font-size:12px;	
+}
+.input_mouseleave {	
+	border:1px solid #565656;
+	color:#000;	
+}
+.input_mouseenter {
+	background-color:#393959;	
+	border:1px solid #000;
+	color:#000;
+}
+.input_mouseclick {
+	background-color:#fff;		
+	border:1px solid #000;
+	color:#195780;
+}	
+.phpos_form_button {
+	padding:5px;
+}
+.phpos_form_input_error {
+	border: 1px solid #6e1e1f;
+	background-color: #f1d8dd;
+}
+.phpos_form_input_field_error {
+	border-color: red;
+	display:block;
+}
+.phpos_form_input_field_error_hidden {
+	border-color: red;
+	display:none;
+}
+.form_error_message {
+	border:none;
+	background:none;
+	margin:10px;
+	width:90%;
+	height:30px auto;
+	text-align:left;	
+}
+.form_error_message img{
+	display:inline-block;
+	vertical-align: text-top;
+	padding-right:10px;
+	width:20px;
+}
+.form_error_message p {
+	color: #5d210b;
+	margin-top:7px;
+	display:inline-block;
+	vertical-align: middle;
+	font-size:12px;
+}	
+
+/* form area, divs */
+.form_area_left {
+	float:left;
+	width:200px;
+	padding-top:3px;
+	font-weight:bold;
+	vertical-align: middle;
+}
+.form_area_right {
+	float:left;
+	width:200px;
+	padding-top:3px;
+	vertical-align: middle;
+}
+.form_area_status {
+	float:left;
+	width:auto;		
+	text-align:right;
+	vertical-align: middle;
+}
+.form_area_status img {
+	height:20px;
+}
+.form_area_tip {
+	color: #60606a;
+	padding-top:5px;
+	padding-left:5px;
+	width:auto;
+}
+
+
+/* ====== LAYOUT TABLE ====== */		
+.phpos_layout_table {
+	padding: 20px;
+	font-size:12px; 
+} 
+.phpos_layout_table .row1{
+	background-color: #fff;
+} 
+.phpos_layout_table .row2{
+	background-color: #eff5fb;
+} 
+.phpos_layout_table .row3{
+	background-color:#f3f3ad;
+} 
+.phpos_layout_table td {	
+	font-size:12px; 
+	padding-top:4px;
+	padding-bottom:4px;
+} 
+.phpos_layout_table_header td{	
+	font-size:13px; 
+	font-weight:bold;
+	border-bottom:1px solid #d5d5d5;
+	background-color:#f3f3ad;
+} 
+.phpos_layout_table_header img{	
+	width:30px;
+} 
+.phpos_layout_table .row1 img{	
+	width:20px;
+} 
+.phpos_layout_table .row2 img{	
+	width:20px;
+} 
+.phpos_layout_table tr .phpos_table_tr_mouseenter {
+	background-color:#f3f3ad;
+}
+.phpos_table {
+	padding:0px;
+	border:1px solid #000;
+	border-spacing:0;
+	border-collapse:collapse;
+}
+.phpos_table_row_header {
+	padding:0px;
+	background-color: #1e2335;			
+	border:none;
+}
+.phpos_table_row_header td{
+	padding:8px;
+	background-color: #1e2335;
+	color: #fff;
+	font-size:12px;		
+	border:none;
+	border-left: 1px solid #d5d5d5;
+}
+.phpos_table_row1 {
+	padding:0px;				
+	border:none;
+	background-color: #fff;
+}
+.phpos_table_row2 {
+	padding:0px;				
+	border:none;
+	background-color: #e5f0f9;
+}
+.phpos_table_row1 td{
+	padding:8px;		
+	font-size:12px;		
+	border:none;
+	border-left: 1px solid #d5d5d5;
+}
+.phpos_table_row2 td{
+	padding:8px;		
+	font-size:12px;		
+	border:none;
+	border-left: 1px solid #d5d5d5;
+}
+
+
+
+/* ====== LAYOUT TOOLBAR ====== */	
+.phpos_toolbar_item {
+	min-width:100px auto;
+	border:2px solid transparent;
+	border-bottom: none;
+	display: inline-block;
+	height:40px auto;
+	vertical-align: middle;
+	font-weight: bold;
+	margin-left:8px;
+	padding:4px;
+	padding-right:8px;
+	padding-left:8px;
+	color: #000;
+	background:none;
+}
+.phpos_toolbar_item img {
+	height:50px;
+	padding-right: 10px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.phpos_toolbar_mouseenter {	
+	border:2px solid #000;
+	border-bottom: none;
+	color: #000;
+	cursor:pointer;
+	background-color:#fff;
+}
+.phpos_toolbar_checked {	
+	border:2px solid #c0c0c0;
+	border-bottom: none;	
+	color: #0c6197;
+	background-color:#fff;
+}
+.phpos_toolbar_mouseleave {	
+	border:2px solid transparent;
+	border-bottom: none;
+	color: #000;
+}
+.phpos_layout_title {
+	border-bottom: 1px solid #8d8d8d;
+	padding-bottom:10px;
+}
+
+
+
+/* ====== RESULTS ====== */	
+.phpos_result_ok {
+	border: none;
+	background-color:none;
+	margin-left:auto;
+	margin-right:auto;
+	width:auto;
+	height:30px auto;
+	text-align:center;		
+}
+.phpos_result_error {
+	border: none;
+	background-color:none;		
+	width:60%;
+	height:30px auto;
+	text-align:center;		
+}
+.phpos_result img{
+	display:inline-block;
+	vertical-align: middle;
+}
+.phpos_result {
+	margin-left:auto;
+	margin-right:auto;
+}
+.phpos_result_ok p {
+	color:#176b19;		
+	margin-top:7px;
+	font-size:12px;
+	font-weight: bold;
+	display:inline-block;
+	vertical-align: middle;
+}	
+.phpos_result_error p {
+	color:#76130c;	
+	font-size:12px;
+	font-weight: bold;
+	margin-top:7px;		
+	display:inline-block;
+	vertical-align: middle;
+}	
+
+
+/* ====== LAYOUT ====== */
+.phpos_layout_footer div {		
+	padding:5px;
+	padding-left:10px;
+	color:#656565;	
+}
+.phpos_layout_footer img {		
+	height:30px;
+	padding-left:10px;
+	padding-right:10px;
+	display:inline-block;
+	vertical-align: middle;
+}
+.phpos_layout_footer span {		
+	display:inline-block;
+	vertical-align: middle;
+}
+
+/* ====== LAYOUT AREA ====== */	
+.phpos_layout_area {	
+	font-size:12px; 
+	padding:10px;	
+}	
+.phpos_layout_area h1 {	
+	font-size:14px; 
+	color:#1e3287;	
+} 
+.phpos_layout_area h2 {	
+	font-size:12px; 
+	color: #d5d5d5;
+} 
+.phpos_layout_area	.line {
+  border-bottom: 3px solid #e6eef8;  
+}
+
+/* ====== LAYOUT ROWBUTTON ====== */	
+.phpos_rowbutton_container {
+	height: 50px;
+	width:100%;
+	background-image:url(icons/rowbutton_bg.jpg);
+	border-bottom:1px solid #000;
+}
+.phpos_rowbutton_container p {
+	font-size:14px;
+	display:inline-block;
+	padding-left:15px;
+	vertical-align:middle;
+	color:#fff;
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}
+.phpos_rowbutton_container img {	
+	width:50px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.rowbtn_hover {	
+	background-image:url(icons/rowbutton_bg_hover.jpg);	
+	cursor: pointer;
+}
+
+/* NAVBUTTON */
+.phpos_layout_navibuttons_prev {
+	width:90%;	
+	background-color: #eff5fb;
+	padding:10px;
+	border-bottom: 2px solid #e6eef8;
+	text-shadow: #fff 0.1em 0.1em 0.2em;
+}
+.phpos_layout_navibuttons_prev p {
+	display:inline-block;
+	vertical-align:middle;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size:12px;
+	font-weight: bold;
+}
+.phpos_layout_navibuttons_prev img {
+	display:inline-block;
+	vertical-align:middle;
+}
+.phpos_layout_navibuttons_next {
+	width:95%;	
+	background-color: #eff5fb;
+	padding:10px;
+	border-bottom: 2px solid #e6eef8;
+	text-shadow: #fff 0.1em 0.1em 0.2em;
+}
+.phpos_layout_navibuttons_next p {
+	display:inline-block;
+	vertical-align:middle;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size:12px;
+	font-weight: bold;
+}
+.phpos_layout_navibuttons_next img {
+	display:inline-block;
+	vertical-align:middle;
+}
+.navbtn_hover {
+	color:#2e6902;
+	cursor: pointer;
+}
+
+/* ====== LAYOUT TXT ====== */	
+.phpos_layout_no_records {
+	padding:30px;
+	font-size:14px;
+}
+.phpos_layout_txtdesc {
+	padding:10px;
+	font-size:11px;
+	color: #878787;
+}
+.phpos_layout_txtdesc b {	
+	color: #000;
+}
+.explorer_readonly_info {
+	padding:20px;
+	font-size:14px;
+	color:#6b1911;
+}
+.server_conn_ok {
+	padding:10px;
+	padding-left: 0px;
+	font-weight: bold;
+	font-size:14px;
+	color: #39a22e;
+}
+.server_conn_error {
+	padding:10px;
+	padding-left: 0px;
+	font-weight: bold;
+	font-size:14px;
+	color: #9c1a20;
+}
+.layout_clouds_select {
+	text-align:center;
+	padding:10px;
+	width:auto;
+	border:1px solid transparent;	
+}
+.layout_clouds_select img{
+	padding:10px;	
+}
+.layout_clouds_select_over {
+	padding:10px;
+	border:1px solid #000;
+	cursor: pointer;	
+}
+.cp_key {
+	width:500px;
+	height: 30px;
+	text-align:center;
+	border: none;
+	background-color: none;
+	font-weight:bold;
+	font-size:19px;
+	padding:15px;
+	color: #225622;
+}
+.phpos_layout_footer_info {
+	padding-left:10px;
+	margin-left:0px;
+}
+.phpos_layout_footer_info img{
+	padding-left:10px;
+	margin-left:0px;
+}
+.phpos_layout_footer_info p{
+	margin: none;
+	padding-left:10px;	
+}
+.phpos_empty_list {
+	padding:5px;
+	padding-left:20px;
+}
+.phpos_empty_list img{
+	display: inline-block;
+	vertical-align:middle;
+	width:25px;
+	padding-right:20px;
+}
+.phpos_empty_list span{
+	font-size:11px;
+	font-weight:bold;
+}
+.phpos_access_denied {
+	display:block;
+	width:100% auto;
+	text-align:center;
+	padding:40px;
+	margin:auto;
+}
+.phpos_access_denied img{
+	width:40px;	
+}
+.phpos_access_denied span{
+	font-size:12px;
+	font-weight:bold;	
+}
+
+
+/* ====== SHORTCUTS ====== */	
+/* APPS */
+#phpos_shortcuts_apps {
+	width:100%;		
+	background-color: #fff;
+	padding-top:10px;
+}
+#phpos_shortcuts_apps .shortcuts_app_item {
+	height:20px;	
+	vertical-align: middle;	
+	background:none;	
+}
+#phpos_shortcuts_apps  .mouseleave {	
+	background:none;	
+}
+#phpos_shortcuts_apps  .mouseenter {	
+	background-image:url('startmenu/left_item_bg.png');
+	cursor:pointer;
+}
+#phpos_shortcuts_apps .shortcuts_app_item  span {	
+	display:inline-block;
+	vertical-align: middle;
+	font-size: 11px;
+	font-weight:bold;
+	padding-left:5px;
+}
+#phpos_shortcuts_apps .shortcuts_app_item  img {	
+	border:none;
+	height:20px;
+	width: 20px;
+	display:inline-block;
+	vertical-align: middle;
+	padding-left:5px;
+}
+
+/* OTHERS */
+.phpos_layout_row_td img {
+	height:20px;
+	display: inline-block;
+	vertical-align:middle;
+	border:0px;
+}
+.tbl_grey {
+	color: #b1b1b1;
+}
+
+pre{
+	display:block;
+	font:100% "Courier New", Courier, monospace;
+	padding:10px;
+	border:1px solid #bae2f0;
+	background:#e3f4f9;	
+	margin:.5em 0;
+	overflow:auto;
+	width:800px;
+}
+
+/* Tooltip */
+
+#tooltip {
+	position:absolute;
+	z-index:99999999;
+	color:#fff;
+	font-size:10px;
+	width:180px;
+	
+}
+
+#tooltip .tipHeader {
+	height:8px;
+	background:url(images/tipHeader.gif) no-repeat;
+}
+
+
+#tooltip .tipBody {
+	background-color:#000;
+	padding:5px 5px 5px 15px;
+}
+
+#tooltip .tipFooter {
+	height:8px;
+	background:url(images/tipFooter.gif) no-repeat;
+}
