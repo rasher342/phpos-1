@@ -29,7 +29,7 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br>
-1.1
+<b>1.1</b> (2013.10.11
 <br>
 - Bugtracker added<br>
 - Log files listing viewing fix<br>
