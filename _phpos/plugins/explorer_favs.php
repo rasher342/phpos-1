@@ -39,38 +39,40 @@ $span['temp'] = $default_span;
 
 $dir_id = $my_app->get_param('dir_id');
 
-switch($dir_id)
+if($my_app->get_param('fs') == 'local_files')
 {
-	case $dir.'_Desktop';
-		$span['desktop'] = $marked_span;
-	break;
-	
-	case $dir.'_Documents';
-		$span['docs'] = $marked_span;
-	break;
-	
-	case $dir.'_Pictures';
-		$span['pics'] = $marked_span;
-	break;
-	
-	case $dir.'_Wallpapers';
-		$span['wallpapers'] = $marked_span;
-	break;
-	
-	case $dir.'_Icons';
-		$span['icons'] = $marked_span;
-	break;
-	
-	case $dir.'_Video';
-		$span['video'] = $marked_span;
-	break;
-	
-	case $dir.'_Temp';
-		$span['temp'] = $marked_span;
-	break;
+	switch($dir_id)
+	{
+		case $dir.'_Desktop';
+			$span['desktop'] = $marked_span;
+		break;
+		
+		case $dir.'_Documents';
+			$span['docs'] = $marked_span;
+		break;
+		
+		case $dir.'_Pictures';
+			$span['pics'] = $marked_span;
+		break;
+		
+		case $dir.'_Wallpapers';
+			$span['wallpapers'] = $marked_span;
+		break;
+		
+		case $dir.'_Icons';
+			$span['icons'] = $marked_span;
+		break;
+		
+		case $dir.'_Video';
+			$span['video'] = $marked_span;
+		break;
+		
+		case $dir.'_Temp';
+			$span['temp'] = $marked_span;
+		break;
 
+	}
 }
-
 
 
 

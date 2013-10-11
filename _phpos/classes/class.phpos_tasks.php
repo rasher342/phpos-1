@@ -233,8 +233,7 @@ if(!defined('PHPOS'))	die();
 			$windows = $this->get_windows_in_task($task_id);
 			
 			
-			$c = count($windows);
-			echo $c;
+			$c = count($windows);			
 			//$context_menu = array();
 			//$context_menu[] = 'debug::'.txt('debug').'::alert("'.$icon['div'].':'.$icon['id'].'");::open';
 			$action_close_all = null;

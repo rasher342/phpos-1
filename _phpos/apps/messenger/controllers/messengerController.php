@@ -25,14 +25,11 @@ if(PHPOS_HAVE_ACCESS != $my_app->get_app_id() or !defined('PHPOS'))
 	$my_app->set_param('msg_id', null);	
 	$my_app->set_param('reply_id', null);	
 	$my_app->set_param('section', 'received');
-	$my_app->set_param('action', null);	
-	
+	$my_app->set_param('action', null);
 
 	
 	$my_app->using('params');
-
-	$my_app->using('toolbar');
-	
+	$my_app->using('toolbar');	
 	winConfig('use_sections');
 
 	cache_param('section');
@@ -53,12 +50,11 @@ if(PHPOS_HAVE_ACCESS != $my_app->get_app_id() or !defined('PHPOS'))
 	}
 	
 if(globalconfig('demo_mode') != 1 || is_root())
-{
-		
+{		
 	if($my_app->get_param('delete_sended_id') !== null)
-	{
-		
+	{		
 		$msg->delete_sended($my_app->get_param('delete_sended_id'));
+		savelog('MSG#DELETED:'.$my_app->get_param('delete_sended_id'));
 		$my_app->set_param('delete_sended_id', null);
 		cache_param('delete_sended_id');	
 		
@@ -67,6 +63,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	if($my_app->get_param('delete_received_id') !== null)
 	{
 		$msg->delete_received($my_app->get_param('delete_received_id'));
+		savelog('MSG#DELETED:'.$my_app->get_param('delete_received_id'));
 		$my_app->set_param('delete_received_id', null);
 		cache_param('delete_received_id');	
 	}
@@ -78,22 +75,16 @@ if(globalconfig('demo_mode') != 1 || is_root())
 		{			
 			$msg->send(intval($_POST['msg_to']), strip_tags($_POST['msg_title']), $_POST['msg_body']);		
 			$_POST['action'] = null;
+			savelog('MSG#SEND_NEW');
 			$msg->delete_sended($my_app->get_param('reply_id'));
 			$my_app->set_param('reply_id', null);
 			cache_param('reply_id');	
-		}
-	
-	}
-	
-}	
-	
-	
+		}	
+	}	
+}		
 	
 	$js = " $('textarea#editor').ckeditor();";
 	$my_app->jquery_onready($js);	
-	$my_app->jquery_onready(msg::showMessages());
-	
-	
-	
+	$my_app->jquery_onready(msg::showMessages());	
 
 ?>

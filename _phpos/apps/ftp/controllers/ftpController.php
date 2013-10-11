@@ -75,7 +75,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				$delete_id = $my_app->get_param('delete_id');
 				if($ftp->delete_ftp($delete_id))
 				{
-					helper_result('delete_ftp', 'ok', txt('deleted'));
+					helper_result('delete_ftp', 'ok', txt('deleted'));			
 					$my_app->set_param('action', null);
 					cache_param('action');
 					
@@ -107,8 +107,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				helper_result('new_ftp', 'ok', txt('created'));		
 				helper_result('new_ftp_result', 'result', 'success');
 				helper_result('new_ftp_id', 'var', 1);	
-				
-				savelog('FTP_ACCOUNT_CREATE#SUCCESS');
+				savelog('FTP_ACCOUNT_CREATE#SUCCESS');			
 				
 			} else {
 			

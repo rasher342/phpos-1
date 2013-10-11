@@ -7,13 +7,12 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.0.1, 2013.10.11
  
 **********************************
 */
 
-	header('Content-Type: text/plain'); 
-
+	
 	if (!isset($_SESSION)) {
 		session_start();
 	}
@@ -39,8 +38,9 @@
 	require_once(PHPOS_DIR.'classes/class.users.php');
 	
 	require_once(PHPOS_DIR.'classes/class.phpos_config.php');
-	$config = new phpos_config;
-	//$config->get_logged_user();
+  require_once(PHPOS_DIR.'classes/class.phpos_filters.php'); 
+	require_once(PHPOS_DIR.'classes/class.phpos_logs.php'); 
+	$config = new phpos_config;	
 	$config->set_id_user();
 	
 	require_once(PHPOS_DIR.'classes/class.helpers.php');	
@@ -58,14 +58,16 @@
 
 	if(!empty($_GET['action'])) 
 	{
-		switch(filter::alfas($_GET['action'])) 
+		$a = filter::alfas($_GET['action']);
+		switch($a) 
 		{		
 			case 'update':	
 			
 				if(globalconfig('demo_mode') != 1 || is_root())
 				{		
 					$config->update_user('wallpaper', filter::fname($_GET['wallpaper']));		
-					$config->update_user('wallpaper_type', filter::fname($_GET['wallpaper_type']));					
+					$config->update_user('wallpaper_type', filter::fname($_GET['wallpaper_type']));		
+				  savelog('CFG#WALLPAPER_CHANGE');
 				}				
 			break;
 

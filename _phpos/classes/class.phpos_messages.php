@@ -37,9 +37,11 @@ class phpos_messages {
 		global $sql;
 		$my_id = logged_id();
 		$sql->cond('id_user_to', $my_id);
-		$sql->cond('receiver_deleted', null);
-		$sql->cond('is_readed', null);
-		return $sql->count_rows($this->db_msg);		
+		$sql->cond('receiver_deleted', '0');
+		$sql->cond('readed_at', '0');
+		$c = $sql->count_rows($this->db_msg);	
+			echo $c;
+		return $c;
 	}
 			 
 /*
@@ -196,7 +198,9 @@ class phpos_messages {
 		'sended_at' => time(),
 		'msg' => $msg,
 		'sender_deleted' => 0,
-		'receiver_deleted' => 0
+		'receiver_deleted' => 0,
+		'is_readed' => 0,
+		'readed_at' => 0
 		);
 		
 		if($sql->add($this->db_msg, $items)) return true;	

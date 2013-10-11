@@ -25,7 +25,7 @@ if(!defined('PHPOS'))	die();
 		$button = txt('shortcuts_window_btn_upload');
 	
 		$input_title = txt('folder_name');		
-		$form_id = 'new_upload';
+		$form_id = 'new_upload'.WIN_ID;
 		$default_value = '';
 		$succ_msg = txt('shortcuts_window_msg_upload');
 

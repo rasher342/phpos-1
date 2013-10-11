@@ -293,9 +293,9 @@ select {
 	position:absolute;
 	right:25px;
 	text-align:right;
-	top:60px;	
-	color:#fff;
-	text-shadow: #000 0.2em 0.2em 0.2em;
+	bottom:100px;	
+	color:black;
+	font-size:11px;
 	z-index: 99999999;		
 }
 #phpos-menustart_Tray_container {

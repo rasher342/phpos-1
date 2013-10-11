@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.0.1, 2013.10.11
  
 **********************************
 */
@@ -21,15 +21,12 @@ echo $layout->txtdesc(txt('logs_app_title_desc'));
 $logs = new phpos_logs;
 $logs_dir = $logs->get_logs_dir();
 	
-	echo $layout->column('70%');
-	
-	
+	echo $layout->column('70%');	
 	
 	$log_file_id = $my_app->get_param('log_id');
 	
 	if(!empty($log_file_id))
-	{	
-	
+	{		
 		$today = '';
 		if($logs->is_today_date($my_app->get_param('year_id'), $my_app->get_param('month_id'), $my_app->get_param('day_id'))) $today = ' <span style="font-weight:bold; color: #1d791e">('.txt('today').')</span>';
 						
@@ -38,8 +35,7 @@ $logs_dir = $logs->get_logs_dir();
 		echo $layout->txtdesc($txt['logs_list']);
 		
 			$download_action = browser_url(PHPOS_WEBROOT_URL."phpos_downloader.php?hash=".md5(PHPOS_KEY)."&download_type=".base64_encode('log')."&file=".base64_encode($log_file_id));
-			$download_btn = $layout->button(txt('logs_section_btn_download'), $download_action, 'download1');
-			
+			$download_btn = $layout->button(txt('logs_section_btn_download'), $download_action, 'download1');			
 			
 			$view_action = browser_url('../_phpos/'.str_replace('../','', $log_file_id));
 			
@@ -48,8 +44,7 @@ $logs_dir = $logs->get_logs_dir();
 		
 		echo $download_btn. '  '.$view_btn;
 		
-		//echo 'Download raw log file here: <a href="'.$logs->get_logs_url().$log_file_id.'" target="_blank"><b>'.basename($log_file_id).'</b></a>';
-		
+		//echo 'Download raw log file here: <a href="'.$logs->get_logs_url().$log_file_id.'" target="_blank"><b>'.basename($log_file_id).'</b></a>';		
 		
 		
 		//echo nl2br($f);	
@@ -89,19 +84,12 @@ $logs_dir = $logs->get_logs_dir();
 	
 	}
 	
-	echo $layout->end('column');
-	
-	
-	
-	
-	
-	
+	echo $layout->end('column');	
 	
 	
 echo $layout->column('30%');		
 echo $layout->subtitle(txt('logs_log_folders_title'), ICONS.'logs/logfiles.png');
 echo $layout->txtdesc(txt('logs_folders'));
-
 
 $dir = glob($logs_dir.'*');
 $years = array();
@@ -173,21 +161,23 @@ if(count($years) != 0)
 						$today = '';
 						if($logs->is_today_date($year_number, $month_number, $day_id)) $today = ' <span style="font-weight:bold; color: #1d791e">('.txt('today').')</span>';						
 											
-						if($my_app->get_param('log_id') == $day) $day_id = '<b>'.$day_id.'</b>';
-						
-						
-						
-						
-					echo '<li data-options="iconCls:\'icon-file\'">
-				<span><a href="javascript:void(0);" onclick="'.helper_reload(array('year_id' => $year_number, 'month_id' => $month_number, 'day_id' => $day_id, 'log_id' => $day)).'"><span style="color:black">'.$day_id.$today.'</span></a></span></li>';
-						
-
+						if($my_app->get_param('log_id') != null && $my_app->get_param('log_id') == $day) $day_id = '<b>'.$day_id.'</b>';
+						$name = $day_id.$today;				
+										
+						if(file_exists($day) && !empty($name))
+						{
+							echo '<li data-options="iconCls:\'icon-file\'">
+							<span>
+								<a href="javascript:void(0);" onclick="'.helper_reload(array('year_id' => $year_number, 'month_id' => $month_number, 'day_id' => $day_id, 'log_id' => $day)).'"><span style="color:black">'.$name.'</span></a>
+							</span></li>';
+						}
 					}	
 				}
 				
 				echo '</ul>';
 		
 			echo '</li>';
+			
 			}
 		
 				echo '</ul>';
@@ -195,21 +185,14 @@ if(count($years) != 0)
 
 	
 	echo '</li>';
-	}
-	
+	}	
 
 	echo '</ul>';
 }
 
-
-
-
 	echo $layout->end('column');	
-	
-	
-	
 	
 	
 	echo $layout->clr();
 	
-	?>
+?>

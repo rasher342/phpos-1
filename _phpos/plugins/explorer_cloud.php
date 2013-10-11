@@ -111,7 +111,7 @@ if(count($records) != 0)
 
 } else {
 	
-	$items.= '<li data-options="iconCls:\'icon-blank\'"><span>'.$txt['cloud_no_accounts'].'</span></li>';
+	$items.= '<li data-options="iconCls:\'icon-blank\'"><span>'.txt('cloud_no_accounts').'</span></li>';
 }
 
 

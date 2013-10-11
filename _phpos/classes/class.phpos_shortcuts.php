@@ -45,7 +45,7 @@ class phpos_shortcuts {
 	global $my_user;	
 	if($icon == 'null') $icon = '';
 	$items = array(
-			'file_title' => filter::utf($title),
+			'file_title' => filter::fname($title),
 			'id_user' => $my_user->get_id_user(),
 			'id_parent' => filter::num($id_parent),
 			'plugin_id' => filter::alfas($plugin),
@@ -94,7 +94,7 @@ class phpos_shortcuts {
 	global $my_user;	
 	if($icon == 'null') $icon = '';
 	$items = array(
-			'file_title' => filter::utf($title),
+			'file_title' => filter::fname($title),
 			'id_user' => $my_user->get_id_user(),			
 			'plugin_id' => filter::alfas($plugin),
 			'app_id' => filter::alfas($app_id),

@@ -1015,4 +1015,14 @@ if(!defined('PHPOS'))	die();
 	$txt['lib_temp'] = 'Pliki tymczasowe';
 	$txt['start_ip'] = 'IP serwera';
 	$txt['start_db'] = 'Baza danych';
+	
+	// bugtracker, 2013.10.11
+	$txt['bugtracker_app'] = 'Raportowanie błędów';
+	$txt['bugtracker_app_tray'] = 'Zgłoś znaleziony błąd';
+	$txt['bugtracker_index_app'] = 'Raportowanie błędów';
+	$txt['bugtracker_app_desc'] = 'Jeśli znalazłeś błąd w działaniu systemu - będziemy wdzięczni jeśli nas o tym poinformujesz. <br />Opisz go tutaj pokrótce i kliknij na \'Wyślij raport o błędzie\'.<br />Wiadomość zostanie przesłana na nasze serwery.';
+	$txt['bugtracker_report_btn'] = 'Wyślij raport o błędzie';
+	$txt['bugtracker_sended_msg'] = 'Dziękujemy. Twój raport został wysłany na nasz serwer.';
+	$txt['bugtracker_name'] = 'Twoje imię';
+	$txt['bugtracker_name_desc'] = 'Nie jest wymagane podawanie imienia, jednak jeśli chcesz, możesz je podać.';
 ?>

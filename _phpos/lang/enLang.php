@@ -1014,8 +1014,17 @@ if(!defined('PHPOS'))	die();
 	$txt['lib_temp'] = 'Temp files';
 	$txt['start_ip'] = 'Server IP';
 	$txt['start_db'] = 'Database';
+	$txt['cloud_no_accounts'] = 'No clouds';
 	
 	
-	
+	// bugtracker, 2013.10.11
+	$txt['bugtracker_app'] = 'Report a bug';
+	$txt['bugtracker_app_tray'] = 'Report bug';
+	$txt['bugtracker_index_app'] = 'Bug reporting';
+	$txt['bugtracker_app_desc'] = 'If you find a bug please type it here and click on \'Send report\'.<br />It will be reported to PHPOS servers.';
+	$txt['bugtracker_report_btn'] = 'Send report';
+	$txt['bugtracker_sended_msg'] = 'Thanks. Your report was sent to our servers.';
+	$txt['bugtracker_name'] = 'Your name';
+	$txt['bugtracker_name_desc'] = 'Name is not required, but you can specify this if you want';
 	
 ?>
