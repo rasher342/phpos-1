@@ -28,3 +28,17 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </td>
 </tr>
 </table>
+<b>Change log:</b><br>
+<b>1.1</b> (2013.10.11)
+<br>
+- Bugtracker added<br>
+- Log files listing viewing fix<br>
+- Windows numbers on tasks bug fix<br>
+- Saving user wallpaper fix<br>
+- Naming files in DB fix<br>
+- Upload files from "shortcut" fixed<br>
+- Marking actual dir in "Libs" fix<br>
+- No clouds info fix (in ENG language)<br>
+- Apps window icons fix<br>
+- Tray messages fix (new messages Tip now works)<br>
+- Logs saves now more informations
