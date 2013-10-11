@@ -50,9 +50,11 @@ if(!defined('PHPOS'))	die();
 		$form->onsuccess($success_code);
 		$form->reload_after_submit(array(WIN_ID));
 		
+		
 		$form->input('hidden','send_bug', '', '',  '1');	
 		$form->input('hidden','version', '', '',  PHPOS_VERSION_NAME);	
 		$form->input('hidden','send_time', '', '',  time());		
+		$form->input('hidden','server_ip', '', '',  $_SERVER['SERVER_ADDR']);	
 		
 		$form->input('text','sender_name', txt('bugtracker_name'),  txt('bugtracker_name_desc'), $start_title);
 		$form->status();
