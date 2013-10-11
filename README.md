@@ -1,7 +1,7 @@
-PHPOS Web Operating System<br>Version: 1.0.0 beta
+PHPOS Web Operating System<br>Version: 1.1 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
-<b>Last version: 1.0.0 beta</b>
+
 <table>
 <tr>
 <td width=50% valign=top>
