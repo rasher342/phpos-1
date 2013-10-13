@@ -1027,4 +1027,8 @@ if(!defined('PHPOS'))	die();
 	$txt['bugtracker_name'] = 'Your name';
 	$txt['bugtracker_name_desc'] = 'Name is not required, but you can specify this if you want';
 	
+	$txt['fs_cloud_gdrive'] = 'Google Drive Cloud';
+	$txt['fs_clouds_right'] = 'Clouds';
+	$txt['cloud_google_connected'] = 'Connected to Google API';
+	
 ?>

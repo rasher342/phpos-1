@@ -23,7 +23,9 @@ if(!defined('PHPOS'))	die();
 						
 /*.............................................. */		
 	
-		if($context_fs == 'ftp')
+		
+		// FTP connection status
+		if($my_app->get_param('fs') == 'ftp')
 		{
 			$ftp_res = $phposFS->get_status().'<br />';
 			
@@ -35,6 +37,32 @@ if(!defined('PHPOS'))	die();
 			} else {
 			
 				$ftp_connect_status =	'<div class="server_conn_error">'.txt('ftp_not_connected').'</div>';	
+			}
+		}
+		
+		
+		// Cloud connection status		
+		if($my_app->get_param('fs') == 'clouds_google_drive')
+		{			
+			if($phposFS->get_authUrl() != '')
+			{
+					$auth_url = '<a href="'.$phposFS->get_authUrl().'"><b>Click here</b></a> to login to Google Account';
+					$up_auth_url = ' <a href="'.$phposFS->get_authUrl().'"><b>[ Token auth URL ]</b></a>';
+			}
+				
+				if($phposFS->is_connected())
+			{
+				$cloud_connect_status =	'<div class="server_conn_ok">'.txt('cloud_google_connected').$phposFS->get_status().'</div>';	
+				$cloud_connected = true;
+				$cloud_header_msg = 'You are connected to Google Drive API'.$up_auth_url;
+				
+			} else {				
+				
+				$err = '';
+				if($phposFS->get_status() != '') $err = '<br/>Error message: '.$phposFS->get_status();
+				
+				$cloud_connect_status =	'<div class="server_conn_error">'.$auth_url.$err.'</div>';	
+				$cloud_header_msg = 'At first you must login to your Google Drive API here: '.$up_auth_url;
 			}
 		}
 			
@@ -56,7 +84,8 @@ if(!defined('PHPOS'))	die();
 	
 	if(APP_ACTION == 'index' && $context_fs == 'clouds_google_drive')
 	{	
-		$html['icons'].=	$layout->txtdesc('ggggggodle');
+		$html['icons'].=	$layout->subtitle($cloud_header_msg, ICONS.'server/google_drive.png');
+		//$html['icons'].=	$layout->txtdesc('ggggggodle');
 	}
 	
 					
@@ -88,7 +117,7 @@ if(!defined('PHPOS'))	die();
 **************************
 */
 	
-	if($context_fs != 'clouds_google_drive')
+	if($context_fs != 'clouds_google_drives')
 	{
 			
 			$c = count($icons);
@@ -139,7 +168,7 @@ if(!defined('PHPOS'))	die();
 							
 					$plugged_context_menu = $my_context_menu;				
 					
-					if($my_app->get_param('fs') == 'local_files' || $my_app->get_param('fs') == 'db_mysql') 
+					if($my_app->get_param('fs') == 'local_files' || $my_app->get_param('fs') == 'db_mysql' || $my_app->get_param('fs') == 'clouds_google_drive') 
 					{
 						$open_action = $phposFS->get_action_dblclick($icons[$i]);		
 						$plugged_context_menu[0] = 'open::'.txt('open').'::'.str_replace('"', '\'', $open_action).'::folder_open';

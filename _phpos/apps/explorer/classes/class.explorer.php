@@ -186,7 +186,9 @@ class app_explorer {
 	public function get_address_links()
 	{	
 		$dir_id = $this->my_app->get_param('dir_id');		
-
+		
+		if($dir_id != '.')
+		{
 		$links = array();		
 		$address_items = $this->filesystem->get_parents($dir_id);	
 
@@ -210,7 +212,9 @@ class app_explorer {
 			if($item['id'] != $this->filesystem->get_root_directory_id())
 			{
 				$links[] = $item['id'];	
-			}			
+			}	
+
+			}	
 		}	
 		
 		return $links;
@@ -832,7 +836,7 @@ class app_explorer {
 			
 			if($rewrite === null)
 			{			
-				$icon_data = '<div title="'.$icon['filename'].'" class="easyui-tooltip phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
+				$icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
 					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
 					<img src="'.$icon['icon'].'" />
 					<br />'.wordwrap($icon['filename'], 15, " ", 1).$shared.'

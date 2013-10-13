@@ -45,6 +45,32 @@ switch($context_fs)
 
 	break;
 	
+	case 'clouds_google_drive':	
+		$contextMenus['FILE'] = array(				
+				'open::'.txt('open').'::alert("normalopen'.$item.'");::folder_open',
+				'---',				
+				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'
+			
+		);			
+
+
+		$contextMenus['DIR'] = array(		
+				'open::Otwórz folder::phpos.windowRefresh("'.$apiWindow->getID().'","dir_id:'.$phposFS->addLastSlash($icons[$i]['id']).'");::open',			
+				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'				
+				
+		);	
+
+		$contextMenus['WINDOW'] = array(		
+				'newshortcut::'.txt('new_shortcut').'::'.winmodal(txt('new_shortcut'), 'app', 'app_id:shortcuts@index,width:300,height:350','desktop:1,location:'.$context_location.',dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::edit_add',
+				'newfolder::'.txt('new_folder').'::'.winmodal(txt('new_folder'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',back:null,dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::folder_files'			
+		);
+	
+
+	break;
+	
+	
+	
+	
 	case 'local_files':
 			$contextMenus['FILE'] = array(				
 				'open::'.txt('open').'::explorer_open_in_browser("'.$icons[$i]['id'].'");::folder_open',

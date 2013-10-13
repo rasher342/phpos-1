@@ -115,6 +115,7 @@
 	if(!empty($_GET['code']))
 	{
 		$_SESSION['google_token'] = $_GET['code'];
+		$_SESSION['google_refresh'] = true;
 	} 
 	
 	//savelog('ACCESS#SUCCESS');

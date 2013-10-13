@@ -56,7 +56,6 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$root_directory_id,
 		$directory_id,
 		$address,
-		$authUrl,
 		$fs_prefix,	
 		$client,
 		$cloud,
@@ -70,54 +69,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  	
 	function __construct($cloud_id = null)
 	{		
-		$this->connect();		
-		$this->set_root_directory_id('.');
-	}
+		global $my_app;
 		
-/*
-**************************
-*/
- 
-	public function set_status($str)
-	{
-		$this->connection_status = $str;	
-	}
-	
-	public function set_authUrl($authUrl)
-	{
-		$this->authUrl = $authUrl;	
-	}
-	
-	public function get_authUrl()
-	{
-		return $this->authUrl;	
-	}
-			
-/*
-**************************
-*/
- 
-	public function is_connected()
-	{		
-		return $this->connected;	
-	}	
-			
-/*
-**************************
-*/
- 
-	public function get_status()
-	{		
-		return $this->connection_status;	
-	}	
-			
-/*
-**************************
-*/
- 
-	public function connect()
-	{
-		global $my_app;		
 		if($my_app->get_param('cloud_id') != null)
 		{					
 			$this->cloud = new phpos_clouds;
@@ -135,70 +88,102 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$this->client->setClientId($this->cloud->get_login());
 			$this->client->setClientSecret($this->cloud->get_password());
 			$this->client->setRedirectUri($this->cloud->get_url());
-			$this->client->setScopes(array('https://www.googleapis.com/auth/drive'));		
+			$this->client->setScopes(array('https://www.googleapis.com/auth/drive'));			
 
-			
-			try 
-			{
-				if(isset($_SESSION['google_token'])) 
-				{
-						$_GET['code'] = $_SESSION['google_token'];
-						$this->client->authenticate();
-						$_SESSION['token'] = $this->client->getAccessToken();
-						$redirect = $this->cloud->get_url();
-						unset($_SESSION['google_token']);
-						//header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
-				}
-			}	catch (Exception $e) 
-			{
-					$this->connected = false;		
-					$this->set_status($e->getMessage());
-					$this->set_authUrl($this->client->createAuthUrl());
+			// Exchange authorization code for access token
+			//$plus = new Google_PlusService($client);
+
+			if(isset($_SESSION['google_token'])) {
+				$_GET['code'] = $_SESSION['google_token'];
+				$this->client->authenticate();
+				$_SESSION['token'] = $this->client->getAccessToken();
+				$redirect = $_SESSION['PHPOS_NETURL'];
+				//unset($_SESSION['google_token']);
+				header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+			}
+
+			if (isset($_SESSION['token'])) {
+				$this->client->setAccessToken($_SESSION['token']);
+			}
+
+			if ($this->client->getAccessToken()) {
+				
+				echo 'Connected to your google account.<br />';
+				//$activities = $plus->activities->listActivities('me', 'public');
+				//print 'Your Activities: <pre>' . print_r($activities, true) . '</pre>';
+
+				// We're not done yet. Remember to update the cached access token.
+				// Remember to replace $_SESSION with a real database or memcached.
+				$_SESSION['token'] = $this->client->getAccessToken();
+			} else {
+				$authUrl = $this->client->createAuthUrl();
+				echo "<a href='$authUrl'>Connect Me!</a>";
 			}
 			
 			
-			if(isset($_SESSION['token'])) 
-			{			
-				try 
-				{				
-					$this->client->setAccessToken($_SESSION['token']);
+			}		
+		
+	}
+		
+/*
+**************************
+*/
+ 
+	public function set_status($str)
+	{
+		$this->connection_status = $str;	
+	}
+	
+	
+	
+	public function get_status()
+	{
+		//print_r($this);
+		return $this->conn_id;	
+	}
+	
+	public function get_conn_id()
+	{
+		//print_r($this);
+		return $this->conn_id;	
+	}
+	
+	public function connect()
+	{
+		
+			$this->conn_id = @ftp_connect($this->ftp->get_host()); 			
+		
+			 //msg::error('FTP: Error connection to server');
+		
+		
+			if($this->conn !== FALSE)
+			{		
+				
+				$this->connected = 1;
+				//msg::ok('FTP: Connected to: '.$this->ftp->get_host());
+				
+				$login_result = @ftp_login($this->conn_id, $this->ftp->get_login(), $this->ftp->get_password()); 
+				if($login_result !== FALSE)
+				{	
+					//msg::ok('FTP: Logged as: '.$this->ftp->get_login());
+					$this->logged = 1;	
+					$this->connection_status = 'connected';
+					return true;
 					
-				}	catch (Exception $e) 
-				{				
-					$this->connected = false;		
-					$this->set_status($e->getMessage());				
-					$this->set_authUrl($this->client->createAuthUrl());
-				}			
-			}			
-			
-			if($this->client->getAccessToken()) 
-			{				
-				try 
-				{					
-					$this->connected = true;
-					//$this->set_status('Token get ok');							
-					$this->set_authUrl($this->client->createAuthUrl());
-					$_SESSION['token'] = $this->client->getAccessToken();	
-												
-					//$this->get_filelist();	
+				} else {
 					
-				}	catch (Exception $e) 
-				{
-					$this->connected = false;		
-					$this->set_status($e->getMessage());
-			  	$this->set_authUrl($this->client->createAuthUrl());
+					$this->connection_status = $login_result;
+					msg::error('FTP: Login incorrect');
+					$this->logged = 0;				
 				}
 				
-				
 			} else {
-				
-				$this->connected = false;				
-				$this->set_authUrl($this->client->createAuthUrl());				
+			
+				$this->connected = 0;
+				$this->connection_status = 'cccccccccccccconnected';
+				msg::error('FTP: Error connection to server');
+				return false;
 			}	
-			
-				
-			
-		}	
 	}	
 		
 /*
@@ -243,7 +228,6 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  
 	public function get_directory_id()
 	{
-		//echo 'dir_id:'.$this->directory_id.'<br>';
 		return $this->directory_id;	
 	}
 		 
@@ -253,90 +237,21 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  
 	public function have_parent($file)
 	{		
-		if($this->directory_id == '.') return false;		
-		
-		if(!empty($file['dirname']))
+		if(!empty($file['dirname']) && $this->directory_id != '.')
 		{
 			return true;
 		}
-		
-	
-		//echo 'ma';
-		$fileinfo = $this->get_file_info($file);
-		if(!empty($fileinfo['dirname'])) return true;
 	}	
 		 
 /*
 **************************
 */
  
-	public function get_filelist()
-	{
-		if(!is_array($this->google_drive_files) || empty($this->google_drive_files[0])) 
-		{
-			try {			
-			$this->service = new Google_DriveService($this->client);
-			$filelist = @$this->service->files->list();
-			$this->connected = true;
-			}	catch (Exception $e) 
-			{
-					$this->connected = false;		
-					$this->set_status($e->getMessage());
-					$this->set_authUrl($this->client->createAuthUrl());
-			}
-			
-			
-			// debug
-			//echo '<pre>';
-			//print_r($filelist);
-			//echo '</pre>';
-
-			$c = count($filelist['items']);
-			if($c != 0)
-			{
-				$this->google_drive_files = $filelist['items'];		
-			}
-			
-		}		
-	} 
- 
- 
 	public function get_parent_dir($file)
-	{		
-		$this->get_filelist();
-		$i = 0;
-		
-		$a['id'] = $file;			
-		
-		$fileinfo = $this->get_file_info($a);
-		$parent_id = $fileinfo['dirname'];
-		
-		// debug
-			//echo '<pre>';
-			//print_r($fileinfo);
-			//echo '</pre>';
-			
-		foreach($this->google_drive_files as $f)
-		{	
-			if($f['id'] == $parent_id) return $i;
-			$i++;
-		}	
-		
-		return '.';
+	{
+		//$pathinfo =  pathinfo($file);		
+		return $file['dirname'];	
 	}
-		 
-	function printParents($fileId) {
-  try {
-    $parents = $this->service->parents->listParents($fileId);
-
-    foreach ($parents->getItems() as $parent) {
-      print 'File Id: ' . $parent->getId();
-    }
-  } catch (Exception $e) {
-    print "An error occurred: " . $e->getMessage();
-  }
-}	 
-		 
 		 
 /*
 **************************
@@ -344,24 +259,15 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  
 	public function get_parents($file)
 	{
-		$this->get_filelist();
 		$parents = array();
-		//echo '<br>file:'.$file.'<br><br>';
+		
 		if($this->have_parent($file))
 		{			
-			//echo '<br>maparenta:'.$file.'<br><br>';
-			
 			$i=0;
 			while($this->have_parent($file) && $i < 50)
 			{
 				$file = $this->get_parent_dir($file);
-			
-				if($file != ".") 
-				{
-						//echo '<br>pobieram parenta, pobrano: '.$file.'<br>';
-						$parents[] = $file;
-					
-				}
+				$parents[] = $file;
 				$i++;
 			}	
 		}			
@@ -374,19 +280,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  
 	public function get_file_info($file)
 	{			
-	  $this->get_filelist();
-		if(is_array($file))
-		{
-			$f_id = $file['id'];			
-		
-		} else {
-		
-			$f_id = $file;			
-		}
-		
-		$file_info['id'] = $f_id;	
-		//echo $file['id'].',';
-		$f = $this->google_drive_files[$f_id];					
+		$file_info['id'] = $file['id'];					
+		$f = $this->google_drive_files[$file['id']];					
 		
 		$file_info['file_id'] = $f['id'];
 		
@@ -395,9 +290,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$file_info['basename'] = $f['title'];	
 		$file_info['extension'] = $f['mimeType'];	
 		$file_info['filename'] = $f['title'];				
-		$file_info['modified_at'] = $f['modifiedDate'];
-		$file_info['created_at'] = $f['createdDate'];
-		$file_info['chmod'] = $f['owners'][0]['permissionId'];
+		$file_info['modified_at'] = 0;
+		$file_info['created_at'] = 0;
+		$file_info['chmod'] = 0;
 		if($f['mimeType'] != 'application/vnd.google-apps.folder')	$file_info['icon'] = $f['iconLink'];	
 
 		return $file_info;	
@@ -408,88 +303,91 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 */
  
 	public function get_files_list()
-	{		
-		$files_array = array();		
-		$this->get_filelist();
+	{	
 		
-		$c = count($this->google_drive_files);
-		if($c != 0)
-		{		
-			$i = 0;
-			foreach($this->google_drive_files as $f)
-			{								
-				$file_info = array();				
-				
-				$file_info['id'] = $i;
-				$file_info['file_id'] = $f['id'];
-				
-				if($f['parents'][0]['isRoot'] != 1)	$file_info['dirname'] = $f['parents'][0]['id'];						
-				
-				$file_info['basename'] = $f['title'];	
-				$file_info['extension'] = $f['mimeType'];	
-				$file_info['filename'] = $f['title'];				
-				$file_info['modified_at'] = $f['modifiedDate'];
-				$file_info['created_at'] = $f['createdDate'];
-				$file_info['chmod'] = $f['owners'][0]['permissionId'];
-				if($f['mimeType'] != 'application/vnd.google-apps.folder')	$file_info['icon'] = $f['iconLink'];			
-				
-				if($this->directory_id == '.')
-				{					
-					if($f['parents'][0]['isRoot'] == 1)
-					{				
-						if($f['mimeType'] == 'application/vnd.google-apps.folder')
-						{
-							$list_dirs[] = $file_info;
-							
-						} else {
-						
-							$list_files[] = $file_info;
-						}		
+		$files_array = array();		
+		
+		$service = new Google_DriveService($this->client);
+		$lista = @$service->files->list();
+	//echo '<pre>';
+	//print_r($lista);
+	//echo '</pre>';
 
+		$c = count($lista['items']);
+		if($c != 0)
+		{
+			$this->google_drive_files = $lista['items'];
+			$i = 0;
+			foreach($lista['items'] as $f)
+			{
+								
+					$file_info = array();				
+					
+					$file_info['id'] = $i;
+					$file_info['file_id'] = $f['id'];
+					
+					if($f['parents'][0]['isRoot'] != 1)	$file_info['dirname'] = $f['parents'][0]['id'];						
+					
+					$file_info['basename'] = $f['title'];	
+					$file_info['extension'] = $f['mimeType'];	
+					$file_info['filename'] = $f['title'];				
+					$file_info['modified_at'] = 0;
+					$file_info['created_at'] = 0;
+					$file_info['chmod'] = 0;
+					if($f['mimeType'] != 'application/vnd.google-apps.folder')	$file_info['icon'] = $f['iconLink'];		
+				
+					
+					if($this->directory_id == '.')
+					{					
+						if($f['parents'][0]['isRoot'] == 1)
+						{				
+							if($f['mimeType'] == 'application/vnd.google-apps.folder')
+							{
+								$list_dirs[] = $file_info;
+							} else {
+							
+								$list_files[] = $file_info;
+							}		
+
+						}
+						
+					} else {
+						
+						$parent = $this->google_drive_files[$this->directory_id];
+						$parent_id = $parent['id'];
+						
+						if($f['parents'][0]['id'] == $parent_id)
+						{
+							if($f['mimeType'] == 'application/vnd.google-apps.folder')
+							{
+								$list_dirs[] = $file_info;
+							} else {
+							
+								$list_files[] = $file_info;
+							}		
+						}					
 					}
 					
-				} else {
-					
-					$parent = $this->google_drive_files[$this->directory_id];
-					$parent_id = $parent['id'];
-					
-					if($f['parents'][0]['id'] == $parent_id)
+					if($f['mimeType'] == 'application/vnd.google-apps.folder')
 					{
-						if($f['mimeType'] == 'application/vnd.google-apps.folder')
-						{
-							$list_dirs[] = $file_info;
-							
-						} else {
-						
-							$list_files[] = $file_info;
-						}		
-					}					
-				}				
-			
-				$i++;
+						//echo '<img src="'.$f['iconLink'].'">FOLDER: <a href="'.$f['webContentLink'].'" target="_blank">'.$f['title'].'</a><br>';
+					} else {
+						//echo '<img src="'.$f['iconLink'].'"><a href="'.$f['webContentLink'].'" target="_blank">'.$f['title'].'</a><br>';
+					}
+					
+				
+			$i++;
 			}
 			
-				if(is_array($list_dirs)) 
-				{
-					array_sort($list_dirs, 'basename');
-					
-				} else {
+				array_sort($list_dirs, 'basename');
+				array_sort($list_files, 'basename');
 				
-					$list_dirs = array();
-				}
+				$all_files = array_merge($list_dirs, $list_files);
 				
-				if(is_array($list_files)) 
-				{
-					array_sort($list_files, 'basename');	
-					
-				} else {
-				
-					$list_files = array();
-				}				
-				
-				$all_files = array_merge($list_dirs, $list_files);					
 				return $all_files;
-		}				
+
+		}			
+		
 	}
 		 
 /*
@@ -497,19 +395,24 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 */
  
  public function connect_status()
- {	
-	return $this->connection_status; 
+ {
+	
+	return $this->connection_status;
+ 
  }
  
 	public function new_dir($dirname)
 	{
-		global $my_app;
-		$dir = $my_app->get_param('dir_id');		
-		
-		if(ftp_mkdir($this->conn_id, $dir.'/'.$dirname)) return true;	
+			global $my_app;
+			$dir = $my_app->get_param('dir_id');		
+			
+			if(ftp_mkdir($this->conn_id, $dir.'/'.$dirname)) return true;	
 	}	
  
-  
+ 
+ 
+ 
+ 
 	public function is_directory($file)
 	{
 		$f = $file;
@@ -525,14 +428,15 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{
 		if($this->is_directory($file))
 		{
-			return helper_reload(array('shared_id' => 0, 'reset_shared' => 0, 'dir_id' => $file['id']));
-			
+			return helper_reload(array('shared_id' => 0, 'reset_shared' => 0, 'dir_id' => $file['id']));	
 		} else {
 			
-			$f = $this->google_drive_files[$file['id']];					
+			$f = $this->google_drive_files[$file['id']];			
+			
 			return "window.open('".$f['webContentLink']."', '_blank');";	
 		}
-	}	
+	}
+	
 		 
 /*
 **************************

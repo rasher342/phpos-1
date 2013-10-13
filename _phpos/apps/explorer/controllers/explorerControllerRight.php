@@ -27,8 +27,7 @@ if(APP_ACTION == 'index')
 				} else {
 				
 					$html['right_items_desc'] = '<span style="color:#7f1f1d">'.txt('readonly_right_msg').'</span>';					
-				}
-				
+				}				
 				$html['right_items_img'] = 'hdd.png';
 			break;
 			
@@ -43,6 +42,13 @@ if(APP_ACTION == 'index')
 				$html['right_items_desc'] = $ftp_connect_status.txt('explorer_right_local_desc_drag_active');
 				$html['right_items_img'] = 'ftp.png';
 			break;	
+			
+			case 'clouds_google_drive':
+				$html['right_items_title'] = txt('fs_clouds_right');
+				//$html['right_items_desc'] = $cloud_connect_status.txt('explorer_right_local_desc_drag_active');
+				$html['right_items_desc'] =  '<span style="font-size:14px;color:red">(alpha test)</span><br/>'.$cloud_connect_status.'<br>If you don\'t see any files after login, click one more time on cloud account of refresh this PHPOS window to refresh filelist from Google.';
+				$html['right_items_img'] = 'google_drive.png';
+			break;
 		}	
 	}
 				

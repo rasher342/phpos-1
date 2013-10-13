@@ -59,6 +59,7 @@ if(!defined('PHPOS'))	die();
 	$my_app->set_param('folder_root', $fsROOT_ID);
 	$my_app->set_param('navigation_id', NULL);	
 	$my_app->set_param('ftp_id', NULL);
+	$my_app->set_param('cloud_id', NULL);
 	$my_app->set_param('APP_ACTION', NULL);
 	$my_app->set_param('dir_id', NULL);
 	$my_app->set_param('desktop_location', NULL);
@@ -111,6 +112,8 @@ if(!defined('PHPOS'))	die();
 /*.............................................. */		
 	
 	cache_param('allowed_ext');	
+	cache_param('cloud_id');	
+	cache_param('reset_google_token');
 	cache_param('view_files_types');	
 	
 	if($my_app->get_param('allowed_ext') !== null)
@@ -138,9 +141,20 @@ if(!defined('PHPOS'))	die();
 */
  	// Reset Google Token
 	
+	if($_SESSION['google_refresh'])
+	{
+		unset($_SESSION['google_refresh']);
+		echo '<script>'.winreload(WIN_ID, array('root_id' => '.', 'dir_id' => '.', 'reset_google_token' => 1)).'</script>';
+	}
+	
+	
 	if($my_app->get_param('reset_google_token') == 1)
 	{
-		unset($_SESSION['google_token']);
+		if(isset($_SESSION['token']) && isset($_SESSION['google_token'])) 
+		{
+			unset($_SESSION['google_token']);
+			//$_SESSION['google_refresh'] = true;
+		}
 	}
 	
 /*
@@ -195,6 +209,21 @@ if(!defined('PHPOS'))	die();
 	
 		cache_param('ftp_id');	
 	} 
+	
+/*
+**************************
+*/
+
+	// Clouds		 
+	if($my_app->get_param('fs') != 'clouds_google_drive')
+	{
+		$my_app->set_param('cloud_id', null);
+		cache_param('cloud_id');	
+		
+	} else {
+	
+		cache_param('cloud_id');	
+	} 
 		 
 		 
 /*
@@ -220,11 +249,7 @@ if(!defined('PHPOS'))	die();
 				}					
 			}
 	 }	
-			
-	
-	
-
-
+		
 			
 /*
 **************************
@@ -363,6 +388,8 @@ if(!defined('PHPOS'))	die();
  	
 	
 	include MY_APP_DIR.'controllers/explorer_ftp.php';		
+	
+		include MY_APP_DIR.'controllers/explorer_clouds.php';		
 	
 		 
 /*
