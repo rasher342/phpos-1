@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.1 beta
+PHPOS Web Operating System<br>Version: 1.2 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,10 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br>
+<b>1.2</b> (2013.10.13)
+<br>
+- Google Drive API support added. (alpha)
+
 <b>1.1</b> (2013.10.11)
 <br>
 - Bugtracker added<br>
