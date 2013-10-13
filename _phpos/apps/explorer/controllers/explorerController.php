@@ -144,7 +144,7 @@ if(!defined('PHPOS'))	die();
 	if($_SESSION['google_refresh'])
 	{
 		unset($_SESSION['google_refresh']);
-		echo '<script>'.winreload(WIN_ID, array('root_id' => '.', 'dir_id' => '.', 'reset_google_token' => 1)).'</script>';
+		//echo '<script>'.winreload(WIN_ID, array('root_id' => '.', 'dir_id' => '.', 'reset_google_token' => 1)).'</script>';
 	}
 	
 	
