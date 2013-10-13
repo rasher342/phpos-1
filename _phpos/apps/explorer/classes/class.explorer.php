@@ -836,7 +836,8 @@ class app_explorer {
 			
 			if($rewrite === null)
 			{			
-				$icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
+				// $icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"  
+				$icon_data = '<div class="easyui-tooltip phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
 					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
 					<img src="'.$icon['icon'].'" />
 					<br />'.wordwrap($icon['filename'], 15, " ", 1).$shared.'
