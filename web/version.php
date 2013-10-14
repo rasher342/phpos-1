@@ -15,9 +15,9 @@
 
 
 /* **************************************** */
-	define('PHPOS_VERSION', '1.2');
-	define('PHPOS_BUILD', '2013.10.13');	
-	define('PHPOS_VERSION_NAME', '1.2 beta');
+	define('PHPOS_VERSION', '1.21');
+	define('PHPOS_BUILD', '2013.10.14');	
+	define('PHPOS_VERSION_NAME', '1.21 beta');
 	define('PHPOS_ONLINE', 'http://phpos.pl/');
 	define('PHPOS_UPDATER', 'http://phpos.pl/updates_server.php');
 	define('PHPOS_GITHUB', 'https://github.com/phpos/phpos/');	
