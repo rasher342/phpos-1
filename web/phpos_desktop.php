@@ -130,7 +130,7 @@
 <META NAME="ROBOTS" CONTENT="NONE">
 <META NAME="GOOGLEBOT" CONTENT="NOARCHIVE">
 <!--[if !IE]> -->
-<meta http-equiv="X-UA-Compatible" content="IE=8" />
+
 <!-- <![endif]-->
 <script type="text/javascript">window.PHPOS_DIR = '<?php echo PHPOS_DIR;?>';</script>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -141,7 +141,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/contextMenu/jquery.contextMenu.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/lightbox/css/lightbox.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/dropzone/css/dropzone.css" />
-<script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jquery/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/vendor/php2js_functions.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jnotify/jNotify.jquery.js"></script>
