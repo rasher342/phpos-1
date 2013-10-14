@@ -268,7 +268,7 @@ select {
 	vertical-align:top
 }
 #phpos-menustart_container {
-	z-index:99999;
+	z-index:9999;
 	height:70px;
 	width:800px;
 	background-color: transparent;
@@ -305,6 +305,7 @@ select {
 	position:relative;
 	vertical-align:top;
 	margin: 0 auto 0;
+	z-index: 99999999;		
 }
 #phpos-menustart_Switch_container {
 	width:auto;

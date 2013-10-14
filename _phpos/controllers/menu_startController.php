@@ -14,9 +14,9 @@
 if(!defined('PHPOS'))	die();	
 
 
-?><div id="phpos-menustart_task_windows" style="z-index:99999999" class="phpos-menustart_task_windows_hide"></div>
+?><div id="phpos-menustart_task_windows" style="z-index:99999" class="phpos-menustart_task_windows_hide"></div>
 
-<div data-options="border:false,region:'south',split:true, minHeight:70, maxHeight:250, cache:false, style:{zIndex:99999999}" id="phpos-menustart_container">
+<div data-options="border:false,region:'south',split:true, minHeight:70, maxHeight:250, cache:false, style:{zIndex:99999}" id="phpos-menustart_container">
 
 	<div id="phpos-menustart_Button_container" title="Start" class="easyui-tooltip">
 		<img src="<?php echo THEME_URL;?>startmenu/api_startmenu-button.png" />

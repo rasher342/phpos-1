@@ -15,6 +15,7 @@
 .context-menu-list {
     margin:0; 
     padding:4px;
+		z-index:999999999;
     
     min-width: 220px;
     max-width: 350px;
