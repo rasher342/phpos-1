@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.2.1, 2013.10.14
  
 **********************************
 */
@@ -116,6 +116,7 @@
 	{
 		$_SESSION['google_token'] = $_GET['code'];
 		$_SESSION['google_refresh'] = true;
+		savelog('GOOGLE_TOKEN#RECEIVED');
 	} 
 	
 	//savelog('ACCESS#SUCCESS');
