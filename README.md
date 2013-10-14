@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.21 beta
+PHPOS Web Operating System<br>Version: 1.22 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,11 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br>
+<b>1.22</b> (2013.10.14)
+<br>
+- Switch desktop icon and tray vertical position fixed
+
+<br>
 <b>1.21</b> (2013.10.14)
 <br>
 - IE10 compatibility fixed
