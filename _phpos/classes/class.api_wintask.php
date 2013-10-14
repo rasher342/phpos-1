@@ -1169,6 +1169,8 @@ class api_wintask {
 				
 				case 'left':
 					$trigger_mode="trigger: 'left',
+					delay: 100,
+					autoHide: true,
 					";
 				break;			
 			}		
