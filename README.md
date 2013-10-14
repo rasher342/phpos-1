@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.22 beta
+PHPOS Web Operating System<br>Version: 1.23 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -28,21 +28,26 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </td>
 </tr>
 </table>
-<b>Change log:</b><br>
-<b>1.22</b> (2013.10.14)
+<b>Change log:</b><br><br>
+
+<b>1.23</b> (2013.10.14)</b>
+<br>
+- FF 24 context menu fix
+
+<b>1.22</b> (2013.10.14)</b>
 <br>
 - Switch desktop icon and tray vertical position fixed
-
 <br>
-<b>1.21</b> (2013.10.14)
+
+<b>1.21</b> (2013.10.14)</b>
 <br>
 - IE10 compatibility fixed
 
-<b>1.2</b> (2013.10.13)
+<b>1.2</b> (2013.10.13)</b>
 <br>
 - Google Drive API support added. (alpha)
 
-<b>1.1</b> (2013.10.11)
+<b>1.1</b> (2013.10.11)</b>
 <br>
 - Bugtracker added<br>
 - Log files listing viewing fix<br>
