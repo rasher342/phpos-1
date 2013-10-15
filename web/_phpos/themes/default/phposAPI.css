@@ -1595,7 +1595,7 @@ pre{
 	font-weight:bold;
 }
 .explorer_tree_header_marked {
-	color: #146193;
+	color: #000;
 	font-weight:bold;
 }
 .explorer_tree_item {
@@ -1603,6 +1603,6 @@ pre{
 	
 }
 .explorer_tree_item_marked {
-	color: #146193;
+	color: #000;
 	font-weight:bold;
 }
