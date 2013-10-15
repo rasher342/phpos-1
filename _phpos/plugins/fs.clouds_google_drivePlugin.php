@@ -646,7 +646,22 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		
 		} else {
 		
-			$icon_image = $file['icon'];		
+			// name
+			$pathinfo =  pathinfo($file['basename']);
+			$ext = strtolower($pathinfo['extension']);
+			if(!empty($ext))
+			{
+				if(file_exists($explorer->config('filetypes_icons_folder_dir').$ext.'.png'))
+				{
+					$icon_image = $explorer->config('filetypes_icons_folder_url').$ext.'.png';
+				} else {
+					$icon_image = $explorer->config('filetypes_icons_folder_url').'default.png';
+				}		
+			
+			} else {
+			
+				$icon_image = $file['icon'];	
+			}
 		}	
 			
 		return $icon_image; // @returns full url
@@ -743,10 +758,10 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		// upload to google
 			
 				$dir_google_id = null;
-				if($this->directory_id != '.' && $this->directory_id != 'root')
+				if($dir != '.' && $dir != 'root')
 				{		
 					
-					$dir_google_id = $this->directory_id;			
+					$dir_google_id = $dir;			
 					//$ref = $service->files->get($dir_google_id);
 				}
 				
@@ -758,36 +773,40 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$file->setTitle(basename($file_upload['name']));
 			$file->setDescription('Uploaded from PHPOS');
 			$file->setMimeType($file_upload["type"]);
-
+			//$file->setParents($this->directory_id);
 			
 			
 			
 		
 			
 			// Set the parent folder.
-			
-			if($dir_google_id !== null) {
+			/*
+			if($dir_google_id != null) {
 				$parent = new ParentReference();
 				$parent->setId($dir_google_id);
 				$file->setParents(array($parent));
 			}
-	
-			try {
+*/
+				echo '<script>alert("insertid:'.$createdFile['id'].', upload dirid:'.$this->directory_id.', googleid:'.$dir_google_id.'");</script>';
+				
 			
 				$data = file_get_contents($target_path);
 				$createdFile = $service->files->insert($file, array(
 					'data' => $data,
+					'uploadType' => 'multipart',
 					'mimeType' => $mimeType,
+					'parents' => array($dir_google_id)
+					
 				
 				));
 				
-				echo '<script>alert("insertid:'.$createdFile['id'].', upload dirid:'.$this->directory_id.', googleid:'.$dir_google_id.'");</script>';
+			
 				//@unlink($target_path);
 				// Uncomment the following line to print the File ID
 				$inserted_id =  $createdFile['id'];
 				
 			
-			
+			/*
 				if($dir_google_id !== null) 
 				{						
 					  $newChild = new Google_ChildReference();
@@ -801,15 +820,11 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					print "An error occurred: " . $e->getMessage();
 					}
 				}			
-				
+				*/
 				
 
 				return $createdFile;
-			} catch (Exception $e) {
-				print "An error occurred: " . $e->getMessage();
-			}
-
-
+		
 
 
 		

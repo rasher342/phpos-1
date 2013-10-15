@@ -11,10 +11,9 @@
  
 **********************************
 */
-
+error_reporting(E_ERROR | E_PARSE);
 	include 'version.php';
 	session_start();
-	
 	define('PHPOS', true);	
 	define('PHPOS_FS', true);
 	define('PHPOS_IN_EXPLORER', true);
@@ -54,7 +53,7 @@
 	$usr = new phpos_users;
 	
 	
-	if($_POST['phpos_login_me'])
+	if(isset($_POST['phpos_login_me']) && $_POST['phpos_login_me'] == '1')
 	{
 		session_regenerate_id();
 		

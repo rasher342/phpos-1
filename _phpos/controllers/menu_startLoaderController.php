@@ -11,7 +11,7 @@
  
 **********************************
 */
-
+	error_reporting(E_ERROR | E_PARSE);
 	if (!isset($_SESSION)) {
 		session_start();
 	}

@@ -99,7 +99,7 @@ if(count($records) != 0)
 	foreach($records as $row)
 	{
 		
-		$items.= '<li data-options="iconCls:\'icon-ftpfolder\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.link_action('index', 'dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:.,fs:clouds_google_drive').'"><span style="color: black; font-weight:bold"><b>'.$row['title'].'</b></span></a></span></li>';
+		$items.= '<li data-options="iconCls:\'icon-ftpfolder\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.link_action('index', 'dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:.,fs:clouds_google_drive').'"><span style="color: black;"><b>'.$row['title'].'</b></span></a></span></li>';
 		
 		
 		/*

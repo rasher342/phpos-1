@@ -840,7 +840,7 @@ class app_explorer {
 			$icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"    style="'.$display.'" id="'.$icon['div'].'">
 					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
 					<img src="'.$icon['icon'].'" />
-					<br />'.wordwrap($icon['filename'], 15, " ", 1).$shared.'
+					<br />'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$shared.'
 					</a>
 				</div>';		
 				

@@ -327,6 +327,7 @@ class phpos_database extends phpos_databases {
  		
 	function parse_cond()
 	{
+		//$sql = array();
 		if(!empty($this->condition[0]))
 		{
 			$c = count($this->condition);		
@@ -342,7 +343,8 @@ class phpos_database extends phpos_databases {
 					
 					if(!empty($this->condition[$i][2])) $operator = trim($this->condition[$i][2]); 					
 					$sql[] = $field." ".$operator." '".$value."'";
-					if(is_array($this->condition[$i+1])) $sql[] = '&&';
+					$index = $i+1;
+					if(is_array($this->condition[$index])) $sql[] = '&&';
 					
 				} elseif(!empty($this->condition[$i])) {
 				
@@ -373,7 +375,7 @@ class phpos_database extends phpos_databases {
 	{		
 		$cond = $this->parse_cond();
 		$sort = $this->sort_by;		
-		
+		$q = null;
 		if(!empty($cond)) $q.=' WHERE '.$cond;
 		if(!empty($this->sort_by)) $q.=' order by '.$this->sort_by;
 		if(!empty($this->limit)) $q.=' limit '.$this->limit;		
