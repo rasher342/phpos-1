@@ -43,14 +43,14 @@ if(!defined('PHPOS'))	die();
 		require $fs_plugin;	
 	}*/
 	
-	require PHPOS_DIR.'plugins/fs.db_mysqlPlugin.php';
-	require PHPOS_DIR.'plugins/fs.local_filesPlugin.php';
-	require PHPOS_DIR.'plugins/fs.ftpPlugin.php';
+	require PHPOS_DIR.'plugins/filesystems/fs.db_mysql.php';
+	require PHPOS_DIR.'plugins/filesystems/fs.local_files.php';
+	require PHPOS_DIR.'plugins/filesystems/fs.ftp.php';
 	
 	// google drive
-	require PHPOS_DIR.'plugins/fs.clouds_google_drivePlugin.php';	
-	require_once PHPOS_DIR.'classes/google-api-php-client/src/Google_Client.php';
-	require_once PHPOS_DIR.'classes/google-api-php-client/src/contrib/Google_DriveService.php';
+	require PHPOS_DIR.'plugins/filesystems/fs.clouds_google_drive.php';	
+	require_once PHPOS_DIR.'plugins/filesystems/google-api-php-client/src/Google_Client.php';
+	require_once PHPOS_DIR.'plugins/filesystems/google-api-php-client/src/contrib/Google_DriveService.php';
 		 
 /*
 **************************

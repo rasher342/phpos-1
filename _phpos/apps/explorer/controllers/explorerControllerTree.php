@@ -27,7 +27,7 @@ define('PHPOS_EXPLORER_PLUGIN', true);
 	
 	$server_plugins = $explorer_plugins;
 	
-	$plugins_path = PHPOS_DIR.'plugins/explorer_*.php';
+	$plugins_path = PHPOS_DIR.'plugins/explorer/explorer_*.php';
 	$plugins_dir = glob($plugins_path);
 		 
 /*
@@ -41,7 +41,7 @@ define('PHPOS_EXPLORER_PLUGIN', true);
 		if(!in_array($plugin_file, $explorer_plugins))
 		{
 			$explorer_plugins[] = $plugin_file;
-			if(file_exists(PHPOS_DIR.'plugins/server.'.$plugin_file)) $server_plugins[] = $plugin_file; 
+			if(file_exists(PHPOS_DIR.'plugins/explorer/server.'.$plugin_file)) $server_plugins[] = $plugin_file; 
 		}
 	}
 		 
@@ -51,7 +51,7 @@ define('PHPOS_EXPLORER_PLUGIN', true);
  	
 	foreach($explorer_plugins as $plugin)
 	{
-		include(PHPOS_DIR.'plugins/'.$plugin);	
+		include(PHPOS_DIR.'plugins/explorer/'.$plugin);	
 	}
 
 ?>

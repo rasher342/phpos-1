@@ -28,7 +28,7 @@ if(!defined('PHPOS'))	die();
  			
 		public function __construct()
 		{
-			$this->plugins_dir = PHPOS_DIR.'plugins/';	
+			$this->plugins_dir = PHPOS_DIR.'plugins/extensions/';	
 		
 		}	
 				 
@@ -38,7 +38,7 @@ if(!defined('PHPOS'))	die();
  	
 		public function load_plugin_data($plugin, $icon = null)
 		{
-			$plugin_file = $this->plugins_dir.'ext.'.$plugin.'Plugin.php';
+			$plugin_file = $this->plugins_dir.'ext.'.$plugin.'.php';
 			if(file_exists($plugin_file))
 			{
 				define('extPlugin', true);
@@ -94,11 +94,11 @@ if(!defined('PHPOS'))	die();
  	
 		public function load_plugins()
 		{
-			$dir = glob($this->plugins_dir.'ext.*Plugin.php');
+			$dir = glob($this->plugins_dir.'ext.*.php');
 			
 			foreach($dir as $file)
 			{
-				$plugin_name = str_replace(array('ext.', 'Plugin.php'), array('', ''), basename($file));
+				$plugin_name = str_replace(array('ext.', '.php'), array('', ''), basename($file));
 				$this->load_plugin_data($plugin_name);			
 			}
 		

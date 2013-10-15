@@ -7,14 +7,14 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
 if(!defined('PHPOS'))	die();	
 
 
-$tray_icons = glob(PHPOS_DIR.'plugins/tray.*.php');
+$tray_icons = glob(PHPOS_DIR.'plugins/tray/tray.*.php');
 $tray_data = array();
 
 foreach($tray_icons as $tray_plugin)

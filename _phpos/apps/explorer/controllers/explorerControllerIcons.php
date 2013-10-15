@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
@@ -117,9 +117,7 @@ if(!defined('PHPOS'))	die();
 **************************
 */
 	
-	if($context_fs != 'clouds_google_drives')
-	{
-			
+
 			$c = count($icons);
 			
 			$plugin = new phpos_plugins;
@@ -383,7 +381,7 @@ if(!defined('PHPOS'))	die();
 				
 				jquery_function($js);
 				
-		}
+		
 						
 /*.............................................. */		
 	

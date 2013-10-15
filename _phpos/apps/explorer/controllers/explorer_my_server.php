@@ -21,10 +21,10 @@ if(APP_ACTION == 'my_server')
 		$html['icons'] = '';
 		foreach($server_plugins as $plugin)
 		{
-			if(file_exists(PHPOS_DIR.'plugins/server.'.$plugin)) 
+			if(file_exists(PHPOS_DIR.'plugins/my_server/server.'.$plugin)) 
 			{				
 				$tmp_html = '';					
-				include(PHPOS_DIR.'plugins/server.'.$plugin);				
+				include(PHPOS_DIR.'plugins/my_server/server.'.$plugin);				
 				$html['icons'].= $layout->area_start($server_item_title).$tmp_html.$layout->area_end();
 			}
 		}
