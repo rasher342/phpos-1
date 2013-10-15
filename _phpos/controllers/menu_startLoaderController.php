@@ -7,11 +7,12 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
 	error_reporting(E_ERROR | E_PARSE);
+	
 	if (!isset($_SESSION)) {
 		session_start();
 	}
@@ -48,8 +49,7 @@
  define('THEME_URL', PHPOS_WEBROOT_URL.'_phpos/themes/'.globalconfig('theme').'/');
  
  require_once(PHPOS_DIR.'classes/class.users.php');	
- require_once(PHPOS_DIR.'classes/class.helpers.php');	
- 
+ require_once(PHPOS_DIR.'classes/class.helpers.php');	 
 	
  require_once(PHPOS_DIR.'classes/class.phpos_startmenu.php');
  require_once(PHPOS_DIR.'classes/class.phpos_app.php');
@@ -61,7 +61,7 @@
  require_once(PHPOS_DIR.'controllers/languageController.php');
 	
  define('PHPOS_IN_EXPLORER', true);
- require PHPOS_DIR.'plugins/fs.db_mysqlPlugin.php';
+ require PHPOS_DIR.'plugins/filesystems/db_mysql/fs.db_mysql.php';
  //$filesystem_class = 'phpos_fs_plugin_'.$my_app->get_param('fs');	
  $phposFS = new phpos_fs_plugin_db_mysql; // start filesytem	 
 	

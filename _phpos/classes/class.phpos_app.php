@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
@@ -295,15 +295,16 @@ class phpos_app
 					return $icon;
 				} else {				
 					
-					if(file_exists(PHPOS_WEBROOT_DIR.'_phpos/resources/'.$this->app_id.'/'.$icon))
+					if(file_exists(PHPOS_DIR.'apps/'.$this->app_id.'/resources/'.$icon))
 					{
-						return PHPOS_WEBROOT_URL.'_phpos/resources/'.$this->app_id.'/'.$icon;
+						return PHPOS_URL.'apps/'.$this->app_id.'/resources/'.$icon;
 						
 					} else {
 					
 						if(file_exists(PHPOS_WEBROOT_DIR.'_phpos/icons/'.$icon))
 						{
 							return ICONS.$icon;
+							
 						} else {
 						
 							if($type == 'cp') return $this->get_icon();

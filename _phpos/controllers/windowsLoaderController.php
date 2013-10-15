@@ -185,63 +185,17 @@
 			// esc - close
 			if(WIN_ID != 1)
 			{
-				$tips = "
-				//Select all anchor tag with rel set to tooltip
-				$('a[rel=tooltip]').mouseover(function(e) {
-				
-				//Grab the title attribute's value and assign it to a variable
-				var tip = $(this).attr('title');	
-				
-				//Remove the title attribute's to avoid the native tooltip from the browser
-				$(this).attr('title','');
-				
-				//Append the tooltip template and its value
-				$(this).append('<div id=\"tooltip\"><div class=\"tipHeader\"></div><div class=\"tipBody\">' + tip + '</div><div class=\"tipFooter\"></div></div>');		
-						
-				//Show the tooltip with faceIn effect
-				$('#tooltip').fadeIn('500');
-				$('#tooltip').fadeTo('10',0.9);
-				
-			}).mousemove(function(e) {
-			
-				//Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
-				$('#tooltip').css('top', e.pageY - 100 );
-				$('#tooltip').css('left', e.pageX - 80 );
-				
-			}).mouseout(function() {
-			
-				//Put back the title attribute's value
-				$(this).attr('title',$('.tipBody').html());
-			
-				//Remove the appended tooltip template
-				$(this).children('div#tooltip').remove();
-				
-			});
-			";
-				
-				
-				
-				
+								
 				$keyboard = '	
 				$(document).keyup(function(e)
 				{
 					switch(e.which)
-					{
-						// user presses the "a"
-						case 97:	alert("a");
-									break;	
-									
-						// user presses the "s" key
-						case 27:	phpos.windowClose(window.PHPOS_ACTIVE_WINDOW);
-						
+					{						
+						case 27:	phpos.windowClose(window.PHPOS_ACTIVE_WINDOW);						
 					}
-				});
-				'.$tips.'
-				//$(".bslink").bstip();
-				//tooltip();
-				
-									
+				});							
 				';
+				
 				$my_app->jquery_onready($keyboard);			
 			}
 		}
