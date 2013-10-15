@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.24 beta
+PHPOS Web Operating System<br>Version: 1.25 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,20 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.25</b> (2013.10.15)</b>
+<br>
+- Footer height fixed<br>
+- Apps structure rebuilded<br>
+- Plugins structure rebuilded<br>
+- PHP 4.3 support fixed<br>
+- Retrieving data from Google API rebuilded (speed up x3)<br>
+- Google API listing files fixed and extended<br>
+- Google API upload added (also with drag&drop) /only to root folder<br>
+- Address bar "go to" icon v-alignment fixed<br>
+- Icons in explorer tree<br>
+- Workgroups list fix<br>
+
 
 <b>1.24</b> (2013.10.14)</b>
 <br>
