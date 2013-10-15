@@ -1588,3 +1588,21 @@ pre{
 	height:8px;
 	background:url(images/tipFooter.gif) no-repeat;
 }
+
+/* explorer left tree */
+.explorer_tree_header {
+	color: #000;
+	font-weight:bold;
+}
+.explorer_tree_header_marked {
+	color: #146193;
+	font-weight:bold;
+}
+.explorer_tree_item {
+	color: #000;
+	
+}
+.explorer_tree_item_marked {
+	color: #146193;
+	font-weight:bold;
+}

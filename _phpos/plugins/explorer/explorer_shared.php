@@ -25,7 +25,11 @@ if(count($records) != 0)
 {
 	foreach($records as $row)
 	{
-		$items.= '<li data-options="iconCls:\'icon-sharedfolder\'"><span><a title="'.$row['title'].' '.$row['desc'].'"  href="javascript:void(0);" onclick="'.link_action('index', 'workgroup_id:0,reset_shared:0,in_shared:1,shared_id:'.$row['id'].',user_id:'.$root_id.',fs:local_files').'"><span style="color: black">'.$row['title'].'</span></a></span>	</li>';
+		$tmp_title = '<span class="explorer_tree_item">'.string_cut($row['title'], 20).'</span>';			
+		if($my_app->get_param('tmp_shared_id') == $row['id']) $tmp_title = '<span  class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';
+		
+		
+		$items.= '<li data-options="iconCls:\'icon-sharedfolder\'"><span><a title="'.$row['title'].' '.$row['desc'].'"  href="javascript:void(0);" onclick="'.link_action('index', 'workgroup_id:0,reset_shared:0,in_shared:1,shared_id:'.$row['id'].',user_id:'.$root_id.',fs:local_files').'">'.$tmp_title.'</a></span>	</li>';
 	}	
 } else {
 	
@@ -34,14 +38,15 @@ if(count($records) != 0)
 
 
 
-
+$tmp_header = '<span class="explorer_tree_header">'.txt('shared_folders').'</span>';
+if(APP_ACTION == 'shared' || $my_app->get_param('shared_id') != null || $my_app->get_param('shared') == 1 || $my_app->get_param('in_shared') == 1) $tmp_header = '<span class="explorer_tree_header_marked">'.txt('shared_folders').'</span>';
 
 
 
 $html['left_tree'].= '<br/><br/>
 <ul id="tt3" class="easyui-tree">
-	<li data-options="iconCls:\'icon-sharedfolder\'">
-        <span><a title="'.txt('shared_folders').'" href="javascript:void(0);" onclick="'.link_action('shared', 'shared_id:0,tmp_shared_id:0,in_shared:1,reset_shared:0,workgroup_id:0,fs:local_files').'"><span style="color: black;"><b>'.txt('shared_folders').'</b></span></a></span>
+	<li data-options="iconCls:\'icon-shared1\'">
+        <span><a title="'.txt('shared_folders').'" href="javascript:void(0);" onclick="'.link_action('shared', 'tmp_shared_id:0,shared_id:0,tmp_shared_id:0,in_shared:1,reset_shared:0,workgroup_id:0,fs:local_files').'">'.$tmp_header.'</a></span>
 				<ul>
 				'.$items.'
 				</ul>

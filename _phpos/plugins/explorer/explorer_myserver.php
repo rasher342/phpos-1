@@ -48,7 +48,7 @@ if(!defined('PHPOS'))	die();
 **************************
 */
  	
-	if($dir_id == $root_id || $global_fs != $my_fs)
+	if($dir_id == $root_id || $global_fs != $my_fs || $mark_lib == 1)
 	{
 		$closed = ',state:\'closed\'';
 	}
@@ -56,10 +56,13 @@ if(!defined('PHPOS'))	die();
 /*
 **************************
 */
+
+$tmp_item = '<span class="explorer_tree_item">'.txt('home_local_folder').'</span>';
+if($mark_lib != 1 && APP_ACTION == 'index' && $my_app->get_param('fs') == 'local_files') $tmp_item = '<span class="explorer_tree_item_marked">'.txt('home_local_folder').'</span>'; 	
  	
 	$tree_local_files = '
-	<li data-options="iconCls:\'icon-disk\''.$closed.'">
-	<span><a title="'.txt('home_local_folder').'" href="javascript:void(0);" onclick="'.link_action('index', 'reset_shared:1,in_shared:0,shared_id:0,root_id:'.$root_id.',dir_id:'.$root_id.',fs:'.$my_fs).'"><span style="color: black; ">'.txt('home_local_folder').'</span></a></span>			
+	<li data-options="iconCls:\'icon-hdd\''.$closed.'">
+	<span><a title="'.txt('home_local_folder').'" href="javascript:void(0);" onclick="'.link_action('index', 'tmp_shared_id:0,workgroup_id:0,reset_shared:1,in_shared:0,shared_id:0,root_id:'.$root_id.',dir_id:'.$root_id.',fs:'.$my_fs).'">'.$tmp_item.'</a></span>			
 	<ul>'.$tree_explorer->get_tree($treeFS->get_root_directory_id()).'</ul>
 	</li>
 	';
@@ -95,11 +98,14 @@ if(!defined('PHPOS'))	die();
 /*
 **************************
 */
- 	
+
+$tmp_item = '<span class="explorer_tree_item">'.txt('home_db_folder').'</span>';
+if(APP_ACTION == 'index' && $my_app->get_param('fs') == 'db_mysql') $tmp_item = '<span class="explorer_tree_item_marked">'.txt('home_db_folder').'</span>'; 	
+	
 	
 	$tree_db_mysql = '
-	<li data-options="iconCls:\'icon-disk\''.$closed.'">
-	<span><a title="'.txt('home_db_folder').'" href="javascript:void(0);" onclick="'.link_action('index', 'reset_shared:1,in_shared:0,shared_id:0,tmp_shared_id:0,root_id:'.$root_id.',dir_id:'.$root_id.',fs:'.$my_fs).'"><span style="color: black;">'.txt('home_db_folder').'</span></a></span>				
+	<li data-options="iconCls:\'icon-db\''.$closed.'">
+	<span><a title="'.txt('home_db_folder').'" href="javascript:void(0);" onclick="'.link_action('index', 'workgroup_id:0,reset_shared:1,in_shared:0,shared_id:0,tmp_shared_id:0,root_id:'.$root_id.',dir_id:'.$root_id.',fs:'.$my_fs).'">'.$tmp_item.'</a></span>				
 	<ul>'.$tree_explorer->get_tree($treeFS->get_root_directory_id()).'</ul>
 	</li>
 	';
@@ -109,13 +115,16 @@ if(!defined('PHPOS'))	die();
 */
  	
 	
+$tmp_header = '<span class="explorer_tree_header">'.txt('my_server').'</span>';
+if($mark_lib != 1 && (APP_ACTION == 'my_server' || (APP_ACTION == 'index' && ($my_app->get_param('fs') == 'local_files' || $my_app->get_param('fs') == 'db_mysql')))) $tmp_header = '<span class="explorer_tree_header_marked">'.txt('my_server').'</span>';
+	
 	
 	$html['left_tree'].= '<br/><br/>
 	<ul id="tt" class="easyui-tree">	
 	
 		<li data-options="iconCls:\'icon-myserver\'" id="xx">
 									
-					<span><a href="javascript:void(0);" onclick="phpos.windowActionChange(\''.$apiWindow->getID().'\', \'my_server\')"><span style="color:black"><b>'.txt('my_server').'</b></span></a></span>
+					<span><a href="javascript:void(0);" onclick="phpos.windowActionChange(\''.$apiWindow->getID().'\', \'my_server\', \'tmp_shared_id:0,workgroup_id:0,cloud_id:0,ftp_id:0,in_shared:0,shared_id:0\')">'.$tmp_header.'</a></span>
 					
 					<ul>
 					

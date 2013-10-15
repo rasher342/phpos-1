@@ -96,8 +96,8 @@ if(APP_ACTION == 'workgroup')
 						{							
 							
 							$right_item['name'] = $group_row['title'];
-							$right_item['onclick'] = link_action('workgroup', 'shared_id:0,workgroup_id:'.$group_row['id'].',fs:ftp');
-							$right_item['icon'] = 'workgroup.png';
+							$right_item['onclick'] = link_action('workgroup', 'shared_id:0,workgroup_id:'.$group_row['id'].',fs:db_mysql');
+							$right_item['icon'] = 'group.png';
 							$right_item['marked'] = false;
 							if($shared_id_user == $grp_user['id_user']) $right_item['marked'] = true;
 							
@@ -133,10 +133,104 @@ if(APP_ACTION == 'workgroup')
 				
 				include(PHPOS_DIR.'plugins/server.explorer_workgroups.php');
 				$html['icons'].= $layout->area_start($server_item_title).$layout->txtdesc(txt('groups_serv_desc')).$tmp_html.$layout->area_end();				
-				$tmp_html = '';	
-				$html['right_items_title'] = txt('explorer_right_groups');
-				$html['right_items_desc'] = txt('explorer_right_groups_desc');
-				$html['right_items_img'] = 'workgroup.png';
+			
+				
+				
+				
+		$group = new phpos_groups;		
+		$groups = new phpos_groups;		
+		$address_icon = ICONS.'server/workgroup.png';
+		$ftp = new phpos_ftp;
+		$records = $groups->get_my_groups();
+		
+		$html['right_items_title'] = txt('explorer_right_groups');
+		//$html['right_items_desc'] = txt('explorer_right_groups_desc');
+		$html['right_items_img'] = 'workgroup.png';
+		
+		//$group->get_group();	
+		
+		
+		if(count($records) != 0)
+		{		
+			foreach($records as $row)
+			{						
+				$action_open = link_action('workgroup', 'workgroup_id:'.$row['id'].',fs:local_files');
+			
+				
+				$contextMenu_group = array(				
+					'open::'.txt('open').'::'.$action_open.'::folder_open'							
+					);				
+								
+				$apiWindow->setContextMenu($contextMenu_group);
+				$js.= $apiWindow->contextMenuRender('group_list_'.$row['id'].WIN_ID, 'img');	
+				$apiWindow->resetContextMenu();							
+				
+				$html['icons'].=	'<div id="group_list_'.$row['id'].WIN_ID.'" ondblclick="'.$action_open.'" class="phpos_server_icon" title="'.$row['title'].' '.$row['host'].'"><img src="'.ICONS.'server/group.png" /><p><b>'.string_cut($row['title'],30).'</b><br />'.string_cut($row['description'], 30).'<br /><span class="desc">'.string_cut($row['host'], 30).'</span></p></div>';
+			
+			}
+			
+			$html['icons'].= $layout->area_end();
+			
+		} else {	
+				
+			$html['icons'].= $layout->area_start(txt('ftp_folders')).txt('ftp_no_accounts').$layout->txtdesc(txt('st_ftp')).$layout->area_end();						
+		}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+	
 		
 		}
 	}
