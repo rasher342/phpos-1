@@ -21,6 +21,6 @@ if(!defined('PHPOS'))	die();
 			
 <?php echo $layout->custom(); ?>			
 	
-<div style="padding:20px"><?php echo $html['left_tree'];?></div>				
+<div style="padding:20px; background-color:#f2f9fc"><?php echo $html['left_tree'];?></div>				
 	
 <?php echo $layout->end('custom'); ?>	

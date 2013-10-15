@@ -27,9 +27,9 @@ if(file_exists(PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.ph
 	define('PHPOS_APP_SYS', true);
 	define('MY_APP_DIR', PHPOS_APPS_DIR.$app_name.'/');
 	define('MY_APP_PATH', PHPOS_DIR.'_phpos/apps/'.$app_name.'/');
-	define('MY_RESOURCES', PHPOS_WEBROOT.'_phpos/resources/'.$app_name.'/');
-	define('MY_RESOURCES_DIR', PHPOS_WEBROOT.'_phpos/resources/'.$app_name.'/');
-	define('MY_RESOURCES_URL', PHPOS_WEBROOT_URL.'_phpos/resources/'.$app_name.'/');  // check _
+	define('MY_RESOURCES', PHPOS_DIR.'apps/'.$app_name.'/resources/');
+	define('MY_RESOURCES_DIR', PHPOS_DIR.'apps/'.$app_name.'/resources/');
+	define('MY_RESOURCES_URL', PHPOS_URL.'apps/'.$app_name.'/resources/');  // check _
 
 	// If ajax and loaded with POST:	
 	if(!empty($_POST['ajax_include']))
