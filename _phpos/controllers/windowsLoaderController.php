@@ -237,11 +237,11 @@
 
 	if(!$_GET['ajax_include'] &&  !$_POST['ajax_include'])
 	{	
-		if(file_exists(PHPOS_WEBROOT_DIR.'_phpos/resources/'.$app_name.'/window_icon.png'))
+		if(file_exists(PHPOS_DIR.'apps/'.$app_name.'/resources/window_icon.png'))
 		{
 			// Custom icon
 			echo '<style>
-			.phpos_window_icon'.$apiWindow->getID().' { background:url("'.PHPOS_WEBROOT_URL.'_phpos/resources/'.$app_name.'/window_icon.png") no-repeat center center;
+			.phpos_window_icon'.$apiWindow->getID().' { background:url("'.PHPOS_URL.'apps/'.$app_name.'/resources/window_icon.png") no-repeat center center;
 			}	</style>';	
 		} else {
 		

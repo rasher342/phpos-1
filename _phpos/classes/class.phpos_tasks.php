@@ -210,7 +210,7 @@ if(!defined('PHPOS'))	die();
 		
 		public function get_icon_style($win_id)
 		{
-			$str = ' .context-menu-item.icon-win { background-image: url("'.PHPOS_WEBROOT_URL.'_phpos/resources/'.$this->get_app_id($win_id).'/windowlist_icon.png"); } ';	
+			$str = ' .context-menu-item.icon-win { background-image: url("'.PHPOS_URL.'apps/'.$this->get_app_id($win_id).'/resources/windowlist_icon.png"); } ';	
 			return $str;		
 		}
 			 

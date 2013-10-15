@@ -411,7 +411,7 @@ class phpos_layout {
 	{
 		if(empty($this->region)) $this->region = 'south';
 		if(empty($this->title)) $this->title = '';
-		if(empty($this->height)) $this->height = '70';
+		if(empty($this->height)) $this->height = '50';
 		if(empty($this->split)) $this->split = 'true';			
 
 		$css_height = $this->height;

@@ -852,6 +852,11 @@ select {
 .nav_address_container {
 	display:inline-block;
 	font-size:10px;
+	vertical-align:middle;
+}
+.nav_address_container img {
+	display:inline-block;
+	vertical-align:middle;
 }
 .explorer_bar_mouseover {
 	background-color:#fff;
@@ -859,7 +864,7 @@ select {
 .explorer_bar_mouseleave {
 	background-image:url(windows/form_input_bg.png);
 }
-#phpos_explorer_address_bar_container .refresh_icon {
+.refresh_icon {
 	display:inline-block;
 	vertical-align: middle;
 	border:none;
@@ -887,6 +892,10 @@ select {
 }
 #explorer_address_list a:hover{
 	color: blue;
+}
+#explorer_address_list img {
+	display: inline-block;
+	vertical-align: middle;	
 }
 
 /* EXPLORER UPLOADER */

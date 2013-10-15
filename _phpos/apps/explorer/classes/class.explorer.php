@@ -478,7 +478,7 @@ class app_explorer {
 		</div>	
 		
 		
-		<a href="javascript:void(0);"><img class="refresh_icon" 
+		<a href="javascript:void(0);"><img style="display:inline-block;vertical-align:top;height:25px" 
 		src="'.THEME_URL.'windows/explorer_header_go.png"></a>	
 		</form>';
 		
