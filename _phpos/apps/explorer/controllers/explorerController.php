@@ -46,7 +46,11 @@ if(!defined('PHPOS'))	die();
 	require PHPOS_DIR.'plugins/fs.db_mysqlPlugin.php';
 	require PHPOS_DIR.'plugins/fs.local_filesPlugin.php';
 	require PHPOS_DIR.'plugins/fs.ftpPlugin.php';
-	require PHPOS_DIR.'plugins/fs.clouds_google_drivePlugin.php';
+	
+	// google drive
+	require PHPOS_DIR.'plugins/fs.clouds_google_drivePlugin.php';	
+	require_once PHPOS_DIR.'classes/google-api-php-client/src/Google_Client.php';
+	require_once PHPOS_DIR.'classes/google-api-php-client/src/contrib/Google_DriveService.php';
 		 
 /*
 **************************
@@ -67,6 +71,7 @@ if(!defined('PHPOS'))	die();
 	$my_app->set_param('workgroup_id', NULL);
 	$my_app->set_param('workgroup_user_id', NULL);
 	$my_app->set_param('shared_id', NULL);
+	$my_app->set_param('parent_id', NULL);
 	$my_app->set_param('action_id', NULL);
 	$my_app->set_param('noindex', NULL);
 	$my_app->set_param('this_index', NULL);

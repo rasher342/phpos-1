@@ -7,11 +7,11 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.1, 2013.10.14
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
-
+	error_reporting(E_ERROR | E_PARSE);
 	include 'version.php';
 	session_start();
 	//session_destroy();

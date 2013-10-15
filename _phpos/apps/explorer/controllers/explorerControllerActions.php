@@ -50,8 +50,7 @@ if(!empty($_FILES))
 			{
 				$_FILES['file']['name'] = filter::fname($_FILES['file']['name']);
 				if($phposFS->upload_file($_FILES['file'])) 
-				{			
-					
+				{					
 					$my_app->set_param('action_status','ok');
 					$my_app->set_param('action_status_msg', txt('uploaded'));
 					cache_param('action_status');	
@@ -65,8 +64,7 @@ if(!empty($_FILES))
 				$my_app->set_param('action_status_msg', $upload_error);
 				cache_param('action_status');	
 				cache_param('action_status_msg');					
-				msg::error(txt('access_denied'));		
-			
+				msg::error(txt('access_denied'));				
 			}
 			
 			
@@ -76,8 +74,7 @@ if(!empty($_FILES))
 			$my_app->set_param('action_status_msg',txt('access_denied'));
 			cache_param('action_status');	
 			cache_param('action_status_msg');					
-			msg::error(txt('access_denied'));				
-		
+			msg::error(txt('access_denied'));			
 		}
 		
 		unset($_FILES);

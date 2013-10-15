@@ -7,10 +7,11 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.5, 2013.10.15
  
 **********************************
 */
+	error_reporting(E_ERROR | E_PARSE);
 
 	if(!isset($_SESSION)) 
 	{
