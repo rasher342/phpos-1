@@ -23,8 +23,8 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	$contextMenus['FILE'] = array(				
 				'open::'.txt('open').'::explorer_open_in_browser("'.$icons[$i]['id'].'");::folder_open',
 				'---',		
-				'open_with::'.txt('open_with').'::alert();::icon',
-					array('openwith1::'.txt('in_web_browser').'::explorer_open_in_browser("'.$icons[$i]['id'].'");'
+				'open_with::'.txt('open_with').'::alert();::folder_open',
+					array('openwith1::'.txt('in_web_browser').'::explorer_open_in_browser("'.$icons[$i]['id'].'");::browser'
 					));
 					
 	if(!$readonly || is_root())
@@ -43,9 +43,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	// DIR:
 
 	$contextMenus['DIR'] = array(		
-				'open::'.txt('open').'::alert("normalopen'.$item.'");::folder_open',
-				'open_with::'.txt('open_with').'::alert();::icon',
-					array('openwith1::'.txt('in_new_win').'::explorer_open_in_browser("'.$icons[$i]['id'].'");')	
+				'open::'.txt('open').'::alert("normalopen'.$item.'");::folder_open'			
 				);
 			
 	if(!$readonly || is_root())

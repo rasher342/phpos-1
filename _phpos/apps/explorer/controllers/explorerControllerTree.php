@@ -11,10 +11,11 @@
  
 **********************************
 */
-if(!defined('PHPOS'))	die();	
+	if(!defined('PHPOS'))	die();	
 
-
-define('PHPOS_EXPLORER_PLUGIN', true);
+	define('PHPOS_EXPLORER_PLUGIN', true);
+	
+	// Default plugins
 	
 	$explorer_plugins = array(
 	'explorer_favs.php',
@@ -34,6 +35,8 @@ define('PHPOS_EXPLORER_PLUGIN', true);
 **************************
 */
  	
+	// Get explorer plugins list
+	
 	foreach($plugins_dir as $plugin)
 	{
 		$plugin_file = basename($plugin);
@@ -48,7 +51,8 @@ define('PHPOS_EXPLORER_PLUGIN', true);
 /*
 **************************
 */
- 	
+ 	// Include plugins
+	
 	foreach($explorer_plugins as $plugin)
 	{
 		include(PHPOS_DIR.'plugins/explorer/'.$plugin);	

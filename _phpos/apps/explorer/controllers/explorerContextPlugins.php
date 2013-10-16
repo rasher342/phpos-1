@@ -28,7 +28,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		// Plugin onopen
 		if(!empty($plugindata['open'])) 
 		{
-			$plugged_context_menu[0] = 'open_plugged::'.txt('open').'::'.$plugindata['open'].'::open';
+			$plugged_context_menu[0] = 'open_plugged::'.txt('open').'::'.$plugindata['open'].'::folder_open';
 			$icons[$i]['action'] = str_replace('"', '\'', $plugindata['open']);
 		}
 		

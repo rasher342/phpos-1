@@ -27,7 +27,8 @@ if(!defined("PHPOS_IN_EXPLORER"))
 
 
 		$contextMenus['DIR'] = array(		
-				'open::Otwórz folder::phpos.windowRefresh("'.$apiWindow->getID().'","dir_id:'.$phposFS->addLastSlash($icons[$i]['id']).'");::open',			
+				'open::Otwórz folder::phpos.windowRefresh("'.$apiWindow->getID().'","dir_id:'.$phposFS->addLastSlash($icons[$i]['id']).'");::open',		
+				'---',				
 				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'				
 				
 		);	

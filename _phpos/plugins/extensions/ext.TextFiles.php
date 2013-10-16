@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.6, 2013.10.16
  
 **********************************
 */
@@ -36,8 +36,8 @@ $extPluginRenderRewrite = '<div title="'.str_replace(PHPOS_HOME_DIR,'',$icon['fu
 
 
 
-$extPluginContextMenu = array('---','fbshare::Share on Facebook::alert("Facebook to zuo");::open');
-$extPluginOpenWith = array('open_notepad::Notepad::'.apiLoad($icon['id']).'::open');
+//$extPluginContextMenu = array('---','fbshare::Share on Facebook::alert("Facebook to zuo");::open');
+$extPluginOpenWith = array('open_notepad::Notepad::'.apiLoad($icon['id']).'::notepad');
 
 
 // == Functions to executes in explorer (add ons)
