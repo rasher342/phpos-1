@@ -135,7 +135,7 @@ error_reporting(E_ERROR | E_PARSE);
 				
 				
 				$in_login = 1;
-				include PHPOS_DIR.'plugins/tray.languages.php';							
+				include PHPOS_DIR.'plugins/tray/tray.languages.php';							
 				$wintask = new api_wintask;
 				$wintask->setContextMenu($tray['context_menu']);
 				$js_context_menu = $wintask->contextMenuRender('lang', 'div', 'hover');		
