@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.6, 2013.10.16
  
 **********************************
 */
@@ -23,94 +23,64 @@ if(!defined('PHPOS'))	die();
 	{
 		die();
 	}
-					
-/*.............................................. */		
 	
-	
-	if(!empty($_FILES))    
-	{
-		$_SESSION['upload_zone'] = 'yeeeees';
-	}
-					
-/*.............................................. */		
-	
-	
-	/*
-	$fs_plugins_path = PHPOS_DIR.'plugins/fs.*Plugin.php';
-	$fs_plugins_dir = glob($fs_plugins_path);	
-	foreach($fs_plugins_dir as $fs_plugin)
-	{		
-		require $fs_plugin;	
-	}*/
-	
-	require PHPOS_DIR.'plugins/filesystems/db_mysql/fs.db_mysql.php';
-	require PHPOS_DIR.'plugins/filesystems/local_files/fs.local_files.php';
-	require PHPOS_DIR.'plugins/filesystems/ftp/fs.ftp.php';
-	
-	// google drive
-	require PHPOS_DIR.'plugins/filesystems/clouds_google_drive/fs.clouds_google_drive.php';	
-	require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/Google_Client.php';
-	require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_DriveService.php';
-		 
 /*
 **************************
 */
  	
 	require MY_APP_DIR.'classes/class.explorer.php';
-
-
-
-	$my_app->set_param('folder_root', $fsROOT_ID);
-	$my_app->set_param('navigation_id', NULL);	
-	$my_app->set_param('ftp_id', NULL);
-	$my_app->set_param('cloud_id', NULL);
-	$my_app->set_param('APP_ACTION', NULL);
-	$my_app->set_param('dir_id', NULL);
-	$my_app->set_param('desktop_location', NULL);
-	$my_app->set_param('root_id', NULL);
-	$my_app->set_param('workgroup_id', NULL);
-	$my_app->set_param('workgroup_user_id', NULL);
-	$my_app->set_param('shared_id', NULL);
-	$my_app->set_param('parent_id', NULL);
-	$my_app->set_param('action_id', NULL);
-	$my_app->set_param('noindex', NULL);
-	$my_app->set_param('this_index', NULL);
-	$my_app->set_param('prev_index', NULL);
-	$my_app->set_param('readonly', NULL);
-	$my_app->set_param('action_param', NULL);
-	$my_app->set_param('action_param2', NULL);
-	$my_app->set_param('tmp_shared_id', NULL);
-	$my_app->set_param('reset_shared', NULL);
-	$my_app->set_param('error_no_dir', NULL);
-	$my_app->set_param('in_shared', NULL);
-	$my_app->set_param('icon_size', 'medium');
-	$my_app->set_param('reset_google_token', NULL);
-	$my_app->set_param('dir_navigation_history', array());
-	$my_app->set_param('dir_navigation_index', 0);
-	$my_app->set_param('minus_index', null);
-	$my_app->set_param('set_index', null);
-	$my_app->set_param('navigation_history', array());
-	$my_app->set_param('dir_navigation_index', null);
-	$my_app->set_param('no_increment', 0);
-	$my_app->set_param('action_status', null);
-	$my_app->set_param('action_status_msg', null);
-	$my_app->set_param('fs', '');	
-	$my_app->set_param('delete_id', '');
-	$my_app->set_param('view_files_types', 'all');
+	
+	param('folder_root', $fsROOT_ID);
+	param('navigation_id', null);	
+	param('ftp_id', null);
+	param('cloud_id', null);
+	param('APP_ACTION', null);
+	param('dir_id', null);
+	param('desktop_location', null);
+	param('root_id', null);
+	param('workgroup_id', null);
+	param('workgroup_user_id', null);
+	param('shared_id', null);
+	param('parent_id', null);
+	param('action_id', null);
+	param('noindex', null);
+	param('this_index', null);
+	param('prev_index', null);
+	param('readonly', null);
+	param('action_param', null);
+	param('action_param2', null);
+	param('tmp_shared_id', null);
+	param('reset_shared', null);
+	param('error_no_dir', null);
+	param('in_shared', null);
+	param('icon_size', 'medium');
+	param('reset_google_token', null);
+	param('dir_navigation_history', array());
+	param('dir_navigation_index', 0);
+	param('minus_index', null);
+	param('set_index', null);
+	param('navigation_history', array());
+	param('dir_navigation_index', null);
+	param('no_increment', 0);
+	param('action_status', null);
+	param('action_status_msg', null);
+	param('fs', '');	
+	param('delete_id', '');
+	param('view_files_types', 'all');
 	
 	// API
-	$my_app->set_param('api_dialog', NULL);
-	$my_app->set_param('api_open_id', NULL);
-	$my_app->set_param('api_dialog_type', NULL);
-	$my_app->set_param('win_id', NULL);
-	$my_app->set_param('opened_file_id', NULL);
-	$my_app->set_param('opened_file_name', NULL);
-	$my_app->set_param('opened_file_extension', NULL);
-	$my_app->set_param('opened_file_app_id', NULL);
-	$my_app->set_param('explorer_save_as_filename', NULL);
-	$my_app->set_param('api_file_ext', NULL);
-	$my_app->set_param('api_action', NULL);
-	$my_app->set_param('allowed_ext', NULL);
+	param('api_dialog', null);
+	param('api_open_id', null);
+	param('api_dialog_type', null);
+	param('win_id', null);
+	param('opened_file_id', null);
+	param('opened_file_name', null);
+	param('opened_file_extension', null);
+	param('opened_file_app_id', null);
+	param('explorer_save_as_filename', null);
+	param('api_file_ext', null);
+	param('api_action', null);
+	param('allowed_ext', null);
 	
 	$my_app->using('params');
 				
@@ -120,242 +90,103 @@ if(!defined('PHPOS'))	die();
 	cache_param('cloud_id');	
 	cache_param('reset_google_token');
 	cache_param('view_files_types');	
-	
-	if($my_app->get_param('allowed_ext') !== null)
-	{
-		$allowed_extensions = explode(';', $my_app->get_param('allowed_ext'));	
-	}
-	
-	/*
-	echo '<pre>';
-	print_r($allowed_extensions);
-	echo '</pre>';
-	*/
-			 
+
 /*
 **************************
-*/
- 	
-	$no_index = null;
+*/	
 	
-	$index = $my_app->get_param('this_index');
-	$no_index = $my_app->get_param('noindex');
-			 
-/*
-**************************
-*/
- 	// Reset Google Token
+	// Load filesystems classes
 	
-	if($_SESSION['google_refresh'])
+	$filesystems_classes = glob(PHPOS_DIR.'plugins/filesystems/*/fs.*.php');
+	$c = count($filesystems_classes);
+	if($c != 0)
 	{
-		unset($_SESSION['google_refresh']);
-		//echo '<script>'.winreload(WIN_ID, array('root_id' => '.', 'dir_id' => '.', 'reset_google_token' => 1)).'</script>';
-	}
-	
-	
-	if($my_app->get_param('reset_google_token') == 1)
-	{
-		if(isset($_SESSION['token']) && isset($_SESSION['google_token'])) 
+		foreach($filesystems_classes as $fs_plugin_class)
 		{
-			unset($_SESSION['google_token']);
-			//$_SESSION['google_refresh'] = true;
-		}
+			include $fs_plugin_class;
+		}	
 	}
 	
 /*
 **************************
 */	
- 	
 
-	// Clipboard
- 	
-	$clipboard = new phpos_clipboard;
-	$clipboard->debug_clipboard();
-	//echo 'action_id:'.$action_id.', action_param:'.$my_app->get_param('action_param').' action_param2:'.$my_app->get_param('action_param2').'<br>'; 
-	
-		
+	 if(APP_ACTION != 'index') 
+	 {
+			param('dir_id', null);
+			param('root_id', null);		
+			
+			cache_param('dir_id');
+			cache_param('root_id');
+	 }	
 			 
+/*
+**************************
+*/
+ 	
+	$no_index = null;	
+	$index = param('this_index');
+	$no_index = param('noindex');
+	
 /*
 **************************
 */ 	
+
 	// Actions results	
-	$action_id = $my_app->get_param('action_id');
-	$action_status = $my_app->get_param('action_status');
-	$action_status_msg = $my_app->get_param('action_status_msg');
 	
-	if(!empty($action_status))
+	include MY_APP_DIR.'controllers/explorerControllerResults.php';
+		 
+/*
+**************************
+*/
+
+	// Filesystems init codes (all)
+	
+	$filesystems_glob = glob(PHPOS_DIR.'plugins/filesystems/*/init.always.php');
+	$c = count($filesystems_glob);
+	if($c != 0)
 	{
-		if($action_status == 'error')
+		foreach($filesystems_glob as $fs_init_code)
 		{
-			msg::error($action_status_msg);
-			
-		} else {		
-			
-			msg::ok($action_status_msg);
-		}
-		
-		$my_app->set_param('action_status', null);
-		$my_app->set_param('action_status_msg', null);
-		cache_param('action_status');	
-		cache_param('action_status_msg');	
+			include $fs_init_code;
+		}	
 	}
-			 
-/*
-**************************
-*/
- 	
-	// FTP		 
-	if($my_app->get_param('fs') != 'ftp')
+					
+/*.............................................. */		
+		
+	// Filesystems init code (only this FS)
+	
+	if(file_exists(PHPOS_DIR.'plugins/filesystems/'.param('fs').'/init.me.php'))
 	{
-		$my_app->set_param('ftp_id', null);
-		cache_param('ftp_id');	
-		
-	} else {
+		include PHPOS_DIR.'plugins/filesystems/'.param('fs').'/init.me.php';
+	}	
 	
-		cache_param('ftp_id');	
-	} 
-	
-/*
-**************************
-*/
 
-	// Clouds		 
-	if($my_app->get_param('fs') != 'clouds_google_drive')
-	{
-		$my_app->set_param('cloud_id', null);
-		cache_param('cloud_id');	
 		
-	} else {
-	
-		cache_param('cloud_id');	
-	} 
-		 
-		 
-/*
-**************************
-*/
-
-	                                                                                                                                       if(APP_ACTION != 'index') 
-	 {
-			$my_app->set_param('dir_id', NULL);
-			$my_app->set_param('root_id', NULL);
-			
-		// Desktop dir
-			
-			if(APP_ACTION == 'desktop' && $my_app->get_param('fs') == 'local_files') 
-			{			
-				$dir_hash = $my_user->get_home_dir_hash();
-				$home_dir = PHPOS_HOME_DIR.$dir_hash.'/_Desktop';
-				
-				if(is_dir($home_dir)) 
-				{
-					$my_app->set_param('root_id', $home_dir);
-					//$this->root_directory_id = $home_dir;		
-				}					
-			}
-	 }	
-		
-			
-/*
-**************************
-*/
- 	
+/*.............................................. */		                                                                                                                                 	
 	include MY_APP_DIR.'controllers/explorerControllerShared.php';
-	
-		 
-/*
-**************************
-*/
- 	
-	include MY_APP_DIR.'controllers/explorerControllerFS.php';
-	
-			 
-/*
-**************************
-*/
- 	
-	include MY_APP_DIR.'controllers/explorerControllerAPI.php';
-
-
-		
-/*
-**************************
-*/
- 	// Start explorer
-	
-	$explorer = new app_explorer;
-	$explorer->set_fs($fs);
-	$explorer->assign_filesystem($phposFS);
-	$explorer->assign_window($apiWindow);
-	$explorer->assign_my_app($my_app);	
-	
-	
-	$explorer->config('filetypes_icons_folder_url', PHPOS_WEBROOT_URL.'_phpos/icons/filetypes/80x80/');
-	$explorer->config('filetypes_icons_folder_dir', PHPOS_WEBROOT_DIR.'_phpos/icons/filetypes/80x80/');	
-	$explorer->config('div_prefix', 'phpos_icon'.$apiWindow->getParam('id'));
-	$explorer->config('div_contener', 'phpos_icons_contener'.$apiWindow->getParam('id'));
-			
 					
 /*.............................................. */		
 	
-	switch($my_app->get_param('icon_size'))
-	{
-		case 'medium':
-			$explorer->config('icon_size_class', 'phpos_icon_window_size_medium');	
-		break;
-		
-		case 'small':
-			$explorer->config('icon_size_class', 'phpos_icon_window_size_small');
-		break;	
-	}
+	include MY_APP_DIR.'controllers/explorerControllerFS.php';
+					
+/*.............................................. */		
 	
-	if(defined('DESKTOP')) $explorer->config('icon_size_class', 'phpos_icon_desktop_size_medium');		
-		 
-/*
-**************************
-*/	
+	include MY_APP_DIR.'controllers/explorerControllerAPI.php';
+					
+/*.............................................. */		
 	
-	// Shortcucts for params
+	include MY_APP_DIR.'controllers/explorerInitialize.php';
+					
+/*.............................................. */		
 	
-	$action_id = $my_app->get_param('action_id');
-	$dir_id = $my_app->get_param('dir_id');
-	$root_id = $my_app->get_param('root_id');
-	
-		 
-	
-/*
-**************************
-*/
-	
-	
-	if(globalconfig('readonly') && !is_root()) 
-	{
-		$my_app->set_param('readonly', 1);
-		$readonly = 1;
-		cache_param('readonly');
-	}
-	
-	
-/*
-**************************
-*/
+
 
 	// Actions (new dir, upload, etc)
  	
 	include MY_APP_DIR.'controllers/explorerControllerActions.php';
 		 
-/*
-**************************
-*/ 	
 	
-	// Reset params
-	
-	$my_app->set_param('action_id', null);
-	$my_app->set_param('action_param', null);
-	cache_param('action_id');
-	cache_param('action_param');	
-	
-		
 /* 
 ****************************
 ====== GET ELEMENTS ====== 
@@ -366,41 +197,29 @@ if(!defined('PHPOS'))	die();
 // Get left tree	
 
 	include MY_APP_DIR.'controllers/explorerControllerTree.php';
-		 
-/*
-**************************
-*/
- 	
+				
+/*.............................................. */		
+		
 	include MY_APP_DIR.'controllers/explorer_my_server.php';
-		 
-/*
-**************************
-*/
- 	
+				
+/*.............................................. */		
+		
 	include MY_APP_DIR.'controllers/explorer_workgroup.php';
-	
-		 
-/*
-**************************
-*/
- 	
+				
+/*.............................................. */		
+		
 	include MY_APP_DIR.'controllers/explorer_shared.php';
-	
-		 
-/*
-**************************
-*/
- 	
-	
+				
+/*.............................................. */		
+		
 	include MY_APP_DIR.'controllers/explorer_ftp.php';		
-	
-		include MY_APP_DIR.'controllers/explorer_clouds.php';		
-	
-		 
-/*
-**************************
-*/
- 	
+					
+/*.............................................. */		
+		
+	include MY_APP_DIR.'controllers/explorer_clouds.php';		
+				
+/*.............................................. */		
+		
 	include MY_APP_DIR.'controllers/explorer_cp.php';		
 
 		 
@@ -410,25 +229,7 @@ if(!defined('PHPOS'))	die();
 	
 	// Get address bars, nav bar and footer
 		
-	$html['addressbar'] = $explorer->render_address_url();
-	$html['footer_address'] = $explorer->render_address_links();
-	$html['footer_protocol_icon'] = $explorer->get_icon_protocol();
-	$html['protocol_icon'] = $explorer->get_icon_protocol();
-		 
-/*
-**************************
-*/
- 	
-	// Protocol icon
-	
-	if(!empty($address_icon)) 
-	{
-		$html['protocol_icon'] = $address_icon;
-		$html['footer_protocol_icon'] = $address_icon;
-	}
-	
-	$html['protocol_bg'] = '';	
-	$html['navbar'] = $explorer->render_nav_bar();
+	include MY_APP_DIR.'controllers/explorerControllerNavBar.php';
 		
 
 /*
@@ -437,45 +238,45 @@ if(!defined('PHPOS'))	die();
 ***************************
 */	
 
-		if(APP_ACTION == 'index' || APP_ACTION == 'desktop') include MY_APP_DIR.'controllers/explorerControllerIcons.php';
-			 
-/*
-**************************
-*/
- 	
-		
-	$js = "$('.phpos_server_icon').addClass('phpos_server_icon_mouseleave').addClass('easyui-tooltip');
-	
-	$('.phpos_server_icon').mouseleave(function() {	    
-		$(this).removeClass('phpos_server_icon_mouseenter').removeClass('phpos_server_icon_mouseclick').addClass('phpos_server_icon_mouseleave');					
-	});
-	
-	
-// == When mouseover on icon
-	$('.phpos_server_icon').mouseenter(function() {	
-		$(this).removeClass('phpos_server_icon_mouseleave').addClass('phpos_server_icon_mouseenter');				
-	});
-	
-	$('.phpos_server_icon').click(function() {	
-		$(this).addClass('phpos_server_icon_mouseclick');				
-	});
-	";
+		if(APP_ACTION == 'index' || APP_ACTION == 'desktop') 
+		{
+			include MY_APP_DIR.'controllers/explorerControllerIcons.php';
+			
+		} else {
+
+			$js = "$('.phpos_server_icon').addClass('phpos_server_icon_mouseleave');
+			
+			$('.phpos_server_icon').mouseleave(function() {	    
+				$(this).removeClass('phpos_server_icon_mouseenter').removeClass('phpos_server_icon_mouseclick').addClass('phpos_server_icon_mouseleave');					
+			});			
+			
+			// == When mouseover on icon
+			$('.phpos_server_icon').mouseenter(function() {	
+				$(this).removeClass('phpos_server_icon_mouseleave').addClass('phpos_server_icon_mouseenter');				
+			});
+			
+			$('.phpos_server_icon').click(function() {	
+				$(this).addClass('phpos_server_icon_mouseclick');				
+			});
+			";		
+		}
 		 
 /*
 **************************
 */
  	
-	jquery_onready($js);
+	//JS:
 	
-		
+	jquery_onready($js);			
 	$my_app->jquery_onready(msg::showMessages());
 				 
 /*
 **************************
 */
 
-	include MY_APP_DIR.'controllers/explorerControllerRight.php';	
+	include MY_APP_DIR.'controllers/explorerControllerRight.php';		
 	
+	// Get menu:
 	
 	$my_app->using('menu');
 	$html['menu'] = $my_app->window->get_layout_menu_html();		

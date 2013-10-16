@@ -22,10 +22,12 @@ if(!defined('PHPOS_IN_EXPLORER'))
 /*
 **************************
 */
- 
+
+require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/Google_Client.php';
+require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_DriveService.php';
+		
 class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 {
-
                                                                              
 	public
 		$protocol_name;
@@ -66,7 +68,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	function __construct($cloud_id = null)
 	{				
 		$this->set_root_directory_id('root');
-		$this->client = $this->connect();		
+		$this->client = $this->connect();			
 	}
 	
 	

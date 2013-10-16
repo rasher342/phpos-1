@@ -723,7 +723,30 @@ if(!defined('PHPOS'))	die();
 		$phpos_log = new phpos_logs;		
 		$phpos_log->create_log($msg);	
 	}
-	
+					 
+/*
+**************************
+*/
+ 	
+	function param($param_name, $param_value = '--no_param--')
+	{
+		global $my_app;
+		
+		if($param_value != '--no_param--')
+		{
+			$my_app->set_param($param_name, $param_value);
+			return $my_app->get_param($param_name);
+			
+		} else {
+		
+			return $my_app->get_param($param_name);
+		}	
+	}
+					 
+/*
+**************************
+*/
+ 	
 	function apiLoad($file_id, $window_title = 'Opened file')
 	{
 		global $my_app;
@@ -743,7 +766,11 @@ if(!defined('PHPOS'))	die();
 		";  
 		return $str;	
 	}
-	
+				 
+/*
+**************************
+*/
+ 		
 	function notify($result, $msg)
 	{
 		global $my_app;
@@ -752,8 +779,7 @@ if(!defined('PHPOS'))	die();
 			$my_app->set_param('action_status_msg', $msg);
 			cache_param('action_status');	
 			cache_param('action_status_msg');					
-			msg::error($msg);		
-	
+			msg::error($msg);			
 	}
 	
 	

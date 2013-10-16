@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.2.6, 2013.10.16
  
 **********************************
 */
@@ -20,6 +20,7 @@ class app_explorer {
 		$my_app,
 		$fs,
 		$filesystem,
+		$hidden_icons = array(),
 		$config = array(),
 		$window;
 		
@@ -41,6 +42,23 @@ class app_explorer {
 		{
 			$this->my_app = $my_app;
 		}		
+		
+		$this->hidden_icons = array(
+		'_Desktop',
+		'_Documents',
+		'_Log',
+		'_Icons',
+		'_Pictures',
+		'_Shared',
+		'_Temp',
+		'_Userdata',
+		'_Video',	
+		'_Wallpapers',	
+		'index.php',
+		'index.htm',
+		'index.html',
+		'index.php5'
+		);		
 	}
 				 
 /*
@@ -55,7 +73,16 @@ class app_explorer {
 /*
 **************************
 */
- 	
+
+ 	public function get_hidden_icons()
+	{
+		return $this->hidden_icons;
+	}
+				 
+/*
+**************************
+*/
+
 	public function config($name, $value = null)
 	{
 		if(!empty($value))
@@ -118,23 +145,7 @@ class app_explorer {
 		$c = count($files);
 		
 		$item_parents_array = $fs->get_parents($dir_id);
-		
-			$hidden_icons = array(
-		'_Desktop',
-		'_Documents',
-		'_Log',
-		'_Icons',
-		'_Pictures',
-		'_Shared',
-		'_Temp',
-		'_Userdata',
-		'_Video',	
-		'_Wallpapers',	
-		'index.php',
-		'index.htm',
-		'index.html',
-		'index.php5'
-		);
+	
 		
 					
 /*.............................................. */		
@@ -143,7 +154,7 @@ class app_explorer {
 		{	
 			if($fs->is_directory($files[$i]))
 			{				
-				if(!in_array($files[$i]['basename'], $hidden_icons))
+				if(!in_array($files[$i]['basename'], $this->hidden_icons))
 				{					
 					if(is_root()) $files[$i] = $this->root_homedir_address_parse($files[$i]);
 						

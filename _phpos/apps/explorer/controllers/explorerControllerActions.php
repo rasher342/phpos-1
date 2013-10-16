@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.2.6, 2013.10.16
  
 **********************************
 */
@@ -37,11 +37,11 @@ if(!empty($_FILES))
 					{
 						$whitelist = explode(',', globalconfig('upload_whitelist'));
 				
-							if(!in_array(strtolower($ext), $whitelist))
-							{
-								$stop_upload = true;
-								$upload_error = 'This filetype is not in whitelist';
-							}
+						if(!in_array(strtolower($ext), $whitelist))
+						{
+							$stop_upload = true;
+							$upload_error = 'This filetype is not in whitelist';
+						}
 					}
 				
 				}
@@ -51,8 +51,8 @@ if(!empty($_FILES))
 				$_FILES['file']['name'] = filter::fname($_FILES['file']['name']);
 				if($phposFS->upload_file($_FILES['file'])) 
 				{					
-					$my_app->set_param('action_status','ok');
-					$my_app->set_param('action_status_msg', txt('uploaded'));
+					param('action_status','ok');
+					param('action_status_msg', txt('uploaded'));
 					cache_param('action_status');	
 					cache_param('action_status_msg');					
 					//msg::error(txt('access_denied'));											
@@ -60,8 +60,8 @@ if(!empty($_FILES))
 				
 			} else {				
 				
-				$my_app->set_param('action_status','error');
-				$my_app->set_param('action_status_msg', $upload_error);
+				param('action_status','error');
+				param('action_status_msg', $upload_error);
 				cache_param('action_status');	
 				cache_param('action_status_msg');					
 				msg::error(txt('access_denied'));				
@@ -70,8 +70,8 @@ if(!empty($_FILES))
 			
 		} else {
 		
-			$my_app->set_param('action_status','error');
-			$my_app->set_param('action_status_msg',txt('access_denied'));
+			param('action_status','error');
+			param('action_status_msg',txt('access_denied'));
 			cache_param('action_status');	
 			cache_param('action_status_msg');					
 			msg::error(txt('access_denied'));			
@@ -94,8 +94,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				{
 					if($phposFS->rename(strip_tags($_POST['edit_id']), filter::fname($_POST['new_folder_name']))) 
 					{
-						$my_app->set_param('action_status','ok');					
-						$my_app->set_param('action_status_msg', txt('renamed'));
+						param('action_status','ok');					
+						param('action_status_msg', txt('renamed'));
 						cache_param('action_status');	
 						cache_param('action_status_msg');	
 						msg::ok($txt('updated'));						
@@ -103,8 +103,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 				} else {
 				
-					$my_app->set_param('action_status','error');
-					$my_app->set_param('action_status_msg',txt('access_denied'));
+					param('action_status','error');
+					param('action_status_msg',txt('access_denied'));
 					cache_param('action_status');	
 					cache_param('action_status_msg');					
 					msg::error($txt('access_denied'));				
@@ -122,16 +122,16 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				{
 					if($phposFS->new_dir(strip_tags(filter::fname($_POST['new_folder_name'])))) 
 					{
-						$my_app->set_param('action_status','ok');						
-						$my_app->set_param('action_status_msg', txt('folder_created'));
+						param('action_status','ok');						
+						param('action_status_msg', txt('folder_created'));
 						cache_param('action_status');	
 						cache_param('action_status_msg');	
 						msg::ok($txt('created'));
 						
 					} else {
 						
-						$my_app->set_param('action_status','error');
-						$my_app->set_param('action_status_msg',txt('folder_create_error'));
+						param('action_status','error');
+						param('action_status_msg',txt('folder_create_error'));
 						cache_param('action_status');	
 						cache_param('action_status_msg');	
 						msg::ok($txt('created'));
@@ -140,8 +140,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 				} else {
 				
-					$my_app->set_param('action_status','error');
-					$my_app->set_param('action_status_msg',txt('access_denied'));
+					param('action_status','error');
+					param('action_status_msg',txt('access_denied'));
 					cache_param('action_status');	
 					cache_param('action_status_msg');					
 					msg::error($txt('access_denied'));				
@@ -160,16 +160,16 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			switch($action_id)
 			{			
 				case 'delete':			
-					if($phposFS->delete($my_app->get_param('action_param'))) msg::ok(txt('file_deleted'));				
+					if($phposFS->delete(param('action_param'))) msg::ok(txt('file_deleted'));				
 				break;	
 				
 				case 'copy':
 					
 					$connect_id = null;
-					$ftp_id = $my_app->get_param('ftp_id');
+					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
-					$clipboard->add_clipboard($my_app->get_param('action_param'), $my_app->get_param('action_param2'), $connect_id);
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
 					msg::ok(txt('copied_to_clip'));			
 					
 				break;
@@ -177,12 +177,12 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				case 'cut':
 					
 					$connect_id = null;
-					$ftp_id = $my_app->get_param('ftp_id');
+					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
 					$clipboard->set_mode('cut');
 					$clipboard->set_source_win(WIN_ID);
-					$clipboard->add_clipboard($my_app->get_param('action_param'), $my_app->get_param('action_param2'), $connect_id);
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
 					msg::ok(txt('cutted_to_clip'));			
 					
 				break;
@@ -190,27 +190,17 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				case 'ftp_download':
 					
 					$connect_id = null;
-					$ftp_id = $my_app->get_param('ftp_id');
+					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
-					$clipboard->add_clipboard($my_app->get_param('action_param'), $my_app->get_param('action_param2'), $connect_id);
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
 					//msg::ok('Copied to clipboard');
 					
 					
-					if($phposFS->ftp_download($my_app->get_param('action_param'))) 
-					{
-						/*
-						$my_app->set_param('action_status','ok');					
-						$my_app->set_param('action_status_msg', null);
-						cache_param('action_status');	
-						cache_param('action_status_msg');	
-						//msg::ok(txt('download_link'));
-						*/
-						
-					} else {
-						
-						$my_app->set_param('action_status','error');
-						$my_app->set_param('action_status_msg',txt('folder_create_error'));
+					if(!$phposFS->ftp_download(param('action_param'))) 
+					{						
+						param('action_status','error');
+						param('action_status_msg',txt('folder_create_error'));
 						cache_param('action_status');	
 						cache_param('action_status_msg');	
 						msg::error(txt('error'));
@@ -222,12 +212,12 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				case 'ftp_view':
 					
 					$connect_id = null;
-					$ftp_id = $my_app->get_param('ftp_id');
+					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
-					$clipboard->add_clipboard($my_app->get_param('action_param'), $my_app->get_param('action_param2'), $connect_id);					
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
 					
-					$pathinfo =  pathinfo($my_app->get_param('action_param2'));
+					$pathinfo =  pathinfo(param('action_param2'));
 					$ext = $pathinfo['extension'];					
 					
 					$stop_upload = false;
@@ -257,8 +247,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					if(!$stop_upload)
 					{
-							$phposFS->ftp_view($my_app->get_param('action_param'));
-							$my_app->set_param('action_param', null);
+							$phposFS->ftp_view(param('action_param'));
+							param('action_param', null);
 							cache_param('action_param');
 							
 					}
@@ -273,12 +263,12 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					if($mode == 'copy')
 					{
-						if($phposFS->copy($my_app->get_param('action_param'))) 	msg::ok(txt('file_pasted'));	
+						if($phposFS->copy(param('action_param'))) 	msg::ok(txt('file_pasted'));	
 						
 					} elseif($mode == 'cut') {
 						
 						$source_win = $clipboard->get_source_win();
-						if($phposFS->cut($my_app->get_param('action_param'))) 	
+						if($phposFS->cut(param('action_param'))) 	
 						{
 							echo '<script>phpos.windowRefresh("'.$source_win.'", "");</script>';
 							msg::ok(txt('file_pasted'));							
@@ -288,11 +278,18 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				break;			
 			}	
 			
-			$my_app->set_param('action_id', null);
+			param('action_id', null);
 			cache_param('action_id');
 		}
 
 }
-	$my_app->set_param('action_id', null);
-			cache_param('action_id');
+
+	param('action_id', null);
+	cache_param('action_id');			
+			
+	param('action_id', null);
+	param('action_param', null);
+	cache_param('action_id');
+	cache_param('action_param');			
+			
 ?>
