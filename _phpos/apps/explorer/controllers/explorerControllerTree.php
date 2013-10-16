@@ -2,12 +2,12 @@
 /*
 **********************************
 
-	PHPOS Web Operating system
+	PHPOS Web Operating System
 	MIT License
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.6, 2013.10.16
  
 **********************************
 */

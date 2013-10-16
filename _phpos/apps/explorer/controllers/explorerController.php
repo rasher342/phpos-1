@@ -194,35 +194,19 @@ if(!defined('PHPOS'))	die();
 */		
 	
 		
-// Get left tree	
+	// Get left tree	
 
 	include MY_APP_DIR.'controllers/explorerControllerTree.php';
 				
 /*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_my_server.php';
-				
-/*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_workgroup.php';
-				
-/*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_shared.php';
-				
-/*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_ftp.php';		
-					
-/*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_clouds.php';		
-				
-/*.............................................. */		
-		
-	include MY_APP_DIR.'controllers/explorer_cp.php';		
 
-		 
+	// Include server plugin
+	
+	if(file_exists(MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php'))
+	{
+		include MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php';
+	}
+	
 /*
 **************************
 */ 	
