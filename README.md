@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.25 beta
+PHPOS Web Operating System<br>Version: 1.26 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,18 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.26</b> (2013.10.16)</b>
+<br>
+- Context menus fixed & enchanced<br>
+- Plugins system rebuilded<br>
+- Explorer app rebuilded<br>
+- System core structure changed<br>
+- Lot of fixes in PHP code<br>
+- Login and Installer languages change fix<br>
+- Some icons added<br>
+- Speed up with rendering files<br>
+
 
 <b>1.25</b> (2013.10.15)</b>
 <br>
