@@ -973,13 +973,13 @@ if(!defined('PHPOS'))	die();
 	$txt['after_install_shortcut_phpos_www'] = 'PHPOS Home Website';
 	$txt['after_install_shortcut_frame_wiki'] = 'Webapp in a window - Wikipedia.org';
 	$txt['after_install_shortcut_link_barok'] = 'Barok 3D Engine';
-	$txt['after_install_shortcut_yt_militia'] = 'PHPOS\'s author vs. Robocain - YouTube';
+	$txt['after_install_shortcut_yt_militia'] = 'PHPOS author vs. Robocain - YouTube';
 	$txt['after_install_folder_links'] = 'Test links';
 	$txt['after_install_readme_title'] = 'Readme.txt';
-	$txt['after_install_readme_file'] = '<p><strong>Your version of PHP was succesfuly installed on this server. :)</strong></p>
+	$txt['after_install_readme_file'] = '<p><strong>Your version of PHP was succesfuly installed on this server.</strong></p>
 	<p>This is a test document.</p>
 	<p>As you see - PHPOS have filestem API to reading and saving files.</p>
-	<p><strong>This is the power of PHPOS :).</strong></p>';
+	<p><strong>This is the power of PHPOS.</strong></p>';
 	
 	$txt['notepad_app_title'] = 'Notepad';
 	$txt['langs_tray_title'] = 'Change language';

@@ -977,10 +977,10 @@ if(!defined('PHPOS'))	die();
 	$txt['after_install_shortcut_yt_militia'] = 'Autor PHPOS-a vs. Robocain - YouTube';
 	$txt['after_install_folder_links'] = 'Linki testowe';
 	$txt['after_install_readme_title'] = 'Czytaj.txt';
-	$txt['after_install_readme_file'] = '<p><strong>Twoja wersja PHPOS została poprawnie zainstalowana na serwerze :)</strong></p>
+	$txt['after_install_readme_file'] = '<p><strong>Twoja wersja PHPOS została poprawnie zainstalowana na serwerze.</strong></p>
 	<p>A to jest testowy dokument tekstowy.</p>
 	<p>Jak widzisz - wystarczyło kliknąć na dokumencie, aby otworzyć Notatnik, który z koleji otworzył ten plik.</p>
-	<p><strong>W takich rzeczach właśnie tkwi prawdziwa moc PHPOS-a :).</strong></p>';
+	<p><strong>W takich rzeczach właśnie tkwi prawdziwa moc PHPOS-a </strong></p>';
 	
 	$txt['notepad_app_title'] = 'Notatnik';
 	$txt['langs_tray_title'] = 'Wybór języka';
