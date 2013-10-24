@@ -670,6 +670,37 @@
 		});	
 	}
 		
+			this.list_select_all = function(win_id) {		
+				var i =0;
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){					
+					$(this).prop("checked","checked");
+				});
+				return false;
+			};
+			
+			this.list_unselect_all = function(win_id) {			
+				var i =0;
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){
+					
+					$(this).prop("checked",false);	
+				});
+				return false;
+			};
+			
+			this.list_reverse_select = function(win_id) {			
+				var i =0;
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){
+					
+					if($(this).is(":checked")) 
+					{	
+						$(this).prop("checked",false);
+					} else {
+						$(this).prop("checked","checked");			
+					}				
+				});
+				return false;
+			};
+			
 			this.list_delete = function(win_id) {
 	 
 			//alert(win_id);	
@@ -759,7 +790,7 @@ function phposRenderWindow(
 	window_app_id) {	
 	
 	// Create new window DIV and append it to DOM
-	$("<div></div>").attr('id',window_id).addClass('easyui-window').appendTo('body');  
+	$("<div></div>").prop('id',window_id).addClass('easyui-window').appendTo('body');  
 	var new_win = '#' + window_id;
 		
 		
@@ -923,7 +954,7 @@ function phposRenderModal(
 	window_app_id) {	
 	
 	// Create new window DIV and append it to DOM
-	$("<div></div>").attr('id',window_id).addClass('easyui-window').appendTo('body');  
+	$("<div></div>").prop('id',window_id).addClass('easyui-window').appendTo('body');  
 	var new_win = '#' + window_id;
 		
 		
@@ -1085,7 +1116,7 @@ function phposRenderDesktop(
 	window_app_id) {	
 	
 	// Create new window DIV and append it to DOM
-	$("<div></div>").attr('id',window_id).addClass('easyui-window').appendTo('body');  
+	$("<div></div>").prop('id',window_id).addClass('easyui-window').appendTo('body');  
 	var new_win = '#' + window_id;
 		
 		

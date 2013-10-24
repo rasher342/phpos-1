@@ -61,7 +61,7 @@ if(!empty($tmp_shared_id))
 		$app_menu[] = 'title:'.txt('upload').',action:actionUpload,icon:icon-download';
 	}
 	
-	$app_menu[] = 'title:'.$item_view['icons'].',view_type:icons,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';
+	$app_menu[] = 'title:'.$item_view['icons'].',view_type:icons,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';
 	
 	if($my_app->get_param('view_type') == 'icons')
 	{			
@@ -73,9 +73,9 @@ if(!empty($tmp_shared_id))
 	}	
 
 	
-	$app_menu[] = 'title:'.$item_view['list'].',view_type:list,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';
+	$app_menu[] = 'title:'.$item_view['list'].',view_type:list,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';
 	
-	$app_menu[] = 'title:'.$item_view['thumbs'].',view_type:thumbs,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';	
+	$app_menu[] = 'title:'.$item_view['thumbs'].',view_type:thumbs,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';	
 	
 	
 	if($context_fs == 'ftp')

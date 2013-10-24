@@ -38,10 +38,10 @@ if(!defined('PHPOS'))	die();
 				
 /*.............................................. */		
 			
-			$html['icons'].= '<div class="phpos_explorer_list_toolbar"><span>Actions for selected icons: </span>
+			$html['icons'].= '<div class="phpos_explorer_list_toolbar">
 			<a href="javascript:void(0);" title="Cut selected files/folders" onclick="phpos.list_cut(\''.WIN_ID.'\');"><img src="'.ICONS.'/explorer_toolbar/cut.png" /></a>
 			<a href="javascript:void(0);" title="Copy selected files/folders" onclick="phpos.list_copy(\''.WIN_ID.'\');"><img src="'.ICONS.'/explorer_toolbar/copy.png" /></a>
-			<a href="javascript:void(0);" title="Delete selected files/folders" onclick="phpos.list_delete(\''.WIN_ID.'\');"><img src="'.ICONS.'/explorer_toolbar/delete.png" /></a>
+			<a href="javascript:void(0);" title="Delete selected files/folders" onclick="phpos.list_delete(\''.WIN_ID.'\');"><img src="'.ICONS.'/explorer_toolbar/delete.png" /></a><br /><span><a href="javascript:void(0);" title="Select all files/folders" onclick="phpos.list_select_all(\''.WIN_ID.'\');">Select All</a> / <a href="javascript:void(0);" title="Unselect all files/folders" onclick="phpos.list_unselect_all(\''.WIN_ID.'\');">Unselect All</a>  / <a href="javascript:void(0);" title="Reverse selection" onclick="phpos.list_reverse_select(\''.WIN_ID.'\');">Reverse</a></span>
 			</div><table class="phpos_explorer_filelist" id="phpos_list_table_'.WIN_ID.'">';
 			
 			$index = 0;

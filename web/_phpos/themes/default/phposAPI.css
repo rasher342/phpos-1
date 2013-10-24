@@ -1635,6 +1635,7 @@ pre{
 	width:90%;
 	text-align:right;
 	padding:20px;
+	padding-top:0px;
 	border-bottom:1px dotted silver;
 }
 .phpos_explorer_list_toolbar img {
@@ -1651,4 +1652,12 @@ pre{
 	font-weight:bold;
 	display:inline-block;
 	vertical-align:middle;
+}
+.phpos_explorer_list_toolbar a{
+	color:#686868;
+	text-decoration:none;
+}
+.phpos_explorer_list_toolbar a:hover{
+	color:#000;
+	
 }
