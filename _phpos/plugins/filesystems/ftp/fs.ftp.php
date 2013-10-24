@@ -618,7 +618,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 $id_file = $clipboard->get_file_id();			
 		 $fs = $clipboard->get_file_fs();				
 				
-		
+		 
 			
 			 $tmp_name = basename($id_file);			 
 			 if(ftp_get($this->conn_id, PHPOS_TEMP.$tmp_name, $id_file, FTP_BINARY))
@@ -658,6 +658,48 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 }
 	}
 	
+	
+	public function ftp_sync($dir, $last_dir) 
+	{		
+    chmod($last_dir, 0777);
+		if($dir != ".") 
+		{ 
+			if(ftp_chdir($this->conn_id, $dir) == false) 
+			{ 
+					echo ("Change Dir Failed: $dir<BR>\r\n"); 
+					return; 
+			}
+			
+			if(!empty($dir)) $last_dir = $last_dir.'/'.$dir;	
+			echo '<br>'.$last_dir.'<br>';		
+	
+			if(!is_dir($last_dir))
+			{				
+				mkdir($last_dir, 0777); 										
+			} 				
+    } 		
+		
+    $contents = ftp_nlist($this->conn_id, "."); 
+    foreach ($contents as $file) 
+		{ 
+			if($file == '.' || $file == '..') 
+					continue; 
+
+			if(@ftp_chdir($this->conn_id, $file)) 
+			{ 
+				ftp_chdir ($this->conn_id, ".."); 
+				$this->ftp_sync($file, $last_dir); 
+					
+			} else {
+			
+				ftp_get($this->conn_id, $last_dir.'/'.$file, $file, FTP_BINARY); 
+			}
+    } 
+    ftp_chdir($this->conn_id, "..");     
+	} 
+	
+	
+	
 	public function ftp_to_temp()
 	{
 		 $clipboard = new phpos_clipboard;		
@@ -667,11 +709,19 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 
 		 if(!empty($id_file))
 		 {			
-			 $tmp_name = basename($id_file);			 
-			 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Temp/'.$tmp_name, $id_file, FTP_BINARY))
-			 {				
-				return true;			 			
-			 }	
+			 if($this->is_directory($id_file))
+			 {
+				//echo basename($id_file);
+				$this->ftp_sync(basename($id_file), MY_HOME_DIR.'_Temp');
+				return true;			
+			 } else {
+			 
+				 $tmp_name = basename($id_file);			 
+				 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Temp/'.$tmp_name, $id_file, FTP_BINARY))
+				 {				
+					return true;			 			
+				 }			 
+			 }
 		 }
 	}
 	
