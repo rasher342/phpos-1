@@ -53,6 +53,7 @@ if(!defined('PHPOS'))	die();
 	param('reset_shared', null);
 	param('error_no_dir', null);
 	param('in_shared', null);
+	param('view_type', 'icons');
 	param('icon_size', 'medium');
 	param('reset_google_token', null);
 	param('dir_navigation_history', array());
@@ -224,7 +225,21 @@ if(!defined('PHPOS'))	die();
 
 		if(APP_ACTION == 'index' || APP_ACTION == 'desktop') 
 		{
-			include MY_APP_DIR.'controllers/explorerControllerIcons.php';
+			switch($my_app->get_param('view_type'))
+			{
+				case 'icons':
+					include MY_APP_DIR.'controllers/explorerControllerIcons.php';
+				break;
+				
+				case 'list':
+					include MY_APP_DIR.'controllers/explorerControllerList.php';
+				break;
+				
+				case 'thumbs':
+					include MY_APP_DIR.'controllers/explorerControllerThumbnails.php';
+				break;
+			}	
+			
 			
 		} else {
 

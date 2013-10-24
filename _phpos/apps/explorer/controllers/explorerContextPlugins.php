@@ -40,16 +40,33 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		{
 			$plugged_on_open = array_merge($context_on_open, $plugindata['open_with']);
 			$plugged_context_menu[3] = $plugged_on_open;				
-		}
-		
+		}		
 	}
 	
-	if(!empty($my_plugin) && !empty($plugindata['render_rewrite']))
-	{
-		$html['icons'].= $explorer->get_explorer_icon_html($icons[$i], $plugindata['render_rewrite']); 
-		
-	} else {
 	
-		$html['icons'].= $explorer->get_explorer_icon_html($icons[$i]);
-	}		
+	switch($my_app->get_param('view_type'))
+	{
+		case 'icons':
+		
+			if(!empty($my_plugin) && !empty($plugindata['render_rewrite']))
+			{
+				$html['icons'].= $explorer->get_explorer_icon_html($icons[$i], $plugindata['render_rewrite']); 
+				
+			} else {
+			
+				$html['icons'].= $explorer->get_explorer_icon_html($icons[$i]);
+			}	
+			
+		break;
+		
+		case 'list':
+			$html['icons'].= $explorer->get_explorer_icon_list_html($icons[$i]);
+		break;
+		
+		case 'thumbs':
+			$html['icons'].= $explorer->get_explorer_icon_html($icons[$i]);
+		break;
+	}	
+		
+		
 ?>

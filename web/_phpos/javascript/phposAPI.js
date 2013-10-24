@@ -670,7 +670,39 @@
 		});	
 	}
 		
+			this.list_delete = function(win_id) {
+	 
+			//alert(win_id);	
 			
+			//#phpos_list_table_'.WIN_ID
+				//var tr_index = $(this).attr("phpos_index");
+				var a = new Array();
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
+				
+				if($(this).is(":checked")) 
+				{				
+					a.push($(this).val());
+					//alert($(this).val());
+				}								
+        
+      });
+			
+			if(a.length != 0)
+			{
+				var file_ids = a.join(";;");
+				//alert(file_ids);
+				explorer_delete_files(win_id, file_ids);
+				
+			} else {				
+				alert('Nothing selected!');
+			}
+			
+			
+		 };	
+		 
+/*
+**************************
+*/	
 		
 		
 	}; // end of class phposAPI
@@ -680,6 +712,8 @@
 **************************
 */
  	
+	
+	
 		
 	
 // ================================ RENDERERS ========================================

@@ -894,7 +894,122 @@ class app_explorer {
 **************************
 */
  	
-		public function get_explorer_icon_jquery($icon)
+		public function get_explorer_icon_list_html($icon, $rewrite = null)
+		{		
+			$class = ' phpos_icon_mouseout';			
+			global $my_app, $phposFS;
+			/*
+			if($icon['title'] == $mark_file)
+			{
+				$class = ' phpos_icon_mouseover';			
+			}	
+			*/			
+			
+			$icon['icon'] = $this->filesystem->get_icon($icon);
+			
+			if($my_app->get_param('fs') == 'db_mysql')
+			{
+				if($icon['content'])
+				{		
+					if(file_exists(PHPOS_WEBROOT_DIR.'_phpos/resources/'.$icon['app_id'].'/db_file.png')) $icon['icon'] = PHPOS_WEBROOT_URL.'_phpos/resources/'.$icon['app_id'].'/db_file.png';	
+				}			
+			}
+				
+/*.............................................. */		
+				
+			if(empty($icon['action'])) $icon['action'] = $this->filesystem->get_action_dblclick($icon);	
+
+			if($my_app->get_param('api_dialog'))
+			{
+				if($my_app->get_param('api_dialog_type') == 'open_file')
+				{				
+					if(!$phposFS->is_directory($icon)) $icon['action'] = helper_reload(array('opened_file_id' => $icon['id'], 'opened_file_name' => $icon['basename'], 'opened_file_extension' => $icon['extension'], 'opened_file_app_id' => $icon['app_id']));	
+					
+				} else {
+				
+					if(!$phposFS->is_directory($icon)) $icon['action'] = "$('#explorer_api".WIN_ID." input[name=explorer_save_as_filename]').val('".$icon['filename']."');";
+				}
+			}
+					
+/*.............................................. */		
+			
+			$display = 'display:inline-block';
+			
+			if(defined('IN_DESKTOP'))
+			{
+				$display = '';
+			}
+			
+			$shared = '';
+			if($icon['is_shared']) $shared = '<br/><span style="color:white; font-size: 9px; padding:2px; background-color:#2e1953">'.txt('shortcuts_icon_explorer_shared').'</span>';
+			
+				
+/*.............................................. */		
+		
+			
+			if($rewrite === null)
+			{			
+				// $icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"  
+			/*
+			$icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
+					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
+					<img src="'.$icon['icon'].'" />
+					<br />'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$shared.'
+					</a>
+				</div>';	
+			*/
+			
+						
+			
+			$icon_data = '
+			<td style="width:10px"><input value="'.base64_encode($icon['id']).'" type="checkbox" id="phpos_list_checkbox_'.WIN_ID.'_'.$icon['index'].'"></td>
+			<td style="width:10px"><img src="'.$icon['icon'].'" style="width:20px"/></td>
+			<td style="width:60%"><div id="'.$icon['div'].'"><a href="javascript:void(0)" onclick="'.$icon['action'].'">'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).'</a></div></td>
+			<td style="width:20%">'.$icon['extension'].'</td>
+			<td style="width:20%">'.$icon['modified_at'].'</td>';
+		
+					
+				
+			} else {
+				$url = $icon['id'];
+				if($my_app->get_param('fs') == 'local_files') $url = str_replace(PHPOS_WEBROOT_DIR, '', $icon['id']);
+				$shortname = wordwrap($icon['filename'], 15, " ", 1);
+				$icon_data = str_replace(array('%url%', '%id%', '%div%', '%class%', '%style%', '%action%', '%icon%', '%fullname%', '%shortname%'), array($url, $icon['id'], $icon['div'], $class, $display, $icon['action'], $icon['icon'], $icon['filename'], $shortname), $rewrite);
+				
+			}
+				
+				/*
+				$icon_data = '<div title="basename:'.$icon['basename'].' dirname: '.$icon['dirname'].'" class="easyui-tooltip phpos_icon '.$class.'"  style="'.$display.'" id="'.$icon['div'].'">
+					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
+					<img src="'.$icon['icon'].'" title="'.$icon['id'].'">
+					<br />'.$shared.wordwrap($icon['filename'], 15, " ", 1).'
+					</a>
+				</div>';			
+			*/
+
+				
+/*.............................................. */		
+			$tr_class = 'tr1';
+			if($icon['index']%2 == 0) $tr_class = 'tr2';
+				
+			// Generate HTML code to render icon			
+			$html_RenderIcons='<tr phpos_index="'.$icon['index'].'" class="'.$tr_class.'">			
+				'.$icon_data.'			
+			</tr>';	
+			
+			if(defined('IN_DESKTOP'))
+			{
+				$html_RenderIcons=$icon_data;
+			}		
+			
+			return $html_RenderIcons;
+		}
+				 
+/*
+**************************
+*/
+
+	public function get_explorer_icon_jquery($icon)
 		{		
 			$attr=".attr('myID','".$icon['id']."')"; // set id attribute for drag&drop actions
 			$middle_click='';

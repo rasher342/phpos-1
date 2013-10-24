@@ -163,6 +163,21 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					if($phposFS->delete(param('action_param'))) msg::ok(txt('file_deleted'));				
 				break;	
 				
+				case 'delete_list':		
+					$file_hashes = param('action_param');
+					if(!empty($file_hashes))
+					{
+						$e = explode(";;", $file_hashes);
+						$c = count($e);
+						for($i=0;$i<$c;$i++)
+						{
+							$phposFS->delete(base64_decode($e[$i]));
+						}						
+					}	
+					
+					msg::ok(txt('file_deleted'));				
+				break;	
+				
 				case 'copy':
 					
 					$connect_id = null;

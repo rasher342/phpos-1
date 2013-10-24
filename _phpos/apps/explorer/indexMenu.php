@@ -17,14 +17,35 @@ if(!defined('PHPOS'))	die();
 global $readonly, $my_app, $context_fs, $tmp_shared_id;
 
 
+// View change
+
+$item_view['icons'] = 'Icons';
+$item_view['list'] = 'List';
+$item_view['thumbs'] = 'Thumbnails';
+
+switch($my_app->get_param('view_type'))
+{
+	case 'icons':
+		$item_view['icons'] = '<b>Icons</b>';
+	break;
+	
+	case 'list':
+		$item_view['list'] = '<b>List</b>';
+	break;
+	
+	case 'thumbs':
+		$item_view['thumbs'] = '<b>Thumbnails</b>';
+	break;
+}
+
+
 
 $app_menu = 
 	array(				
 			
 				'title:'.txt('new_folder').',action:actionNewFolder,icon:icon-folder_files',
 				'title:'.txt('my_server').',action:actionGoServer,icon:icon-myserver',
-				'title:'.txt('control_panel').',action:actionGoCP,icon:icon-login'
-				
+				'title:'.txt('control_panel').',action:actionGoCP,icon:icon-login'				
 									
 	);								
 		
@@ -39,24 +60,32 @@ if(!empty($tmp_shared_id))
 	{
 		$app_menu[] = 'title:'.txt('upload').',action:actionUpload,icon:icon-download';
 	}
-		
-	$app_menu[] = 'title:'.txt('icon_size').',action:actionChangeIcons,icon:icon-application';
-	$app_menu[] = array(
-						'title:'.txt('icon_size_s').',icon_size:small,check:icon_size,if:'.$my_app->get_param('icon_size').',action:actionChangeIcons',
-						'title:'.txt('icon_size_m').',icon_size:medium,check:icon_size,if:'.$my_app->get_param('icon_size').',action:actionChangeIcons'
-							);
-		
 	
-if($context_fs == 'ftp')
-{
-	$check_ftp = new phpos_ftp;
-	if(is_root() || ($check_ftp->is_my($my_app->get_param('ftp_id'))))
+	$app_menu[] = 'title:'.$item_view['icons'].',view_type:icons,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';
+	
+	if($my_app->get_param('view_type') == 'icons')
+	{			
+		$app_menu[] = 'title:'.txt('icon_size').',action:actionChangeIcons,icon:icon-application';
+		$app_menu[] = array(
+							'title:'.txt('icon_size_s').',icon_size:small,check:icon_size,if:'.$my_app->get_param('icon_size').',action:actionChangeIcons',
+							'title:'.txt('icon_size_m').',icon_size:medium,check:icon_size,if:'.$my_app->get_param('icon_size').',action:actionChangeIcons'
+								);
+	}	
+
+	
+	$app_menu[] = 'title:'.$item_view['list'].',view_type:list,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';
+	
+	$app_menu[] = 'title:'.$item_view['thumbs'].',view_type:thumbs,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-cancel';	
+	
+	
+	if($context_fs == 'ftp')
 	{
-		$app_menu[] = 'title:'.txt('dsc_ftp_a_edit').',action:actionEditFtp,icon:icon-edit';
-	}
-
-
-}	
+		$check_ftp = new phpos_ftp;
+		if(is_root() || ($check_ftp->is_my($my_app->get_param('ftp_id'))))
+		{
+			$app_menu[] = 'title:'.txt('dsc_ftp_a_edit').',action:actionEditFtp,icon:icon-edit';
+		}
+	}	
 
 function actionEditFtp($menu_item)
 {				
@@ -86,6 +115,12 @@ function actionUpload($menu_item)
 function actionChangeIcons($menu_item)
 {		
 	$j = helper_reload(array('icon_size' => $menu_item['icon_size']));
+	return 	$j;
+}
+
+function actionChangeView($menu_item)
+{		
+	$j = helper_reload(array('view_type' => $menu_item['view_type']));
 	return 	$j;
 }
 

@@ -17,7 +17,7 @@ if(!defined('PHPOS'))	die();
 $layout->set_region('center');
 $layout->set_classes('phpos_explorer_files_body');			
 $layout->set_id('phpos_explorer_div'.div(1));
-$layout->set_style('background-image:url('.$html['protocol_bg'].'); background-repeat:no-repeat; background-position:top right');	
+$layout->set_style('background-image:url('.$html['protocol_bg'].'); background-repeat:no-repeat; margin-top:0; vertical-align:top; background-position:top right');	
 ?>
 
 <?php echo $layout->custom(); ?>

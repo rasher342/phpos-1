@@ -46,6 +46,15 @@ $(document).ready(function() {
 		});	
 	}
 	
+	function explorer_delete_files(win_id, file_ids)
+	{	
+		$.messager.confirm('<?php echo txt('delete');?>', '<?php echo txt('delete_confirm');?>?', function(r){
+			if (r){
+				phpos.windowRefresh(win_id, 'action_id:delete_list,action_param:'+file_ids+',no_increment:1');	
+			}
+		});	
+	}
+	
 	function explorer_cut(win_id, file_id, file_name, file_type)
 	{	
 		//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
