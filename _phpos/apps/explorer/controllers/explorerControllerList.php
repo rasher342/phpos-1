@@ -32,6 +32,11 @@ if(!defined('PHPOS'))	die();
 	$icons = $phposFS->get_files_list();		
 	$hidden_icons = $explorer->get_hidden_icons();
 	$c = count($icons);
+		
+	if($c != 0)
+	{	
+		usort($icons, 'explorer_sort_icons');
+	}	
 	
 	$plugin = new phpos_plugins;
 	$plugin->load_plugins();			

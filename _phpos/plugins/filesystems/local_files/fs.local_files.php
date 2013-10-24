@@ -207,13 +207,19 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$file_info['id'] = $file;
 		$file_info['dirname'] = $pathinfo['dirname'];	
 		$file_info['basename'] = $pathinfo['basename'];	
-		$file_info['extension'] = $pathinfo['extension'];	
+		$file_info['extension'] = $pathinfo['extension'];
+		$file_info['size'] = filesize($file);			
 		$file_info['filename'] = $pathinfo['filename'];		
 		$file_info['modified_at'] = @filemtime($file);
 		$file_info['created_at'] = @filectime($file);
 		$file_info['chmod'] = @fileperms($file);
 		$file_info['fs'] = 'local_files';
-		$file_info['icon'] = '';			
+		$file_info['icon'] = '';	
+
+		if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+		$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+		$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
+				
 		return $file_info;	
 	}	
 			 
@@ -240,13 +246,18 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 				$file_info['id'] = $file;
 				$file_info['dirname'] = $pathinfo['dirname'];	
 				$file_info['basename'] = $pathinfo['basename'];	
-				$file_info['extension'] = $pathinfo['extension'];	
+				$file_info['extension'] = $pathinfo['extension'];
+				$file_info['size'] = filesize($file);					
 				$file_info['filename'] = $pathinfo['filename'];		
 				$file_info['modified_at'] = @filemtime($file);
 				$file_info['created_at'] = @filectime($file);
 				$file_info['chmod'] = @fileperms($file);
 				$file_info['fs'] = 'local_files';
 				$file_info['icon'] = '';
+				
+				if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+				$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+				$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
 				
 				$files_array[] = $file_info;
 				

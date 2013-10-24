@@ -55,6 +55,9 @@ if(!defined('PHPOS'))	die();
 	param('in_shared', null);
 	param('view_type', 'icons');
 	param('icon_size', 'medium');
+	param('sort_by', 'extension');
+	param('show_extensions', '0');
+	param('sort_order', 'asc');
 	param('reset_google_token', null);
 	param('dir_navigation_history', array());
 	param('dir_navigation_index', 0);
@@ -222,7 +225,20 @@ if(!defined('PHPOS'))	die();
 ========== ICONS =========
 ***************************
 */	
-
+	function explorer_sort_icons($a, $b) 
+	{
+		global $my_app;
+		$sortby = $my_app->get_param('sort_by');			
+		if ($a[$sortby] == $b[$sortby]) return 0;
+		if($my_app->get_param('sort_order') == 'asc')
+		{
+			return ($a[$sortby] < $b[$sortby]) ? -1 : 1;
+		} else {
+			return ($a[$sortby] > $b[$sortby]) ? -1 : 1;
+		}
+	}	
+		
+		
 		if(APP_ACTION == 'index' || APP_ACTION == 'desktop') 
 		{
 			switch($my_app->get_param('view_type'))

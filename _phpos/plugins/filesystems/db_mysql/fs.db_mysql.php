@@ -239,6 +239,10 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		$file_info['no_delete'] = $row['no_delete'];
 		$file_info['fs'] = 'db_mysql';
 		
+		if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+		$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+		$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
+		
 		if(!empty($row['content'])) $file_info['content'] = true;	
 			
 			$params[0] = 'id_file:'.$file_info['id'];
@@ -295,6 +299,10 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 				$file_info['plugin_id'] = $row['plugin_id'];	
 				$file_info['no_delete'] = $row['no_delete'];	
 				$file_info['fs'] = 'db_mysql';
+				
+				if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+				$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+				$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
 				
 				if(!empty($row['content'])) $file_info['content'] = true;			
 				

@@ -43,7 +43,7 @@ switch($my_app->get_param('view_type'))
 $app_menu = 
 	array(				
 			
-				'title:'.txt('new_folder').',action:actionNewFolder,icon:icon-folder_files',
+				'title:<b>'.txt('new_folder').'</b>,action:actionNewFolder,icon:icon-folder_files',
 				'title:'.txt('my_server').',action:actionGoServer,icon:icon-myserver',
 				'title:'.txt('control_panel').',action:actionGoCP,icon:icon-login'				
 									
@@ -76,6 +76,23 @@ if(!empty($tmp_shared_id))
 	$app_menu[] = 'title:'.$item_view['list'].',view_type:list,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';
 	
 	$app_menu[] = 'title:'.$item_view['thumbs'].',view_type:thumbs,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';	
+	
+	$app_menu[] = 'title:Sort by,action:actionChangeIcons,icon:icon-application';
+		$app_menu[] = array(
+							'title:Type,sort_by:extension,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:Name,sort_by:filename,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:Date,sort_by:modified_at,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:Size,sort_by:size,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:<b>Ascending</b>,sort_order:asc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder',
+							'title:<b>Descending</b>,sort_order:desc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder'
+								);
+								
+	$app_menu[] = 'title:File Extensions,action:actionChangeIcons,icon:icon-application';
+		$app_menu[] = array(
+							'title:Show,show_extensions:1,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt',
+							'title:Hide,show_extensions:0,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt'
+								);
+	
 	
 	
 	if($context_fs == 'ftp')
@@ -115,6 +132,24 @@ function actionUpload($menu_item)
 function actionChangeIcons($menu_item)
 {		
 	$j = helper_reload(array('icon_size' => $menu_item['icon_size']));
+	return 	$j;
+}
+
+function actionChangeSort($menu_item)
+{		
+	$j = helper_reload(array('sort_by' => $menu_item['sort_by']));
+	return 	$j;
+}
+
+function actionChangeExt($menu_item)
+{		
+	$j = helper_reload(array('show_extensions' => $menu_item['show_extensions']));
+	return 	$j;
+}
+
+function actionChangeSortOrder($menu_item)
+{		
+	$j = helper_reload(array('sort_order' => $menu_item['sort_order']));
 	return 	$j;
 }
 

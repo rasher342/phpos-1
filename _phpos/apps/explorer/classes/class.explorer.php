@@ -844,21 +844,23 @@ class app_explorer {
 				
 /*.............................................. */		
 		
+			$ext = '';
+			if($my_app->get_param('show_extensions') == '1' && ($my_app->get_param('fs') == 'local_files' || $my_app->get_param('fs') == 'ftp')) $ext = '.'.$icon['extension'];
 			
 			if($rewrite === null)
 			{			
 				// $icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"  
-			$icon_data = '<div title="'.$icon['id'].', file_id:'.$icon['file_id'].'" class="easyui-tooltip phpos_icon '.$class.'"    style="'.$display.'" id="'.$icon['div'].'">
+			$icon_data = '<div title="'.$icon['filename'].'" class="phpos_icon '.$class.'"    style="'.$display.'" id="'.$icon['div'].'">
 					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
 					<img src="'.$icon['icon'].'" />
-					<br />'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$shared.'
+					<br />'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$ext.$shared.'
 					</a>
 				</div>';		
 				
 			} else {
 				$url = $icon['id'];
 				if($my_app->get_param('fs') == 'local_files') $url = str_replace(PHPOS_WEBROOT_DIR, '', $icon['id']);
-				$shortname = wordwrap($icon['filename'], 15, " ", 1);
+				$shortname = wordwrap($icon['filename'], 15, " ", 1).$ext;
 				$icon_data = str_replace(array('%url%', '%id%', '%div%', '%class%', '%style%', '%action%', '%icon%', '%fullname%', '%shortname%'), array($url, $icon['id'], $icon['div'], $class, $display, $icon['action'], $icon['icon'], $icon['filename'], $shortname), $rewrite);
 				
 			}
@@ -904,6 +906,9 @@ class app_explorer {
 				$class = ' phpos_icon_mouseover';			
 			}	
 			*/			
+			
+			$ext = '';
+			if($my_app->get_param('show_extensions') == '1' && ($my_app->get_param('fs') == 'local_files' || $my_app->get_param('fs') == 'ftp')) $ext = '.'.$icon['extension'];
 			
 			$icon['icon'] = $this->filesystem->get_icon($icon);
 			
@@ -964,8 +969,9 @@ class app_explorer {
 			$icon_data = '
 			<td style="width:10px"><input value="'.base64_encode($icon['id']).'" type="checkbox" id="phpos_list_checkbox_'.WIN_ID.'_'.$icon['index'].'"></td>
 			<td style="width:10px"><img src="'.$icon['icon'].'" style="width:20px"/></td>
-			<td style="width:60%"><div id="'.$icon['div'].'"><a href="javascript:void(0)" onclick="'.$icon['action'].'">'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).'</a></div></td>
-			<td style="width:20%">'.$icon['extension'].'</td>
+			<td style="width:60%"><div id="'.$icon['div'].'"><a href="javascript:void(0)" onclick="'.$icon['action'].'">'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$ext.'</a></div></td>
+			<td style="width:10%">'.$icon['extension'].'</td>
+			<td style="width:10%">'.filesizes($icon['size']).'</td>
 			<td style="width:20%">'.$icon['modified_at'].'</td>';
 		
 					
