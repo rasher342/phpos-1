@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.26 beta
+PHPOS Web Operating System<br>Version: 1.27 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,14 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.27</b> (2013.10.24)</b>
+<br>
+- List view in files explorer added<br>
+- Multiple files selecting and deleting<br>
+- Files sorting, by name, type, date or size<br>
+- Upload of multiple files at once added<br>
+- Some fixes<br>
 
 <b>1.26</b> (2013.10.16)</b>
 <br>
