@@ -161,6 +161,14 @@ if(!defined('PHPOS'))	die();
 				}
 			});			
 			
+			$(".phpos_explorer_list_toolbar img").mouseenter(function() {
+				$(this).addClass("img_hover");			
+			});
+			
+			$(".phpos_explorer_list_toolbar img").mouseleave(function() {				
+				$(this).removeClass("img_hover");			
+			});	
+			
 			';
 			
 			

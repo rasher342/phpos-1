@@ -1639,10 +1639,13 @@ pre{
 }
 .phpos_explorer_list_toolbar img {
 	height:30px;
-	border:0px;
-	padding-left: 15px;
+	border:1px solid transparent;
+	padding: 10px;
 	display:inline-block;
 	vertical-align:middle;
+}
+.phpos_explorer_list_toolbar .img_hover {	
+	border:1px solid silver;	
 }
 .phpos_explorer_list_toolbar span{
 	font-weight:bold;

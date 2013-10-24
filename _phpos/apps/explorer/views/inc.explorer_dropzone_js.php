@@ -20,7 +20,7 @@ if($context_fs != 'db_mysql' && !$readonly)
 	$dropzone = '
 
 	$("div#phpos_explorer_div'.div(1).'").dropzone({ url: "'.helper_post('null').'", 
-	createImageThumbnails: false,	
+	createImageThumbnails: false,	autoProcessQueue: true, parallelUploads: 100,
 	init: function() {
 	
 	this.on("sending", function(file) {
