@@ -33,7 +33,7 @@ if(!defined('PHPOS'))	die();
 	$hidden_icons = $explorer->get_hidden_icons();
 	$c = count($icons);
 	
-	if($c != 0)
+	if($c != 0 && !defined('DESKTOP'))
 	{	
 		usort($icons, 'explorer_sort_icons');
 	}		
