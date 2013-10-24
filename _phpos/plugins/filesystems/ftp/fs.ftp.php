@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.7, 2013.10.24
  
 **********************************
 */
@@ -62,12 +62,19 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 /*
 **************************
 */
- 	
+ 	function __destruct()
+	{	
+		@ftp_close($this->conn);	
+	}
+		
+	
 	function __construct($ftp_id = null)
 	{		
 		$this->protocol_name = 'ftp';		 	 
 		$this->errorHandler = array();		
 		$this->prefix = 'ftp';	
+		
+		
 		
 		if(empty($ftp_id))
 		{
@@ -85,7 +92,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				{
 					$this->connection_status = 'connected';
 				} else {
-					$this->connection_status = 'eeeroro connected';
+					$this->connection_status = 'connection error';
 				}
 			
 				 //msg::error('FTP: Error connection to server');
@@ -94,11 +101,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		
 		
 		global $my_user;
-		$this->root_directory_id = '.';
-		
-
-
-		
+		$this->root_directory_id = '.';	
 		 
 /*
 **************************
@@ -109,13 +112,12 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		{
 			$this->directory_id = $this->root_directory_id;
 		}		
-		
-		
 	}
-		
-/*
+	
+	/*
 **************************
 */
+ 
  
 	public function set_status($str)
 	{
@@ -149,50 +151,51 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  	
 	public function connect()
-	{
-		
-		try {	
+	{		
+		if(!$this->logged)
+		{
+			try {	
+				
+				$this->conn_id = @ftp_connect($this->ftp->get_host(), null, 10); 				
 			
-			$this->conn_id = @ftp_connect($this->ftp->get_host(), null, 10); 			
-	
-		
-		
-			 //msg::error('FTP: Error connection to server');
-		
-		} catch (Exception $e) {
-		
-        $this->conn = false;
-				$this->conn_log = 'Failed to connect server'; 
-				
-    }	
-		
-			if($this->conn !== FALSE)
-			{					
-				$this->connected = 1;
-				//msg::ok('FTP: Connected to: '.$this->ftp->get_host());
-				
-				$login_result = @ftp_login($this->conn_id, $this->ftp->get_login(), $this->ftp->get_password()); 
-				if($login_result !== FALSE)
-				{	
-					//msg::ok('FTP: Logged as: '.$this->ftp->get_login());
-					$this->logged = 1;	
-					$this->connection_status = 'connected';
-					return true;
+			} catch (Exception $e) {
+			
+					$this->conn = false;
+					$this->conn_log = 'Failed to connect server'; 				
+			}	
+			
+				if($this->conn !== FALSE)
+				{					
+					$this->connected = 1;
+					//echo hide_conn();
+					//msg::ok('FTP: Connected to: '.$this->ftp->get_host());
+					
+					$login_result = @ftp_login($this->conn_id, $this->ftp->get_login(), $this->ftp->get_password()); 
+					if($login_result !== FALSE)
+					{	
+						//msg::ok('FTP: Logged as: '.$this->ftp->get_login());
+						$this->logged = 1;	
+						$this->connection_status = 'connected';
+						return true;
+						
+					} else {
+						
+						$this->connection_status = $login_result;
+						msg::error('FTP: Login incorrect');
+						$this->logged = 0;				
+					}
 					
 				} else {
-					
-					$this->connection_status = $login_result;
-					msg::error('FTP: Login incorrect');
-					$this->logged = 0;				
-				}
 				
+					$this->connected = 0;
+					$this->connection_status = 'connected';
+					msg::error('FTP: Error connection to server');
+					return false;
+				}	
 			} else {
 			
-				$this->connected = 0;
-				$this->connection_status = 'cccccccccccccconnected';
-				msg::error('FTP: Error connection to server');
-				return false;
-			}		
+				return true;
+			}
 	}	
 		 
 
@@ -249,9 +252,12 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
  
 	public function have_parent($file)
 	{		
-		if($file['dirname'] != '.')
-		{
-			return true;
+		if($this->is_directory($file))
+		{	
+			if(dirname($file) != '')
+			{
+				return true;
+			}		
 		}
 	}	
 		 
@@ -260,9 +266,8 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  
 	public function get_parent_dir($file)
-	{
-		$pathinfo =  pathinfo($file);		
-		return $pathinfo['dirname'];	
+	{		
+		return dirname($file);
 	}
 		 
 /*
@@ -283,6 +288,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				$i++;
 			}	
 		}			
+		
 		return $parents;		
 	}	
 		 
@@ -294,11 +300,19 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	{
 		$pathinfo =  pathinfo($file);
 		$file_info['id'] = $file;
-		$file_info['dirname'] = $pathinfo['dirname'];	
+		$file_info['dirname'] = ftp_pwd($this->conn_id);
 		$file_info['basename'] = $pathinfo['basename'];	
 		$file_info['extension'] = $pathinfo['extension'];	
-		$file_info['filename'] = $pathinfo['filename'];				
-		$file_info['icon'] = '';			
+		$file_info['filename'] = $pathinfo['filename'];	
+		$file_info['modified_at'] = ftp_mdtm($this->conn_id, $file);
+		$file_info['created_at'] = ftp_mdtm($this->conn_id, $file);
+		$file_info['size'] = ftp_size($this->conn_id, $file);
+		$file_info['icon'] = '';	
+
+		if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+		$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+		$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
+		
 		return $file_info;	
 	}	
 		 
@@ -313,6 +327,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		
 		if($this->logged)
 		{
+			$pathinfo =  pathinfo($this->directory_id);					
 			$directory = @ftp_nlist($this->conn_id, $this->directory_id);	
 			
 			$list_dirs = array();
@@ -320,20 +335,26 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			
 			if(is_array($directory))
 			{
+				//ftp_chdir($this->conn_id, $this->directory_id);	
 				foreach($directory as $file)
 				{			
 					$file_info = array();
 					$pathinfo =  pathinfo($file);
 					
 					$file_info['id'] = $file;
-					$file_info['dirname'] = $pathinfo['dirname'];	
+					$file_info['dirname'] = ftp_pwd($this->conn_id);
 					$file_info['basename'] = $pathinfo['basename'];	
 					$file_info['extension'] = $pathinfo['extension'];	
 					$file_info['filename'] = $pathinfo['filename'];				
-					$file_info['modified_at'] = 0;
-					$file_info['created_at'] = 0;
+					$file_info['modified_at'] = ftp_mdtm($this->conn_id, $file);
+					$file_info['created_at'] = ftp_mdtm($this->conn_id, $file);
+					$file_info['size'] = ftp_size($this->conn_id, $file);
 					$file_info['chmod'] = 0;
 					$file_info['icon'] = '';		
+					
+					if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+					$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+					$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
 				
 					if($this->is_directory($file_info))
 					{
@@ -360,10 +381,8 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  
  public function connect_status()
- {
-	
-	return $this->connection_status;
- 
+ {	
+	 return $this->connection_status; 
  }
  		 
 /*
@@ -383,7 +402,6 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 **************************
 */
  	
- 
  
  
 	public function is_directory($file)
@@ -485,43 +503,33 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  	
 	
-		public function rename($id_file, $new_name)
+	public function rename($id_file, $new_name)
 	{
 		//$dir = dirname($id_file);		
 		global $my_app;
 		$dir = $my_app->get_param('dir_id');
 		$_SESSION['ftp'] = 'conn:'.$this->conn_id.'  dir:'.$dir.'/'.$id_file.' to:'.$dir.'/'.$new_name;
-		if(ftp_rename($this->conn_id, $id_file, $dir.'/'.$new_name)) return true;
+		if(@ftp_rename($this->conn_id, $id_file, $dir.'/'.$new_name)) return true;
 	}
 			 
 /*
 **************************
 */
  	
-	public static function deleteDir($path) {
-    if (!is_dir($path)) {
-        return false;
-    }
-    if (substr($path, strlen($path) - 1, 1) != '/') {
-        $path .= '/';
-    }
+	public function recursiveDelete($directory)
+	{   
+    if(!(@ftp_rmdir($this->conn_id, $directory) || @ftp_delete($this->conn_id, $directory)) )
+    {       
+			$filelist = @ftp_nlist($this->conn_id, $directory); 
 		
-    $dotfiles = glob($path . '.*', GLOB_MARK);
-    $files = glob($path . '*', GLOB_MARK);
-    $files = array_merge($files, $dotfiles);
-    foreach ($files as $file) {
-        if (basename($file) == '.' || basename($file) == '..') {
-            continue;
-        } else if (is_dir($file)) {
-            self::deleteDir($file);
-        } else {
-            unlink($file);
-        }
+			foreach($filelist as $file)
+			{
+				$this->recursiveDelete($file);
+			}		 
+			$this->recursiveDelete($directory);
     }
-    rmdir($path);
 	}
-	
-			 
+				 
 /*
 **************************
 */
@@ -529,7 +537,14 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	
 	public function delete($id_file)
 	{		
-		if(ftp_delete($this->conn_id, $id_file)) return true;		
+		if($this->is_directory($id_file))
+		{			
+			$this->recursiveDelete($id_file);
+			return true;
+			
+		} else {		
+			if(@ftp_delete($this->conn_id, $id_file)) return true;	
+		}
 	}
 			 
 /*
@@ -540,7 +555,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	{					
 		global $my_app;
 		$dir = $my_app->get_param('dir_id');		
-		if(ftp_put($this->conn_id, $dir.'/'.$file['name'], $file['tmp_name'], FTP_BINARY)) return true;			
+		if(@ftp_put($this->conn_id, $dir.'/'.$file['name'], $file['tmp_name'], FTP_BINARY)) return true;			
 	}
 			 
 /*
@@ -552,25 +567,21 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
 		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();
-				
-			echo $to_dir_id;
+		 $fs = $clipboard->get_file_fs();	
 				
 		switch($fs)
-		 { 
-			case 'ftp':
-			
-			 $tmp_name = base64_encode($id_file);			 
-			 if(ftp_get($this->conn_id, PHPOS_TEMP.$tmp_name, $id_file, FTP_BINARY))
+		{ 
+			case 'ftp':	
+				 
+			 if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file))
 			 { 				
 				$basename = basename($id_file);
 				
-				if(ftp_put($this->conn_id, $to_dir_id.'/'.$basename, PHPOS_TEMP.$tmp_name , FTP_BINARY))
+				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Temp/'.$id_file, FTP_BINARY))
 				{ 
-					if(file_exists(PHPOS_TEMP.$tmp_name)) unlink(PHPOS_TEMP.$tmp_name); 
+					@unlink(MY_HOME_DIR.'_Temp/'.$id_file); 
 					$clipboard->reset_clipboard();						
-					return true;
-					
+					return true;					
 					
 				} else {   
 				
@@ -579,28 +590,20 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			}		
 			break;
 			
-			case 'local_files':
-			
-			 $tmp_name = base64_encode($id_file);			 
+			case 'local_files':		
 			  				
-				$basename = basename($id_file);
-				
-				if(ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
-				{ 
-					if(file_exists(PHPOS_TEMP.$tmp_name)) unlink(PHPOS_TEMP.$tmp_name);  
+				$basename = basename($id_file);				
+				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
+				{ 					
 					$clipboard->reset_clipboard();							
 					return true;
 					
 				} else {   
 				
 					return false; 
-				} 		
-				
-			break;
-			
-			
-		}
-		
+				} 					
+			break;			
+		}		
 	}
 			 
 /*
@@ -654,6 +657,24 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			}	
 		 }
 	}
+	
+	public function ftp_to_temp()
+	{
+		 $clipboard = new phpos_clipboard;		
+		 $clipboard->get_clipboard();			
+		 $id_file = $clipboard->get_file_id();			
+		 $fs = $clipboard->get_file_fs();		
+		 
+		 if(!empty($id_file))
+		 {			
+			 $tmp_name = basename($id_file);			 
+			 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Temp/'.$tmp_name, $id_file, FTP_BINARY))
+			 {				
+				return true;			 			
+			 }	
+		 }
+	}
+	
 	
 }
 ?>

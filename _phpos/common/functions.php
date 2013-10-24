@@ -190,4 +190,41 @@ if(!defined('PHPOS'))	die();
 
         return $bytes;
 	}
+	
+	
+function infomonit($msg, $noscript = null)
+ {
+ 	 if($noscript === null) 	$monit.= "<script>";
+	
+	 $monit.= "
+				jNotify(
+					'".$msg."',
+					{
+						autoHide : true, 
+						clickOverlay : false,
+						MinWidth : 200,
+						TimeShown : 3000,
+						ShowTimeEffect : 1000,
+						HideTimeEffect : 600,
+						LongTrip :20,
+						HorizontalPosition : 'right',
+						VerticalPosition : 'bottom',
+						ShowOverlay : false
+					}
+				);
+				";		
+		if($noscript === null) $monit.= "</script>";
+		return $monit;
+ } 
+ 
+ function hide_conn()
+ {
+ 	 if($noscript === null) 	$monit.= "<script>";
+	
+	 $monit.= "
+				$('.c2').hide();
+				";		
+		if($noscript === null) $monit.= "</script>";
+		return $monit;
+ } 
 ?>

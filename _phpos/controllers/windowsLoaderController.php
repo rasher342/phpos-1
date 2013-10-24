@@ -211,6 +211,9 @@
 	  define('MY_HOME_URL', PHPOS_HOME_URL.$my_user->get_home_dir_hash().'/');			
 			
 		define('PHPOS_ACCESS', true);
+		
+		
+		
 		include PHPOS_DIR.'plugins/windows/window.'.$apiWindow->getParam('wintype').'.php';	
 		echo $my_app->render_javascript_jquery();
 		

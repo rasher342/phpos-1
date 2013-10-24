@@ -1031,4 +1031,6 @@ if(!defined('PHPOS'))	die();
 	$txt['fs_clouds_right'] = 'Clouds';
 	$txt['cloud_google_connected'] = 'Connected to Google API';
 	
+	$txt['connecting_ftp_wait'] = 'Connecting to FTP. Please wait...';
+	
 ?>

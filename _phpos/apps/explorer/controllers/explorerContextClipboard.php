@@ -21,7 +21,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		$clipboard= new phpos_clipboard;
 				
 		// ftp copy/paste in next updates
-		if($my_app->get_param('fs') != 'ftp')
+		if($my_app->get_param('fs') != 'ftp2')
 		{
 			$plugged_context_menu[] = '---';
 			$plugged_context_menu[] = 'copy::'.txt('copy').'::explorer_copy("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::copy';

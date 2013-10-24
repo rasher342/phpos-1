@@ -544,21 +544,19 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
 		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();				
-				
-		switch($fs)
-		{ 
-			case 'ftp':			
-			
-			$clipboard->get_clipboard();				
-			$ftp_connect = new phpos_fs_plugin_ftp($clipboard->get_file_connect_id());		
-			 
-			 if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
-			 { 
-					$clipboard->reset_clipboard();						
-					return true;
-			 }
-		 	
+		 $fs = $clipboard->get_file_fs();			
+		
+		 switch($fs)
+		 { 
+			case 'ftp':					
+				if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file)) 
+				{
+					if(rename(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$id_file)) 
+					{						
+						$clipboard->reset_clipboard();	
+						return true;
+					}
+				}		 	
 			break;
 			
 			case 'local_files':					 

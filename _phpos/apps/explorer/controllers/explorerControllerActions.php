@@ -184,8 +184,15 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
+					$clipboard->set_mode('copy');
 					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
-					msg::ok(txt('copied_to_clip'));			
+					
+					if(param('fs') == 'ftp')
+					{
+						if($phposFS->ftp_to_temp()) echo 'totemp';						
+					}
+					
+					msg::ok(txt('copied_to_clip'));		
 					
 				break;
 				
@@ -198,6 +205,10 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$clipboard->set_mode('cut');
 					$clipboard->set_source_win(WIN_ID);
 					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
+					if(param('fs') == 'ftp')
+					{
+						if($phposFS->ftp_to_temp()) echo 'totemp';						
+					}
 					msg::ok(txt('cutted_to_clip'));			
 					
 				break;
@@ -273,12 +284,21 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				
 				case 'paste':			
 				
-					$clipboard = new phpos_clipboard;
-					$mode = $clipboard->get_mode();						
+				
+					$clipboard = new phpos_clipboard;					
+				
+					$clipboard->get_clipboard();
+					$mode = $clipboard->get_mode();				
+										 
+					 $id_file = $clipboard->get_file_id();			
+					 $fs = $clipboard->get_file_fs();		
+					 
+					 //echo 'id:'.$id_file.'<br>fs: '.$fs.'<br>connid:'.$clipboard->get_file_connect_id();
+		 					
 					
 					if($mode == 'copy')
 					{
-						if($phposFS->copy(param('action_param'))) 	msg::ok(txt('file_pasted'));	
+						if($phposFS->copy(param('action_param')))	msg::ok(txt('file_pasted'));	
 						
 					} elseif($mode == 'cut') {
 						

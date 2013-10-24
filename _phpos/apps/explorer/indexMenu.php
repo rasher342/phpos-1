@@ -95,14 +95,6 @@ if(!empty($tmp_shared_id))
 	
 	
 	
-	if($context_fs == 'ftp')
-	{
-		$check_ftp = new phpos_ftp;
-		if(is_root() || ($check_ftp->is_my($my_app->get_param('ftp_id'))))
-		{
-			$app_menu[] = 'title:'.txt('dsc_ftp_a_edit').',action:actionEditFtp,icon:icon-edit';
-		}
-	}	
 
 function actionEditFtp($menu_item)
 {				

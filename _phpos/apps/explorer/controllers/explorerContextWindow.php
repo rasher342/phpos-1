@@ -29,7 +29,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		// clipboard
 		$clipboard= new phpos_clipboard;
 	
-		if($my_app->get_param('fs') != 'ftp')
+		if($my_app->get_param('fs') != 'ftp2')
 		{					
 			if($clipboard->is_clipboard($my_app->get_param('fs')))
 			{
