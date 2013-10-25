@@ -25,6 +25,10 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		{
 			$plugged_context_menu[] = '---';
 			$plugged_context_menu[] = 'copy::'.txt('copy').'::explorer_copy("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::copy';
+			if($my_app->get_param('fs') != 'local_files') 
+			{
+				$plugged_context_menu[] = 'copy_serv::'.txt('copy_server').'::explorer_copy_server("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::copy';
+			}
 			$plugged_context_menu[] = 'cut::'.txt('cut').'::explorer_cut("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::cut';			
 		
 			if($clipboard->is_clipboard($my_app->get_param('fs')) && $phposFS->is_directory($icons[$i]))				

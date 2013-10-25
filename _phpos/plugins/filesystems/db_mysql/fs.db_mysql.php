@@ -587,68 +587,74 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 **************************
 */
  	
-	public function copy($to_dir_id = null)
+	public function clipboard_paste($to_dir_id = null, $mode = 'copy')
 	{
 	 $clipboard = new phpos_clipboard;		
 	 $clipboard->get_clipboard();			
 	 $id_file = $clipboard->get_file_id();			
 	 $fs = $clipboard->get_file_fs();			
 		
-		global $sql, $my_app;
+	 global $sql, $my_app;
+	 
+	 $location = 'db';
+	 if($my_app->get_param('desktop_location') !== null) $location = 'desktop';
 		
-		$sql->cond('id_file', $id_file);
-		$row = $sql->get_row($this->db_files);			
+		switch($mode)
+		{
+			case 'copy':		
 		
-		$location = 'db';
-		if($my_app->get_param('desktop_location') !== null) $location = 'desktop';
-		
-		$items = array(
-		'file_title' => $row['file_title'],
-		'plugin_id' => $row['plugin_id'],
-		'location' => $location,
-		'app_id' => $row['app_id'],
-		'app_action' => $row['app_action'],
-		'win_params' => $row['win_params'],
-		'app_params' => $row['app_params'],
-		'id_parent' => $to_dir_id,
-		'id_user' => $row['id_user'],
-		'created_at' => time(),
-		'modified_at' => time(),
-		'is_dir' => $row['is_dir'],
-		'content' => $row['content'],
-		'multilang' =>  $row['multilang']		
-		);			
-		
-		if(false !== $sql->add($this->db_files, $items))	return true;		
-		
-	}
-	
-	public function cut($to_dir_id = null)
-	{
-	 $clipboard = new phpos_clipboard;		
-	 $clipboard->get_clipboard();			
-	 $id_file = $clipboard->get_file_id();			
-	 $fs = $clipboard->get_file_fs();			
-		
-		global $sql, $my_app;				
-		
-		$location = 'db';
-		if($my_app->get_param('desktop_location') !== null) $location = 'desktop';		
-			
-			$sql->cond('id_file', $id_file);
-			$items = array(
+				$sql->cond('id_file', $id_file);
+				$row = $sql->get_row($this->db_files);					
+				
+				$items = array(
+				'file_title' => $row['file_title'],
+				'plugin_id' => $row['plugin_id'],
+				'location' => $location,
+				'app_id' => $row['app_id'],
+				'app_action' => $row['app_action'],
+				'win_params' => $row['win_params'],
+				'app_params' => $row['app_params'],
 				'id_parent' => $to_dir_id,
-				'location' => $location
-			);
+				'id_user' => $row['id_user'],
+				'created_at' => time(),
+				'modified_at' => time(),
+				'is_dir' => $row['is_dir'],
+				'content' => $row['content'],
+				'multilang' =>  $row['multilang']		
+				);			
+				
+				if(false !== $sql->add($this->db_files, $items))	return true;	
+
+			break;
 			
-			if($sql->update($this->db_files, $items))	
-			{
-					$clipboard->reset_clipboard();		
-					return true;
-			}
-		
+			case 'cut':
+			
+				$sql->cond('id_file', $id_file);
+				$items = array(
+					'id_parent' => $to_dir_id,
+					'location' => $location
+				);
+				
+				if($sql->update($this->db_files, $items))	
+				{
+						$clipboard->reset_clipboard();		
+						return true;
+				}			
+			
+			break;
+		}		
 	}
 	
+	
+	public function clipboard_copy()
+	{
+	
+	}
+	
+	public function clipboard_cut()
+	{
+	
+	}
 	
 }
 ?>

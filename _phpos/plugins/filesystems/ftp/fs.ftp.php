@@ -584,60 +584,10 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 }
 	
 	
-	
-	public function copy($to_dir_id = null)
-	{
-		 $clipboard = new phpos_clipboard;		
-		 $clipboard->get_clipboard();			
-		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();	
-				
-		switch($fs)
-		{ 
-			case 'ftp':	
-				
-			 $basename = basename($id_file);	
-			 		
-			 if(is_dir(MY_HOME_DIR.'_Temp/'.$basename))
-			 {
-					echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
-					$this->ftp_putAll(MY_HOME_DIR.'_Temp/'.$basename, $to_dir_id.'/'.$basename);			 
-					ftp_chdir($this->conn_id, $this->directory_id); 
-					
-			 } else {
-			 
-				 if(file_exists(MY_HOME_DIR.'_Temp/'.$basename))
-				 { 									
-						if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Temp/'.$basename, FTP_BINARY))
-						{ 
-							@unlink(MY_HOME_DIR.'_Temp/'.$basename); 
-							$clipboard->reset_clipboard();						
-							return true;					
-						} 		
-				 }	
-			}
-			break;
-			
-			case 'local_files':		
-			  	
-			 $basename = basename($id_file);	
-			 if(is_dir(MY_HOME_DIR.'_Temp/'.$id_file))
-			 {
-					$this->ftp_putAll(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$basename);			 
-			 
-			 } else {	
-			 
-				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
-				{ 					
-					$clipboard->reset_clipboard();							
-					return true;					
-				} 
-
-				}
-			break;			
-		}		
-	}
-			 
+	public function clipboard_copy_server()
+	{		
+		$this->clipboard_copy();
+	}			 
 /*
 **************************
 */
@@ -648,7 +598,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
 		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();				
+		 $fs = $clipboard->get_file_fs();			
 				
 		 
 			
@@ -733,7 +683,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	
 	
 	
-	public function ftp_to_temp()
+	public function clipboard_copy()
 	{
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
@@ -746,13 +696,14 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			 {
 				//echo basename($id_file);
 				
-				$this->ftp_sync($id_file, MY_HOME_DIR.'_Temp');
+				$this->ftp_sync($id_file, MY_HOME_DIR.'_Clipboard');
 				ftp_chdir($this->conn_id, '..');   
-				return true;			
+				return true;	
+				
 			 } else {
 			 
 				 $tmp_name = basename($id_file);			 
-				 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Temp/'.$tmp_name, $id_file, FTP_BINARY))
+				 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Clipboard/'.$tmp_name, $id_file, FTP_BINARY))
 				 {				
 					return true;			 			
 				 }			 
@@ -761,5 +712,62 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	}
 	
 	
+	public function clipboard_cut()
+	{
+		return $this->clipboard_copy();
+	}
+	
+	public function clipboard_paste($to_dir_id = null, $mode = 'copy')
+	{
+		 $clipboard = new phpos_clipboard;		
+		 $clipboard->get_clipboard();			
+		 $id_file = $clipboard->get_file_id();			
+		 $fs = $clipboard->get_file_fs();	
+				
+		switch($fs)
+		{ 
+			case 'ftp':	
+				
+			 $basename = basename($id_file);	
+			 		
+			 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$basename))
+			 {
+					echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
+					$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$basename, $to_dir_id.'/'.$basename);			 
+					ftp_chdir($this->conn_id, $this->directory_id); 
+					
+			 } else {
+			 
+				 if(file_exists(MY_HOME_DIR.'_Clipboard/'.$basename))
+				 { 									
+						if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Clipboard/'.$basename, FTP_BINARY))
+						{ 
+							@unlink(MY_HOME_DIR.'_Clipboard/'.$basename); 
+							$clipboard->reset_clipboard();						
+							return true;					
+						} 		
+				 }	
+			}
+			break;
+			
+			default:		
+			  	
+			 $basename = basename($id_file);	
+			 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$id_file))
+			 {
+					$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir_id.'/'.$basename);			 
+			 
+			 } else {	
+			 
+				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
+				{ 					
+					$clipboard->reset_clipboard();							
+					return true;					
+				} 
+
+				}
+			break;			
+		}		
+	}
 }
 ?>

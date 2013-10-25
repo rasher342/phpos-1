@@ -22,7 +22,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 			
 				'open::'.txt('open').'::explorer_ftp_view("'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::folder_open',
 				'---',
-				'download::'.txt('download').'::explorer_ftp_download("'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::download',	
+				'download::'.txt('download_to_disk').'::explorer_ftp_download("'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::download',	
 				'---',
 				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',action_id:null,edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'
 				

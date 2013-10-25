@@ -156,7 +156,13 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	 
 		
 		if(!empty($action_id))
-		{
+		{			
+			if(file_exists(PHPOS_DIR.'plugins/filesystems/'.param('fs').'/explorer.actions.php'))
+			{
+				include PHPOS_DIR.'plugins/filesystems/'.param('fs').'/explorer.actions.php';
+			}	
+			
+			
 			switch($action_id)
 			{			
 				case 'delete':			
@@ -173,8 +179,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 						{
 							$phposFS->delete(base64_decode($e[$i]));
 						}						
-					}	
-					
+					}						
 					msg::ok(txt('file_deleted'));				
 				break;	
 				
@@ -185,13 +190,24 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
 					$clipboard = new phpos_clipboard;
 					$clipboard->set_mode('copy');
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
+					$clipboard->set_server(false);
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
 					
-					if(param('fs') == 'ftp')
-					{
-						$phposFS->ftp_to_temp(); 				
-					}
+					$phposFS->clipboard_copy();							
+					msg::ok(txt('copied_to_clip'));		
 					
+				break;
+				
+				case 'copy_server':
+					
+					$connect_id = null;
+					$ftp_id = param('ftp_id');
+					if(!empty($ftp_id)) $connect_id = $ftp_id;
+					$clipboard = new phpos_clipboard;
+					$clipboard->set_mode('copy');
+					$clipboard->set_server(true);
+					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
+					$phposFS->clipboard_copy_server();							
 					msg::ok(txt('copied_to_clip'));		
 					
 				break;
@@ -205,82 +221,10 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$clipboard->set_mode('cut');
 					$clipboard->set_source_win(WIN_ID);
 					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
-					if(param('fs') == 'ftp')
-					{
-						if($phposFS->ftp_to_temp()) echo 'totemp';						
-					}
+					$phposFS->clipboard_cut();					
 					msg::ok(txt('cutted_to_clip'));			
 					
-				break;
-				
-				case 'ftp_download':
-					
-					$connect_id = null;
-					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;
-					$clipboard = new phpos_clipboard;
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
-					//msg::ok('Copied to clipboard');
-					
-					
-					if(!$phposFS->ftp_download(param('action_param'))) 
-					{						
-						param('action_status','error');
-						param('action_status_msg',txt('folder_create_error'));
-						cache_param('action_status');	
-						cache_param('action_status_msg');	
-						msg::error(txt('error'));
-					}			
-					
-				break;
-				
-				
-				case 'ftp_view':
-					
-					$connect_id = null;
-					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;
-					$clipboard = new phpos_clipboard;
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
-					
-					$pathinfo =  pathinfo(param('action_param2'));
-					$ext = $pathinfo['extension'];					
-					
-					$stop_upload = false;
-					
-					if(globalconfig('upload_blacklist') != '')
-					{
-						$blacklist = explode(',', globalconfig('upload_blacklist'));
-						if(in_array(strtolower($ext), $blacklist))
-						{
-							$stop_upload = true;
-							$upload_error = 'This filetype is on blacklist';
-						}		
-							
-						} else {
-							
-							if(globalconfig('upload_whitelist') != '')
-							{
-								$whitelist = explode(',', globalconfig('upload_whitelist'));
-						
-									if(!in_array(strtolower($ext), $whitelist))
-									{
-										$stop_upload = true;
-										$upload_error = 'This filetype is not in whitelist';
-									}
-							}						
-						}
-					
-					if(!$stop_upload)
-					{
-							$phposFS->ftp_view(param('action_param'));
-							param('action_param', null);
-							cache_param('action_param');
-							
-					}
-				break;			
-				
-				
+				break;				
 				
 				case 'paste':						
 				
@@ -289,23 +233,24 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$clipboard->get_clipboard();
 					$mode = $clipboard->get_mode();				
 										 
-					 $id_file = $clipboard->get_file_id();			
+					 $id_file = $clipboard->get_file_id();
+					echo $id_file;
 					 $fs = $clipboard->get_file_fs();		
 					 
 					 //echo 'id:'.$id_file.'<br>fs: '.$fs.'<br>connid:'.$clipboard->get_file_connect_id();
 		 					
 					
 					if($mode == 'copy')
-					{
-						if($phposFS->copy(param('action_param')))	msg::ok(txt('file_pasted'));	
+					{						
+						if($phposFS->clipboard_paste(param('action_param'), 'copy'))	msg::ok(txt('file_pasted'));	
 						echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
 						
 					} elseif($mode == 'cut') {
 						
 						$source_win = $clipboard->get_source_win();
-						if($phposFS->cut(param('action_param'))) 	
+						if($phposFS->clipboard_paste(param('action_param'), 'cut')) 	
 						{
-							echo '<script>phpos.windowRefresh("'.$source_win.'", "");</script>';
+							echo '<script>phpos.windowRefresh("'.$source_win.'", ""); phpos.windowRefresh("'.WIN_ID.'", "");</script>';
 							msg::ok(txt('file_pasted'));							
 						}
 					}					

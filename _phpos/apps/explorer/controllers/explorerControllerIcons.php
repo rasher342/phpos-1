@@ -142,6 +142,16 @@ if(!defined('PHPOS'))	die();
 				}		
 			}	// end loop (icons)
 				
+				
+		// Load filesystem plugin preloader
+		if(file_exists(PHPOS_DIR.'plugins/filesystems/'.$my_app->get_param('fs').'/explorer.afterload.php'))
+		{
+			include PHPOS_DIR.'plugins/filesystems/'.$my_app->get_param('fs').'/explorer.afterload.php';	
+		}	
+				
+				
+				
+				
 /* =============================================== */		
 	
 				// Context menu for RMB click on folder area

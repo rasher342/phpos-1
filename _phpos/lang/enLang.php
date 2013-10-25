@@ -73,7 +73,10 @@ if(!defined('PHPOS'))	die();
 	$txt['open'] = 'Open';
 	$txt['open_with'] = 'Open with';
 	$txt['download'] = 'Download';
+	$txt['download_to_disk'] = 'Download to your computer';
+	$txt['download_to_server'] = 'Download to server';
 	$txt['copy'] = 'Copy';
+	$txt['copy_server'] = 'Copy against filesystems';
 	$txt['paste'] = 'Paste';
 	$txt['cut'] = 'Cut';
 	$txt['delete'] = 'Delete';
@@ -115,6 +118,8 @@ if(!defined('PHPOS'))	die();
 	
 // LIBS	
 	$txt['libs'] = 'Libraries';
+	$txt['lib_clipboard'] = 'Clipboard';
+	$txt['lib_download'] = 'Download';
 	$txt['lib_desktop'] = 'Desktop';
 	$txt['lib_docs'] = 'Documents';
 	$txt['lib_wallpapers'] = 'Wallpapers';

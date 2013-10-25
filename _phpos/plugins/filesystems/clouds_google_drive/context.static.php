@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.6, 2013.10.16
+	File version: 1.2.8, 2013.10.25
  
 **********************************
 */
@@ -19,21 +19,27 @@ if(!defined("PHPOS_IN_EXPLORER"))
 }
 
 		$contextMenus['FILE'] = array(				
-				'open::'.txt('open').'::alert("normalopen'.$item.'");::folder_open',
-				'---',				
-				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'
+				'open::'.txt('open').'::alert();::google_drive',
+				'---',									
+				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'			
+		);		
+
+		$contextMenus['FILE'][] = '---';	
 			
-		);			
+	  $contextMenus['FILE'][]	=	
+		'downloadl::'.txt('download_to_disk').'::explorer_clouds_google_drive_localdownload("'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::download';	
+		$contextMenus['FILE'][]	=	
+		'downloads::'.txt('download_to_server').'::explorer_clouds_google_drive_serverdownload("'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::download';	
 
 
 		$contextMenus['DIR'] = array(		
-				'open::Otwórz folder::phpos.windowRefresh("'.$apiWindow->getID().'","dir_id:'.$phposFS->addLastSlash($icons[$i]['id']).'");::open',			
+				'open::Open folder::::open',			
 				'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit'				
 				
 		);	
 
 		$contextMenus['WINDOW'] = array(		
-				'newshortcut::'.txt('new_shortcut').'::'.winmodal(txt('new_shortcut'), 'app', 'app_id:shortcuts@index,width:300,height:350','desktop:1,location:'.$context_location.',dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::edit_add',
+				'newshortcut::Open this folder in Google::'.winmodal(txt('new_shortcut'), 'app', 'app_id:shortcuts@index,width:300,height:350','desktop:1,location:'.$context_location.',dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::edit_add',
 				'newfolder::'.txt('new_folder').'::'.winmodal(txt('new_folder'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',back:null,dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::folder_files'			
 		);
 ?>

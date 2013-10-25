@@ -90,6 +90,8 @@ class phpos_users
 		
 		$this->home_dir_folders = array(
 		'_Desktop',
+		'_Download',
+		'_Clipboard',
 		'_Wallpapers',
 		'_Pictures',
 		'_Video',

@@ -516,7 +516,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		 
 		 $dir = opendir($src); 
 		 
-    @mkdir($dst, 0777); 
+    @mkdir($dst, 0755); 
     while(false !== ( $file = readdir($dir)) ) { 
         if (( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
@@ -530,16 +530,13 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
     closedir($dir); 
 		
 		return true;
-} 
-	
+} 	
 			 
 /*
 **************************
-*/
- 	
+*/	
 	
-	
-	public function copy($to_dir_id = null)
+	public function clipboard_paste($to_dir_id = null, $mode = 'copy')
 	{
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
@@ -549,91 +546,117 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		 switch($fs)
 		 { 
 			case 'ftp':					
-				if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file)) 
+				
+				switch($mode)
 				{
-					if(rename(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$id_file)) 
-					{						
-						$clipboard->reset_clipboard();	
-						return true;
-					}
-				}		 	
+					case 'copy':
+					
+						if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file)) 
+						{
+							if(rename(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$id_file)) 
+							{						
+								$clipboard->reset_clipboard();	
+								return true;
+							}
+						}	
+						
+					break;
+					
+					case 'cut':
+					
+						$ftp_connect = new phpos_fs_plugin_ftp($clipboard->get_file_connect_id());		
+						 
+						// unlink ftp add
+						if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
+						{ 
+								if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
+								{
+									$clipboard->reset_clipboard();						
+									return true;
+								}
+						 }
+						 
+					break;	
+				}	
+				
 			break;
+			
+			
 			
 			case 'local_files':					 
 			  				
-				$basename = basename($id_file);			
-				
-				if(!is_dir($id_file))
-				{						
-					if(copy($id_file, $to_dir_id.'/'.$basename))
-					{ 				
-						$clipboard->reset_clipboard();							
-						return true;
+				switch($mode)
+				{
+					case 'copy':
+					
+						$basename = basename($id_file);			
 						
-					} else {  
+						if(!is_dir($id_file))
+						{						
+							if(copy($id_file, $to_dir_id.'/'.$basename))
+							{ 				
+								$clipboard->reset_clipboard();							
+								return true;
+								
+							} else {  
+							
+								$clipboard->reset_clipboard();	
+								return false; 
+							} 	
+						
+						} else {
+							
+							$to_dir = $to_dir_id.'/'.$basename;
+							mkdir($to_dir, 0777);
+							$clipboard->reset_clipboard();					
+							if($this->recurse_copy($id_file, $to_dir)) return true;
+						}
+						
+					break;
 					
-						$clipboard->reset_clipboard();	
-						return false; 
-					} 	
-				
-				} else {
 					
-					$to_dir = $to_dir_id.'/'.$basename;
-					mkdir($to_dir, 0777);
-					$clipboard->reset_clipboard();					
-					if($this->recurse_copy($id_file, $to_dir)) return true;
+					case 'cut':
+					
+						$basename = basename($id_file);												
+						if(rename($id_file, $to_dir_id.'/'.$basename))
+						{ 				
+							$clipboard->reset_clipboard();							
+							return true;
+							
+						} else {  
+						
+							$clipboard->reset_clipboard();	
+							return false; 
+						} 					
+					
+					break;
 				}
 				
+				
 			break;			
 		}		
 	}
 	
-	public function cut($to_dir_id = null)
+	
+	
+	
+	public function clipboard_copy()
 	{
-		 $clipboard = new phpos_clipboard;		
-		 $clipboard->get_clipboard();			
-		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();				
-				
-		switch($fs)
-		{ 
-			case 'ftp':			
-			
-			$clipboard->get_clipboard();				
-			$ftp_connect = new phpos_fs_plugin_ftp($clipboard->get_file_connect_id());		
-			 
-			// unlink ftp add
-			if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
-			{ 
-					if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
-					{
-						$clipboard->reset_clipboard();						
-						return true;
-					}
-			 }
-		 	
-			break;
-			
-			case 'local_files':					 
-			  				
-				$basename = basename($id_file);			
-				
-										
-					if(rename($id_file, $to_dir_id.'/'.$basename))
-					{ 				
-						$clipboard->reset_clipboard();							
-						return true;
-						
-					} else {  
-					
-						$clipboard->reset_clipboard();	
-						return false; 
-					} 				
-				
-			break;			
-		}		
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}
 	
+	public function clipboard_copy_server()
+	{
+		$this->clipboard_copy();
+	}
 	
+	public function clipboard_cut()
+	{
+	
+	}
 }
 ?>

@@ -37,7 +37,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	$contextMenus['FILE'][] = '---';	
 			
 	$contextMenus['FILE'][]	=	
-				'download::'.txt('download').'::'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $icons[$i]['id']))).'::download';
+				'download::'.txt('download_to_disk').'::'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $icons[$i]['id']))).'::download';
 					
 			
 	// DIR:

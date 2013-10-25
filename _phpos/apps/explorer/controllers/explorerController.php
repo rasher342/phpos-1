@@ -99,6 +99,27 @@ if(!defined('PHPOS'))	die();
 **************************
 */	
 	
+	// Check dirs	
+	if(!is_dir(MY_HOME_DIR.'_Temp'))
+	{
+		mkdir(MY_HOME_DIR.'_Temp',0755);
+		file_put_contents(MY_HOME_DIR.'_Temp/index.php', ' ');
+	}
+	
+	if(!is_dir(MY_HOME_DIR.'_Download'))
+	{
+		mkdir(MY_HOME_DIR.'_Download',0755);
+		file_put_contents(MY_HOME_DIR.'_Download/index.php', ' ');
+	}
+	
+	if(!is_dir(MY_HOME_DIR.'_Clipboard'))
+	{
+		mkdir(MY_HOME_DIR.'_Clipboard',0755);
+		file_put_contents(MY_HOME_DIR.'_Clipboard/index.php', ' ');
+	}
+	
+	
+	
 	// Load filesystems classes
 	
 	$filesystems_classes = glob(PHPOS_DIR.'plugins/filesystems/*/fs.*.php');
@@ -239,7 +260,7 @@ if(!defined('PHPOS'))	die();
 	}	
 		
 		
-		if(APP_ACTION == 'index' || APP_ACTION == 'desktop') 
+		if((APP_ACTION == 'index' || APP_ACTION == 'desktop') && !$_GET['ajax_include']) 
 		{
 			switch($my_app->get_param('view_type'))
 			{

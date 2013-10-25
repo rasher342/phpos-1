@@ -18,8 +18,10 @@ class phpos_clipboard
 {
 	private 
 		$file_id,	
+		$file_name,
 		$file_connect_id,	
 		$mode,
+		$server,
 		$file_fs;		
 		 
 /*
@@ -31,7 +33,9 @@ class phpos_clipboard
 		if(!is_array($_SESSION['phpos_clipboard']))
 		{
 			$_SESSION['phpos_clipboard'] = array();
-			$_SESSION['phpos_clipboard']['id'] = null;			
+			$_SESSION['phpos_clipboard']['id'] = null;	
+			$_SESSION['phpos_clipboard']['file_name'] = null;			
+			$_SESSION['phpos_clipboard']['server'] = false;
 			$_SESSION['phpos_clipboard']['fs'] = null;
 			$_SESSION['phpos_clipboard']['mode'] = 'copy';
 			$_SESSION['phpos_clipboard']['connect_id'] = null;
@@ -47,6 +51,16 @@ class phpos_clipboard
 		$_SESSION['phpos_clipboard']['mode'] = $mode;
 	}
 	
+	public function set_name($name)
+	{
+		$_SESSION['phpos_clipboard']['file_name'] = $name;
+	}
+	
+	public function set_server($val)
+	{
+		$_SESSION['phpos_clipboard']['server'] = $val;
+	}
+	
 	public function set_source_win($id)
 	{
 		$_SESSION['phpos_clipboard']['source_win'] = $id;
@@ -55,6 +69,11 @@ class phpos_clipboard
 	public function get_source_win()
 	{
 		return $_SESSION['phpos_clipboard']['source_win'];
+	}
+	
+	public function get_name()
+	{
+		return $_SESSION['phpos_clipboard']['name'];
 	}
 	
 	public function add_clipboard($id, $fs, $connect_id = null)
@@ -71,6 +90,7 @@ class phpos_clipboard
 	public function get_clipboard()
 	{
 		$this->file_id = $_SESSION['phpos_clipboard']['id'];
+		$this->file_name = $_SESSION['phpos_clipboard']['file_name'];
 		$this->file_fs = $_SESSION['phpos_clipboard']['fs'];
 		$this->file_connect_id = $_SESSION['phpos_clipboard']['connect_id'];		
 	}
@@ -78,6 +98,11 @@ class phpos_clipboard
 	public function get_mode()
 	{
 		return $_SESSION['phpos_clipboard']['mode'];
+	}
+	
+	public function is_server()
+	{
+		if($_SESSION['phpos_clipboard']['server']) return true;
 	}
 /*
 **************************
@@ -116,7 +141,9 @@ class phpos_clipboard
 	public function reset_clipboard()
 	{
 		$_SESSION['phpos_clipboard'] = array();
-		$_SESSION['phpos_clipboard']['id'] = null;			
+		$_SESSION['phpos_clipboard']['id'] = null;		
+		$_SESSION['phpos_clipboard']['file_name'] = null;
+		$_SESSION['phpos_clipboard']['server'] = false;	
 		$_SESSION['phpos_clipboard']['fs'] = null;
 		$_SESSION['phpos_clipboard']['connect_id'] = null;
 	}
@@ -140,20 +167,14 @@ class phpos_clipboard
  	
 	public function is_my_clipboard($fs)
 	{
-		switch($fs)
+		if($this->is_clipboard() && $fs == 'db_mysql' && $_SESSION['phpos_clipboard']['fs'] == 'db_mysql') 
 		{
-			case 'db_mysql':
-				$allowed = array('db_mysql');
-			break;
+			return true;	
 			
-			case 'local_files':
-			case 'ftp':
-				$allowed = array('local_files', 'ftp');
-			break;		
-		}	
-		
-		
-		if($this->is_clipboard() && in_array($_SESSION['phpos_clipboard']['fs'], $allowed)) return true;				
+		} elseif($_SESSION['phpos_clipboard']['fs'] != 'db_mysql') {
+			
+			if($this->is_clipboard() && $this->is_server()) return true;	
+		}						
 	}
 	 
 /*

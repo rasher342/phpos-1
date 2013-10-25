@@ -20,6 +20,7 @@ class app_explorer {
 		$my_app,
 		$fs,
 		$filesystem,
+		$js_code,
 		$hidden_icons = array(),
 		$config = array(),
 		$window;
@@ -46,6 +47,8 @@ class app_explorer {
 		$this->hidden_icons = array(
 		'_Desktop',
 		'_Documents',
+		'_Download',
+		'_Clipboard',
 		'_Log',
 		'_Icons',
 		'_Pictures',
@@ -78,7 +81,23 @@ class app_explorer {
 	{
 		return $this->hidden_icons;
 	}
-				 
+	
+/*
+**************************
+*/	
+	public function addJs($js_code)
+	{
+		$this->js_code.= $js_code;
+	}
+	
+/*
+**************************
+*/	
+	public function renderJs()
+	{
+		return $this->js_code;
+	}
+	
 /*
 **************************
 */
@@ -854,7 +873,7 @@ class app_explorer {
 					<a href="javascript:void(0)" ondblclick="'.$icon['action'].'">
 					<img src="'.$icon['icon'].'" />
 					<br />'.wordwrap(string_cut($icon['filename'],25), 15, " ", 1).$ext.$shared.'
-					</a>
+					</a><br>'.$icon['file_id'].'
 				</div>';		
 				
 			} else {

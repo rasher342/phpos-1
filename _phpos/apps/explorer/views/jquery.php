@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.2.8, 2013.10.25
  
 **********************************
 */
@@ -26,6 +26,8 @@ $(document).ready(function() {
 <!-- <![endif]-->
 
 <script>
+
+	<?php echo $explorer->renderJs(); ?>
 
 // == Create new folder
 	function explorer_newfolder()
@@ -63,54 +65,15 @@ $(document).ready(function() {
 	}
 	
 	function explorer_copy(win_id, file_id, file_name, file_type)
-	{	
-		//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
-		//phpos.windowRefresh('1', '');	
+	{			
 		phpos.windowRefresh(win_id, 'action_id:copy,action_param:'+file_id+',action_param2:'+file_type);		
 	}
 	
-	function explorer_ftp_download(file_id, file_name, file_type)
-	{	
-		jNotify(
-				'<?php echo txt('wait_for_download'); ?>',
-				{
-					autoHide : true, 
-					clickOverlay : false,
-					MinWidth : 300,
-					TimeShown : 7000,
-					ShowTimeEffect : 1000,
-					HideTimeEffect : 600,
-					LongTrip :20,
-					HorizontalPosition : 'right',
-					VerticalPosition : 'bottom',
-					ShowOverlay : false
-			});
-			
-		phpos.windowRefresh('<?php echo WIN_ID;?>', 'action_id:ftp_download,action_param:'+file_id+',action_param2:'+file_type);		
+	function explorer_copy_server(win_id, file_id, file_name, file_type)
+	{			
+		phpos.windowRefresh(win_id, 'action_id:copy_server,action_param:'+file_id+',action_param2:'+file_type);		
 	}
-	
-	function explorer_ftp_view(file_id, file_name, file_type)
-	{	
-		jNotify(
-				'<?php echo txt('wait_for_download'); ?>',
-				{
-					autoHide : true, 
-					clickOverlay : false,
-					MinWidth : 300,
-					TimeShown : 5000,
-					ShowTimeEffect : 1000,
-					HideTimeEffect : 600,
-					LongTrip :20,
-					HorizontalPosition : 'right',
-					VerticalPosition : 'bottom',
-					ShowOverlay : false
-			});	
 		
-		
-		
-		phpos.windowRefresh('<?php echo WIN_ID;?>', 'action_id:ftp_view,action_param:'+file_id+',action_param2:'+file_type);		
-	}
-	
 	function explorer_paste(win_id, to_id, location)
 	{	
 		//alert('to_id:'+to_id);	
