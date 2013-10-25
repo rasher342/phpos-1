@@ -282,8 +282,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				
 				
 				
-				case 'paste':			
-				
+				case 'paste':						
 				
 					$clipboard = new phpos_clipboard;					
 				
@@ -299,6 +298,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					if($mode == 'copy')
 					{
 						if($phposFS->copy(param('action_param')))	msg::ok(txt('file_pasted'));	
+						echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
 						
 					} elseif($mode == 'cut') {
 						

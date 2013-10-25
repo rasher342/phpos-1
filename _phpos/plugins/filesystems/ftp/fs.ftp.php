@@ -563,7 +563,10 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  	
 	public function ftp_putAll($src_dir, $dst_dir) {
-    $d = dir($src_dir);
+    if (!@ftp_chdir($this->conn_id, $dst_dir)) {
+     ftp_mkdir($this->conn_id, $dst_dir); // create directories that do not yet exist
+     }
+		$d = dir($src_dir);
     while($file = $d->read()) { // do this for each file in the directory
         if ($file != "." && $file != "..") { // to prevent an infinite loop
             if (is_dir($src_dir."/".$file)) { // do the following if it is a directory
@@ -577,6 +580,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
         }
     }
     $d->close();
+	 
 }
 	
 	
@@ -596,9 +600,10 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			 		
 			 if(is_dir(MY_HOME_DIR.'_Temp/'.$basename))
 			 {
-					echo $basename;	
+					echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
 					$this->ftp_putAll(MY_HOME_DIR.'_Temp/'.$basename, $to_dir_id.'/'.$basename);			 
-			 
+					ftp_chdir($this->conn_id, $this->directory_id); 
+					
 			 } else {
 			 
 				 if(file_exists(MY_HOME_DIR.'_Temp/'.$basename))
