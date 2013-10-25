@@ -7,23 +7,27 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.2.8, 2013.10.26
  
 **********************************
 */
 if(!defined('PHPOS'))	die();	
-
 
 if(!defined('PHPOS_IN_EXPLORER'))
 {
 	die();
 }
 
+	 
+/*
+**************************
+*/
+ 
 class phpos_fs_plugin_local_files extends phpos_filesystems
-{
-                                                                               
+{                                                                               
 	public
-		$protocol_name;
+	
+		$protocol_name = 'local_files';
 				 
 /*
 **************************
@@ -62,12 +66,6 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		{
 			$this->root_directory_id = $home_dir;		
 		}		
-		/*
-		if($my_user->get_user_type() == 3)
-		{
-			$this->root_directory_id = PHPOS_WEBROOT_DIR.'home';
-		}		
-		*/
 		
 		if(empty($this->directory_id))
 		{
@@ -141,7 +139,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
  	
 	public function new_dir($dirname)
 	{
-		if(mkdir($this->directory_id.'/'.$dirname, 0777)) 
+		if(mkdir($this->directory_id.'/'.$dirname, 0755)) 
 		{
 			$file = '<?php die(); ?>';
 			if(!@file_put_contents($this->directory_id.'/'.$dirname.'/index.php', $file)) return false;		
@@ -267,17 +265,15 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 					} else {
 					
 						$list_files[] = $file_info;
-					}
-					
+					}				
+				}	
 				
-				}		
 				array_sort($list_dirs, 'basename');
 				array_sort($list_files, 'basename');
 				
 				$all_files = array_merge($list_dirs, $list_files);
 				
-				return $all_files;
-			
+				return $all_files;			
 		}
 	}
 		 
@@ -348,8 +344,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
         }
     }
     rmdir($path);
-	}
-	
+	}	
 	
 			 
 /*
@@ -368,14 +363,12 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		
 			if(@unlink($id_file)) return true;
 		}
-	}
-	
+	}	
 			 
 /*
 **************************
 */
- 	
-	
+ 		
 	public function get_icon($file)
 	{	
 		global $explorer;
@@ -411,8 +404,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	{
 		$this->api_file_id = $file_id;	
 	}
-	
-			 
+				 
 /*
 **************************
 */
@@ -442,16 +434,11 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		
 			return false;
 		}
-	}
-	
-	
+	}		
 			 
 /*
 **************************
 */
- 	
-	
-	
 	
 	
 	public function update_file_content($file_info, $content)
@@ -540,49 +527,12 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	{
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
-		 $id_file = $clipboard->get_file_id();			
+		 $id_file = $clipboard->get_file_id();		
+		 $file_name = $clipboard->get_name();		 
 		 $fs = $clipboard->get_file_fs();			
 		
 		 switch($fs)
-		 { 
-			case 'ftp':					
-				
-				switch($mode)
-				{
-					case 'copy':
-					
-						if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file)) 
-						{
-							if(rename(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$id_file)) 
-							{						
-								$clipboard->reset_clipboard();	
-								return true;
-							}
-						}	
-						
-					break;
-					
-					case 'cut':
-					
-						$ftp_connect = new phpos_fs_plugin_ftp($clipboard->get_file_connect_id());		
-						 
-						// unlink ftp add
-						if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
-						{ 
-								if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
-								{
-									$clipboard->reset_clipboard();						
-									return true;
-								}
-						 }
-						 
-					break;	
-				}	
-				
-			break;
-			
-			
-			
+		 { 						
 			case 'local_files':					 
 			  				
 				switch($mode)
@@ -607,7 +557,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 						} else {
 							
 							$to_dir = $to_dir_id.'/'.$basename;
-							mkdir($to_dir, 0777);
+							mkdir($to_dir, 0755);
 							$clipboard->reset_clipboard();					
 							if($this->recurse_copy($id_file, $to_dir)) return true;
 						}
@@ -630,15 +580,60 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 						} 					
 					
 					break;
-				}
+				}				
 				
+			break;
+			
+			default:					
 				
-			break;			
+				switch($mode)
+				{
+					case 'copy':					
+						
+							if(!is_dir($id_file))
+							{						
+								if(copy($id_file, $to_dir_id.'/'.$file_name))
+								{									
+									return true;				
+								} 
+							
+							} elseif(file_exists(MY_HOME_DIR.'_Clipboard/'.$id_file)) {
+								
+								$to_dir = $to_dir_id.'/'.$file_name;
+								mkdir($to_dir, 0755);							
+								if($this->recurse_copy($id_file, $to_dir)) return true;
+							}
+						
+						
+					break;
+					
+					case 'cut':
+					
+						$ftp_connect = new phpos_fs_plugin_ftp($clipboard->get_file_connect_id());		
+						 
+						// unlink ftp add
+						if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
+						{ 
+								if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
+								{
+									$clipboard->reset_clipboard();						
+									return true;
+								}
+						 }
+						 
+					break;	
+				}	
+				
+			break;
+			
 		}		
 	}
 	
-	
-	
+		 
+/*
+**************************
+*/
+ 	
 	
 	public function clipboard_copy()
 	{
@@ -648,15 +643,50 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$clipboard->set_server(false);
 		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}
-	
+		 
+/*
+**************************
+*/
+ 
 	public function clipboard_copy_server()
 	{
-		$this->clipboard_copy();
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(true);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);			
+		
+		$basename = basename(param('action_param'));			
+		$to_dir_id = MY_HOME_DIR.'_Clipboard/';
+		
+		if(!is_dir($id_file))
+		{						
+			if(copy($id_file, $to_dir_id.'/'.$basename))
+			{									
+				return true;				
+			} 
+		
+		} else {
+			
+			$to_dir = $to_dir_id.'/'.$basename;
+			mkdir($to_dir, 0755);							
+			if($this->recurse_copy($id_file, $to_dir)) return true;
+		}
+				
 	}
-	
+		 
+/*
+**************************
+*/
+ 
 	public function clipboard_cut()
 	{
-	
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('cut');
+		$clipboard->set_source_win(WIN_ID);
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}
 }
 ?>

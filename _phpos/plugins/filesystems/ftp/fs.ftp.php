@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.2.8, 2013.10.26
  
 **********************************
 */
@@ -24,11 +24,9 @@ if(!defined('PHPOS_IN_EXPLORER'))
 */
  
 class phpos_fs_plugin_ftp extends phpos_filesystems
-{
-
-                                                                             
+{                                                                             
 	public
-		$protocol_name;
+		$protocol_name = 'ftp';
 		 
 /*
 **************************
@@ -62,19 +60,20 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 /*
 **************************
 */
- 	function __destruct()
+ 	public function __destruct()
 	{	
 		@ftp_close($this->conn);	
-	}
-		
-	
-	function __construct($ftp_id = null)
+	}		
+	 
+/*
+**************************
+*/
+ 	
+	public function __construct($ftp_id = null)
 	{		
 		$this->protocol_name = 'ftp';		 	 
 		$this->errorHandler = array();		
 		$this->prefix = 'ftp';	
-		
-		
 		
 		if(empty($ftp_id))
 		{
@@ -93,20 +92,16 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 					$this->connection_status = 'connected';
 				} else {
 					$this->connection_status = 'connection error';
-				}
+				}			
 			
-				 //msg::error('FTP: Error connection to server');
-			
-		}
-		
+		}		
 		
 		global $my_user;
 		$this->root_directory_id = '.';	
 		 
 /*
 **************************
-*/
- 	
+*/ 	
 		
 		if(empty($this->directory_id))
 		{
@@ -116,19 +111,16 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	
 	/*
 **************************
-*/
- 
+*/ 
  
 	public function set_status($str)
 	{
 		$this->connection_status = $str;	
 	}
 	
-			 
 /*
 **************************
-*/
- 	
+*/ 	
 	
 	public function get_status()
 	{
@@ -166,14 +158,11 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			
 				if($this->conn !== FALSE)
 				{					
-					$this->connected = 1;
-					//echo hide_conn();
-					//msg::ok('FTP: Connected to: '.$this->ftp->get_host());
+					$this->connected = 1;					
 					
 					$login_result = @ftp_login($this->conn_id, $this->ftp->get_login(), $this->ftp->get_password()); 
 					if($login_result !== FALSE)
-					{	
-						//msg::ok('FTP: Logged as: '.$this->ftp->get_login());
+					{							
 						$this->logged = 1;	
 						$this->connection_status = 'connected';
 						return true;
@@ -197,10 +186,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				return true;
 			}
 	}	
-		 
-
-
-		
+	
 /*
 **************************
 */
@@ -395,13 +381,11 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			$dir = $my_app->get_param('dir_id');		
 			
 			if(ftp_mkdir($this->conn_id, $dir.'/'.$dirname)) return true;	
-	}	
- 
+	}	 
  		 
 /*
 **************************
-*/
- 	
+*/ 	
  
  
 	public function is_directory($file)
@@ -564,18 +548,18 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
  	
 	public function ftp_putAll($src_dir, $dst_dir) {
     if (!@ftp_chdir($this->conn_id, $dst_dir)) {
-     ftp_mkdir($this->conn_id, $dst_dir); // create directories that do not yet exist
+     ftp_mkdir($this->conn_id, $dst_dir); 
      }
 		$d = dir($src_dir);
-    while($file = $d->read()) { // do this for each file in the directory
-        if ($file != "." && $file != "..") { // to prevent an infinite loop
-            if (is_dir($src_dir."/".$file)) { // do the following if it is a directory
+    while($file = $d->read()) {
+        if ($file != "." && $file != "..") { 
+            if (is_dir($src_dir."/".$file)) { 
                 if (!@ftp_chdir($this->conn_id, $dst_dir."/".$file)) {
-                    ftp_mkdir($this->conn_id, $dst_dir."/".$file); // create directories that do not yet exist
+                    ftp_mkdir($this->conn_id, $dst_dir."/".$file); 
                 }
-                $this->ftp_putAll($src_dir."/".$file, $dst_dir."/".$file); // recursive part
+                $this->ftp_putAll($src_dir."/".$file, $dst_dir."/".$file); 
             } else {
-                $upload = ftp_put($this->conn_id, $dst_dir."/".$file, $src_dir."/".$file, FTP_BINARY); // put the files
+                $upload = ftp_put($this->conn_id, $dst_dir."/".$file, $src_dir."/".$file, FTP_BINARY); 
             }
         }
     }
@@ -583,10 +567,16 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	 
 }
 	
-	
+	 
+/*
+**************************
+*/
+ 	
 	public function clipboard_copy_server()
 	{		
 		$this->clipboard_copy();
+		$clipboard = new phpos_clipboard;	
+		$clipboard->set_server(true);
 	}			 
 /*
 **************************
@@ -599,18 +589,16 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 $clipboard->get_clipboard();			
 		 $id_file = $clipboard->get_file_id();			
 		 $fs = $clipboard->get_file_fs();			
-				
-		 
+						
+		 $tmp_name = basename($id_file);			 
+		 if(ftp_get($this->conn_id, PHPOS_TEMP.$tmp_name, $id_file, FTP_BINARY))
+		 { 				
+			$basename = basename($id_file);
+			$clipboard->reset_clipboard();
+			echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('ftp_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', PHPOS_TEMP.$tmp_name))).'</script>';
 			
-			 $tmp_name = basename($id_file);			 
-			 if(ftp_get($this->conn_id, PHPOS_TEMP.$tmp_name, $id_file, FTP_BINARY))
-			 { 				
-				$basename = basename($id_file);
-				$clipboard->reset_clipboard();
-				echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('ftp_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', PHPOS_TEMP.$tmp_name))).'</script>';
-				
-				return true;			 			
-			}	
+			return true;			 			
+		}	
 	}
 			 
 /*
@@ -625,8 +613,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		 $fs = $clipboard->get_file_fs();		
 		 
 		 if(!empty($id_file))
-		 {
-			
+		 {			
 			 $tmp_name = basename($id_file);			 
 			 if(ftp_get($this->conn_id, MY_HOME_DIR.'_Temp/'.$tmp_name, $id_file, FTP_BINARY))
 			 { 				
@@ -639,23 +626,23 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			}	
 		 }
 	}
-	
+	 
+/*
+**************************
+*/
+ 	
 	
 	public function ftp_sync($dir, $last_dir) 
-	{	    
-		
-		
+	{			
 		if($dir != ".") 
-		{ 
-			//echo 'dirID:'.$this->directory_id.'<br>';
+		{ 			
 			if(@ftp_chdir($this->conn_id, $dir) == false) 
-			{ 					
-					//echo 'aaaaa';
+			{					
 					return; 
 			}
 			
 			if(!empty($dir)) $last_dir = $last_dir.'/'.pathinfo($dir, PATHINFO_FILENAME);				
-	//echo $last_dir;
+
 			if(!is_dir($last_dir))
 			{				
 				mkdir($last_dir, 0777); 										
@@ -681,21 +668,28 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
     ftp_chdir($this->conn_id, '..');     
 	} 
 	
-	
+	 
+/*
+**************************
+*/
+ 	
 	
 	public function clipboard_copy()
 	{
-		 $clipboard = new phpos_clipboard;		
-		 $clipboard->get_clipboard();			
-		 $id_file = $clipboard->get_file_id();			
-		 $fs = $clipboard->get_file_fs();		
+		global $connect_id;
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);	
+		 
+		$id_file = param('action_param');		 
+		$fs = param('action_param2');			 
 		 
 		 if(!empty($id_file))
 		 {			
 			 if($this->is_directory($id_file))
-			 {
-				//echo basename($id_file);
-				
+			 {				
 				$this->ftp_sync($id_file, MY_HOME_DIR.'_Clipboard');
 				ftp_chdir($this->conn_id, '..');   
 				return true;	
@@ -710,61 +704,107 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			 }
 		 }
 	}
-	
+		 
+/*
+**************************
+*/
+ 
 	
 	public function clipboard_cut()
 	{
-		return $this->clipboard_copy();
+		$this->clipboard_copy();
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_source_win(WIN_ID);
+		$clipboard->set_mode('cut');
 	}
-	
+		 
+/*
+**************************
+*/
+ 
 	public function clipboard_paste($to_dir_id = null, $mode = 'copy')
 	{
 		 $clipboard = new phpos_clipboard;		
 		 $clipboard->get_clipboard();			
-		 $id_file = $clipboard->get_file_id();			
+		 $id_file = $clipboard->get_file_id();		
+		 $file_name = $clipboard->get_name();
 		 $fs = $clipboard->get_file_fs();	
 				
 		switch($fs)
 		{ 
 			case 'ftp':	
 				
-			 $basename = basename($id_file);	
-			 		
-			 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$basename))
-			 {
-					echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
-					$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$basename, $to_dir_id.'/'.$basename);			 
-					ftp_chdir($this->conn_id, $this->directory_id); 
+				switch($mode)
+				{
+					case 'copy':
 					
-			 } else {
-			 
-				 if(file_exists(MY_HOME_DIR.'_Clipboard/'.$basename))
-				 { 									
-						if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Clipboard/'.$basename, FTP_BINARY))
-						{ 
-							@unlink(MY_HOME_DIR.'_Clipboard/'.$basename); 
-							$clipboard->reset_clipboard();						
-							return true;					
-						} 		
-				 }	
-			}
-			break;
-			
-			default:		
+						$basename = basename($id_file);	
+								
+						 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$basename))
+						 {
+								echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
+								$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$basename, $to_dir_id.'/'.$basename);			 
+								ftp_chdir($this->conn_id, $this->directory_id); 
+								
+						 } else {
+						 
+								 if(file_exists(MY_HOME_DIR.'_Clipboard/'.$basename))
+								 { 									
+										if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Clipboard/'.$basename, FTP_BINARY))
+										{ 
+											@unlink(MY_HOME_DIR.'_Clipboard/'.$basename); 
+											$clipboard->reset_clipboard();						
+											return true;					
+										} 		
+								 }							 
+							}
+							
+						break;
+						
+						case 'cut':
+							
+						$basename = basename($id_file);	
+								
+							 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$basename))
+							 {
+									echo 'todir:'.$to_dir_id.'--plik:'.$basename;	
+									$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$basename, $to_dir_id.'/'.$basename);			 
+									ftp_chdir($this->conn_id, $this->directory_id); 
+									
+							 } else {
+							 
+									 if(file_exists(MY_HOME_DIR.'_Clipboard/'.$basename))
+									 { 									
+											if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Clipboard/'.$basename, FTP_BINARY))
+											{ 
+												@unlink(MY_HOME_DIR.'_Clipboard/'.$basename); 
+												if($this->delete($id_file))
+												{
+													$clipboard->reset_clipboard();						
+													return true;
+												}					
+											} 		
+									 }							 
+								}							
+							
+						break;
+				}
+				
+				break;
+				
+				default:		
 			  	
-			 $basename = basename($id_file);	
+			 $basename = $file_name;	
 			 if(is_dir(MY_HOME_DIR.'_Clipboard/'.$id_file))
 			 {
 					$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir_id.'/'.$basename);			 
 			 
 			 } else {	
 			 
-				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
-				{ 					
-					$clipboard->reset_clipboard();							
-					return true;					
-				} 
-
+					if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Clipboard/'.$id_file , FTP_BINARY))
+					{ 											
+						return true;					
+					}
 				}
 			break;			
 		}		

@@ -7,18 +7,21 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.2.8, 2013.10.26
  
 **********************************
 */
 if(!defined('PHPOS'))	die();	
 
-
 if(!defined('PHPOS_IN_EXPLORER'))
 {
 	die();
 }
-
+			 
+/*
+**************************
+*/
+ 	
 class phpos_fs_plugin_db_mysql extends phpos_filesystems
 {
                                                                                
@@ -163,8 +166,7 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 /*
 **************************
 */
- 	
-	
+ 		
 	
 	public function get_parent_dir($file)
 	{		
@@ -413,17 +415,12 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		}
 	}
 	
-	
 			 
 /*
 **************************
 */
  	
-	
-	
-	
-	
-	
+		
 	public function get_action_dblclick($file)
 	{
 		if($this->is_directory($file))
@@ -443,18 +440,8 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 			
 			$app_action = 'app_id:'.$filedata['app_id'].'@'.$filedata['app_action'];
 			$action = winopen(txt($filedata['basename']), $filedata['plugin_id'], $app_action, $filedata['app_params']);
-			 /*
-	{		
-		$str = "phpos.windowCreate('".$title."','".$app."', '".$params."', '".$app_params."')";	
-		//this.controllerWindows('action=create&title=' + title_encode + '&wintype=' + type_encode + '&params=' + json_params_encode + app_params_url);
-			*/
-			
-			
-			return $action;
-		
-		
-		
-			//return "alert('plik');";	
+					
+			return $action;			
 		}
 	}
 			 
@@ -644,16 +631,33 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 			break;
 		}		
 	}
-	
+			 
+/*
+**************************
+*/
+ 	
 	
 	public function clipboard_copy()
 	{
-	
-	}
-	
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+	}	
+			 
+/*
+**************************
+*/
+ 	
 	public function clipboard_cut()
 	{
-	
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('cut');
+		$clipboard->set_source_win(WIN_ID);
+		$clipboard->set_name(basename(param('action_param')));
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}
 	
 }

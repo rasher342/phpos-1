@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.15
+	File version: 1.2.8, 2013.10.26
  
 **********************************
 */
@@ -21,13 +21,19 @@ if(!defined('PHPOS_IN_EXPLORER'))
 /*
 **************************
 */
-// Include google API classes
-require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/Google_Client.php';
-require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_Oauth2Service.php';
-require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_DriveService.php';
-		
 
-// Class
+	// Include Google API classes
+
+	require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/Google_Client.php';
+	require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_Oauth2Service.php';
+	require_once PHPOS_DIR.'plugins/filesystems/clouds_google_drive/google-api-php-client/src/contrib/Google_DriveService.php';
+		
+		 
+/*
+**************************
+*/
+ 	
+
 class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 {                                                                             
 	public
@@ -183,11 +189,11 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$this->client->setScopes(array('https://www.googleapis.com/auth/drive'));		
 							
 /*.............................................. */		
+
 			if(isset($_SESSION['google_token'])) 
-				{
+			{
 				try 
-				{
-					
+				{					
 						$_GET['code'] = $_SESSION['google_token'];
 						$_SESSION['token'] = $this->client->authenticate($_GET['code']);
 						//$_SESSION['token'] = $this->client->getAccessToken();
@@ -452,9 +458,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$file_info['size'] = $googlefile->getQuotaBytesUsed();
 					$file_info['defaultOpenWithLink'] = $googlefile->getDefaultOpenWithLink();
 					if($file_info['extension'] != 'folder') $file_info['icon'] = $googlefile->getIconLink();
-					if($file_info['extension'] == 'folder') $file_info['extension'] = '';
+					if($file_info['extension'] == 'folder') $file_info['extension'] = '';					
 					
-					//$this->get_file_info($child->getId());		
 					if($file_info['extension'] == 'folder' || empty($file_info['extension']))
 					{
 						$list_dirs[] = $file_info;
@@ -586,7 +591,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$icon_image = $explorer->config('filetypes_icons_folder_url').'default.png';
 				}
 			}				
-		
+				
+/*.............................................. */	
 		} else {		
 		
 			$pathinfo =  pathinfo($file['basename']);
@@ -725,7 +731,15 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  	
 	public function clipboard_copy()
 	{
+		$file = new Google_DriveFile();
+		$file = $this->service->files->get(param('action_param')); 		
+		$fileName = $file->getTitle();
 		
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name($fileName);
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}	
 			
 /*
@@ -734,10 +748,16 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 
 	public function clipboard_copy_server()
 	{
-		$clipboard = new phpos_clipboard;		
-		$clipboard->get_clipboard();			
-		$id_file = $clipboard->get_file_id();		
-		$this->file_download($id_file, false, true);
+		$file = new Google_DriveFile();
+		$file = $this->service->files->get(param('action_param')); 		
+		$fileName = $file->getTitle();
+		
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('copy');
+		$clipboard->set_name($fileName);
+		$clipboard->set_server(true);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);			
+		$this->file_download(param('action_param'), false, true);
 	}	
 			
 /*
@@ -746,7 +766,16 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  	
 	public function clipboard_cut()
 	{
-		// to do in next update			
+		$file = new Google_DriveFile();
+		$file = $this->service->files->get(param('action_param')); 		
+		$fileName = $file->getTitle();
+		
+		$clipboard = new phpos_clipboard;
+		$clipboard->set_mode('cut');
+		$clipboard->set_source_win(WIN_ID);
+		$clipboard->set_name($fileName);
+		$clipboard->set_server(false);
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
 	}	
 			
 /*
@@ -759,7 +788,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$clipboard->get_clipboard();			
 		$id_file = $clipboard->get_file_id();			
 		$fs = $clipboard->get_file_fs();	
-		
+		$file_name = $clipboard->get_name();		
+				
+/*.............................................. */	
 		switch($fs)
 		{ 
 			case $this->fs_prefix:			
@@ -768,6 +799,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$copiedFile = new Google_DriveFile();
 					$copiedFile->setTitle($file_data['basename']);
 					
+					
+/*.............................................. */			
 					switch($mode)
 					{ 
 						case 'copy':
@@ -787,7 +820,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 								return NULL;
 					
 						break;
-						
+								
+/*.............................................. */	
 						case 'cut':
 							
 							  try 
@@ -810,9 +844,26 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					}
 
 			break;
-			
-		}
-		 
+					
+/*.............................................. */	
+			default:
+			$basename = $file_name;	
+				if(is_dir(MY_HOME_DIR.'_Clipboard/'.$id_file))
+				{
+					//$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir_id.'/'.$basename);			 
+			 
+				} else {	
+			 
+				 $file = array();
+				 $file['tmp_name'] = MY_HOME_DIR.'_Clipboard/'.$id_file;
+				 $file['name'] = $basename;
+				 
+					if($this->upload_file($file))
+					{ 											
+						return true;					
+					} 
+			  }			
+		}		 
 	}	
 	
 				
@@ -831,21 +882,29 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$httpRequest = Google_Client::$io->authenticatedRequest($request);
 			if ($httpRequest->getResponseHttpCode() == 200) {
 				$content = $httpRequest->getResponseBody();
-				
+						
+/*.............................................. */	
 				if(!empty($content))
 				{
 					if(!$download_local)
 					{					
 						$dir = '_Download';
-						if($clipboard) $dir = '_Clipboard';
-						if(file_put_contents(MY_HOME_DIR.$dir.'/'.$fileName, $content)) 
+						$fname = $fileName;
+						if($clipboard) 
+						{
+							$dir = '_Clipboard';
+							$fname = $file_id;
+						}
+						
+						if(file_put_contents(MY_HOME_DIR.$dir.'/'.$fname, $content)) 
 						{						
 							/*
 							echo '<script>phpos.windowRefresh("'.WIN_ID.'", "reset_shared:1,dir_id:'.MY_HOME_DIR.'_Download,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files"); </script>';
 							*/
 							return true;							
 						}	
-						
+								
+/*.............................................. */	
 					} else {
 					
 						if(file_put_contents(PHPOS_TEMP.$fileName, $content)) 
@@ -859,12 +918,17 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				// An error occurred.
 				return null;
 			}
+			
 		} else {
 			// The file doesn't have any content stored on Drive.
 			return null;
 		}	
 	}	
-	
+			 
+/*
+**************************
+*/
+ 	
 	public function file_view()
 	{
 		// to do in next update			

@@ -73,7 +73,7 @@ class phpos_clipboard
 	
 	public function get_name()
 	{
-		return $_SESSION['phpos_clipboard']['name'];
+		return $_SESSION['phpos_clipboard']['file_name'];
 	}
 	
 	public function add_clipboard($id, $fs, $connect_id = null)
@@ -173,7 +173,7 @@ class phpos_clipboard
 			
 		} elseif($_SESSION['phpos_clipboard']['fs'] != 'db_mysql') {
 			
-			if($this->is_clipboard() && $this->is_server()) return true;	
+			if($this->is_clipboard() && ($this->is_server() || $_SESSION['phpos_clipboard']['fs'] == $fs)) return true;	
 		}						
 	}
 	 

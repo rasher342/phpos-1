@@ -25,7 +25,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		{
 			$plugged_context_menu[] = '---';
 			$plugged_context_menu[] = 'copy::'.txt('copy').'::explorer_copy("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::copy';
-			if($my_app->get_param('fs') != 'local_files') 
+			if($my_app->get_param('fs') != 'db_mysql') 
 			{
 				$plugged_context_menu[] = 'copy_serv::'.txt('copy_server').'::explorer_copy_server("'.WIN_ID.'", "'.$icons[$i]['id'].'", "'.$icons[$i]['basename'].'", "'.$my_app->get_param('fs').'");::copy';
 			}

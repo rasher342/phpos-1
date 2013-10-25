@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.6, 2013.10.16
+	File version: 1.2.8, 2013.10.28
  
 **********************************
 */
@@ -45,7 +45,8 @@ if(!empty($_FILES))
 					}
 				
 				}
-			
+				
+/*.............................................. */		
 			if(!$stop_upload)
 			{
 				$_FILES['file']['name'] = filter::fname($_FILES['file']['name']);
@@ -80,11 +81,10 @@ if(!empty($_FILES))
 		unset($_FILES);
 	}
 	
-		 
-/*
-**************************
-*/	
-	//echo $_SESSION['ftp'].'<br>';
+		
+/*.............................................. */	
+
+
 if(globalconfig('demo_mode') != 1 || is_root())
 {
 
@@ -110,12 +110,9 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					msg::error($txt('access_denied'));				
 				}
 			}
-			
-	 
-	/*
-	**************************
-	*/
-			
+		
+/*.............................................. */	
+		
 			if(form_submit('new_folder')) 
 			{
 				if($readonly != 1) // 0
@@ -150,10 +147,9 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			
 			
 		 
-	/*
-	**************************
-	*/
-	 
+/*
+**************************
+*/	 
 		
 		if(!empty($action_id))
 		{			
@@ -162,13 +158,17 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				include PHPOS_DIR.'plugins/filesystems/'.param('fs').'/explorer.actions.php';
 			}	
 			
-			
+		
+/*.............................................. */		
+		
 			switch($action_id)
 			{			
 				case 'delete':			
 					if($phposFS->delete(param('action_param'))) msg::ok(txt('file_deleted'));				
 				break;	
 				
+/*.............................................. */		
+	
 				case 'delete_list':		
 					$file_hashes = param('action_param');
 					if(!empty($file_hashes))
@@ -182,63 +182,50 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					}						
 					msg::ok(txt('file_deleted'));				
 				break;	
-				
+			
+/*.............................................. */			
+	
 				case 'copy':
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;
-					$clipboard = new phpos_clipboard;
-					$clipboard->set_mode('copy');
-					$clipboard->set_server(false);
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
-					
+					if(!empty($ftp_id)) $connect_id = $ftp_id;					
 					$phposFS->clipboard_copy();							
 					msg::ok(txt('copied_to_clip'));		
 					
 				break;
-				
+			
+/*.............................................. */			
+	
 				case 'copy_server':
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;
-					$clipboard = new phpos_clipboard;
-					$clipboard->set_mode('copy');
-					$clipboard->set_server(true);
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);					
+					if(!empty($ftp_id)) $connect_id = $ftp_id;									
 					$phposFS->clipboard_copy_server();							
 					msg::ok(txt('copied_to_clip'));		
 					
 				break;
-				
+					
+/*.............................................. */		
+
 				case 'cut':
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;
-					$clipboard = new phpos_clipboard;
-					$clipboard->set_mode('cut');
-					$clipboard->set_source_win(WIN_ID);
-					$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
+					if(!empty($ftp_id)) $connect_id = $ftp_id;					
 					$phposFS->clipboard_cut();					
 					msg::ok(txt('cutted_to_clip'));			
 					
 				break;				
-				
+			
+/*.............................................. */				
+
 				case 'paste':						
 				
 					$clipboard = new phpos_clipboard;					
-				
 					$clipboard->get_clipboard();
-					$mode = $clipboard->get_mode();				
-										 
-					 $id_file = $clipboard->get_file_id();
-					echo $id_file;
-					 $fs = $clipboard->get_file_fs();		
-					 
-					 //echo 'id:'.$id_file.'<br>fs: '.$fs.'<br>connid:'.$clipboard->get_file_connect_id();
-		 					
+					$mode = $clipboard->get_mode();						
 					
 					if($mode == 'copy')
 					{						
@@ -257,12 +244,17 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 				break;			
 			}	
-			
+				
+/*.............................................. */	
+
+	
 			param('action_id', null);
 			cache_param('action_id');
 		}
 
 }
+		
+/*.............................................. */	
 
 	param('action_id', null);
 	cache_param('action_id');			
