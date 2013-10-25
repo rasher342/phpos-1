@@ -189,7 +189,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					if(param('fs') == 'ftp')
 					{
-						if($phposFS->ftp_to_temp()) echo 'totemp';						
+						$phposFS->ftp_to_temp(); 				
 					}
 					
 					msg::ok(txt('copied_to_clip'));		
