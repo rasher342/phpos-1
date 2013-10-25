@@ -692,7 +692,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		
 		if($dir != ".") 
 		{ 
-			echo 'dirID:'.$this->directory_id.'<br>';
+			//echo 'dirID:'.$this->directory_id.'<br>';
 			if(@ftp_chdir($this->conn_id, $dir) == false) 
 			{ 					
 					//echo 'aaaaa';
@@ -723,7 +723,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				ftp_get($this->conn_id, $last_dir.'/'.$file, $file, FTP_BINARY); 
 			}
     } 
-    ftp_chdir($this->conn_id, $this->root_id);     
+    ftp_chdir($this->conn_id, '..');     
 	} 
 	
 	
@@ -742,7 +742,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				//echo basename($id_file);
 				
 				$this->ftp_sync($id_file, MY_HOME_DIR.'_Temp');
-				ftp_chdir($this->conn_id, $this->root_id);   
+				ftp_chdir($this->conn_id, '..');   
 				return true;			
 			 } else {
 			 
