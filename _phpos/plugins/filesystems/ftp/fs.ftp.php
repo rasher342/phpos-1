@@ -562,6 +562,25 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 **************************
 */
  	
+	public function ftp_putAll($src_dir, $dst_dir) {
+    $d = dir($src_dir);
+    while($file = $d->read()) { // do this for each file in the directory
+        if ($file != "." && $file != "..") { // to prevent an infinite loop
+            if (is_dir($src_dir."/".$file)) { // do the following if it is a directory
+                if (!@ftp_chdir($this->conn_id, $dst_dir."/".$file)) {
+                    ftp_mkdir($this->conn_id, $dst_dir."/".$file); // create directories that do not yet exist
+                }
+                $this->ftp_putAll($src_dir."/".$file, $dst_dir."/".$file); // recursive part
+            } else {
+                $upload = ftp_put($this->conn_id, $dst_dir."/".$file, $src_dir."/".$file, FTP_BINARY); // put the files
+            }
+        }
+    }
+    $d->close();
+}
+	
+	
+	
 	public function copy($to_dir_id = null)
 	{
 		 $clipboard = new phpos_clipboard;		
@@ -572,36 +591,44 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		switch($fs)
 		{ 
 			case 'ftp':	
-				 
-			 if(file_exists(MY_HOME_DIR.'_Temp/'.$id_file))
-			 { 				
-				$basename = basename($id_file);
 				
-				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Temp/'.$id_file, FTP_BINARY))
-				{ 
-					@unlink(MY_HOME_DIR.'_Temp/'.$id_file); 
-					$clipboard->reset_clipboard();						
-					return true;					
-					
-				} else {   
-				
-					return false; 
-				} 			
-			}		
+			 $basename = basename($id_file);	
+			 		
+			 if(is_dir(MY_HOME_DIR.'_Temp/'.$basename))
+			 {
+					echo $basename;	
+					$this->ftp_putAll(MY_HOME_DIR.'_Temp/'.$basename, $to_dir_id.'/'.$basename);			 
+			 
+			 } else {
+			 
+				 if(file_exists(MY_HOME_DIR.'_Temp/'.$basename))
+				 { 									
+						if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename, MY_HOME_DIR.'_Temp/'.$basename, FTP_BINARY))
+						{ 
+							@unlink(MY_HOME_DIR.'_Temp/'.$basename); 
+							$clipboard->reset_clipboard();						
+							return true;					
+						} 		
+				 }	
+			}
 			break;
 			
 			case 'local_files':		
-			  				
-				$basename = basename($id_file);				
+			  	
+			 $basename = basename($id_file);	
+			 if(is_dir(MY_HOME_DIR.'_Temp/'.$id_file))
+			 {
+					$this->ftp_putAll(MY_HOME_DIR.'_Temp/'.$id_file, $to_dir_id.'/'.$basename);			 
+			 
+			 } else {	
+			 
 				if(@ftp_put($this->conn_id, $to_dir_id.'/'.$basename , $id_file , FTP_BINARY))
 				{ 					
 					$clipboard->reset_clipboard();							
-					return true;
-					
-				} else {   
-				
-					return false; 
-				} 					
+					return true;					
+				} 
+
+				}
 			break;			
 		}		
 	}
@@ -660,19 +687,20 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	
 	
 	public function ftp_sync($dir, $last_dir) 
-	{		
-    chmod($last_dir, 0777);
+	{	    
+		
+		
 		if($dir != ".") 
 		{ 
-			if(ftp_chdir($this->conn_id, $dir) == false) 
-			{ 
-					echo ("Change Dir Failed: $dir<BR>\r\n"); 
+			echo 'dirID:'.$this->directory_id.'<br>';
+			if(@ftp_chdir($this->conn_id, $dir) == false) 
+			{ 					
+					//echo 'aaaaa';
 					return; 
 			}
 			
-			if(!empty($dir)) $last_dir = $last_dir.'/'.$dir;	
-			echo '<br>'.$last_dir.'<br>';		
-	
+			if(!empty($dir)) $last_dir = $last_dir.'/'.pathinfo($dir, PATHINFO_FILENAME);				
+	//echo $last_dir;
 			if(!is_dir($last_dir))
 			{				
 				mkdir($last_dir, 0777); 										
@@ -695,7 +723,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				ftp_get($this->conn_id, $last_dir.'/'.$file, $file, FTP_BINARY); 
 			}
     } 
-    ftp_chdir($this->conn_id, "..");     
+    ftp_chdir($this->conn_id, $this->root_id);     
 	} 
 	
 	
@@ -712,7 +740,9 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			 if($this->is_directory($id_file))
 			 {
 				//echo basename($id_file);
-				$this->ftp_sync(basename($id_file), MY_HOME_DIR.'_Temp');
+				
+				$this->ftp_sync($id_file, MY_HOME_DIR.'_Temp');
+				ftp_chdir($this->conn_id, $this->root_id);   
 				return true;			
 			 } else {
 			 
