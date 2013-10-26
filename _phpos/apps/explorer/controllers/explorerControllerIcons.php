@@ -166,6 +166,6 @@ if(!defined('PHPOS'))	die();
 	
 		// If empty folder:
 		
-		if(!$is_icons) $html['icons'].= txt('folder_is_empty');
+		if(!$is_icons) $html['icons'].= '<div style="width:90%; text-align:center;padding:30px; padding-top:20px">'.txt('folder_is_empty').'</div>';
 
 ?>

@@ -69,6 +69,47 @@ if(!defined('PHPOS'))	die();
 	$txt['icon_size_s'] = 'Small';
 	$txt['icon_size_m'] = 'Medium';
 	
+	
+	// Menu up files
+	$txt['view_icons'] = 'Icons view';
+	$txt['view_list'] = 'List view';
+	$txt['view_thumbs'] = 'Thumbnails';
+	$txt['view_extensions'] = 'Files extensions';
+	$txt['view_extensions_show'] = 'Show extensions';
+	$txt['view_extensions_hide'] = 'Hide extensions';
+	$txt['view_sortby'] = 'Sort files';
+	$txt['view_sortby_type'] = 'by Type';
+	$txt['view_sortby_name'] = 'by Name';
+	$txt['view_sortby_date'] = 'by Date of modification';
+	$txt['view_sortby_size'] = 'by Filesize';
+	$txt['view_sortby_asc'] = 'Ascending';
+	$txt['view_sortby_desc'] = 'Descending';
+	
+	
+	
+	// Toolbar list
+	$txt['list_copy_desc'] = 'Copy selected files/folders to clipboard';
+	$txt['list_cut_desc'] = 'Cut selected files/folders to clipboard';
+	$txt['list_delete_desc'] = 'Delete selected files/folders';
+	$txt['list_select_all'] = 'Select All';
+	$txt['list_select_none'] = 'Select None';
+	$txt['list_select_reverse'] = 'Reverse selection';
+	$txt['list_select_all_desc'] = 'Select all files/folders';
+	$txt['list_select_none_desc'] = 'Unselect all files/folders';
+	$txt['list_select_reverse_desc'] = 'Reverse selection';
+	
+	// GoogleDrive
+	$txt['googledrive_loginscreen_info'] = '<b>Google Drive is now supported!</b><br />From version 1.28 Google Drive is fully supported. You can manage all your files placed on your Google Drive just like a normal folder. Check the features live!  // 2013.10.26';
+	$txt['googledrive_header_connected'] = 'Connected to your Google Drive Account';
+	$txt['googledrive_right_clickhere'] = 'Click here';
+	$txt['googledrive_right_clickhere_desc'] = 'to login to your Google Drive';
+	$txt['googledrive_header_must_login'] = 'At first you must login to your Google Drive Account here below';
+	$txt['googledrive_auth_url'] = 'Login to Google Account';
+	$txt['googledrive_need_login_help'] = 'Google Drive requires login and accept access to your files.<br />When you click on <b>Login to Google Account</b> you will be redirected to Google and you must accept<br/> request for agree to showing files from your Google Drive. Google Drive API must be enable in your account settings.<br/><b>PHPOS will <u>not store</u> any data about your Google Account.</b>';
+	
+	$txt['googledrive_right_info_nologged'] = 'With Google Drive support you can manage your files like normal folder. You can creating new files and folders, deleting them, moving (between other filesystems also!), copying, downloading and uploading new files from other filesystems or from your computer via <b>Drag&Drop</b>.';
+
+	
 // CONTEXT MENUS
 	$txt['open'] = 'Open';
 	$txt['open_with'] = 'Open with';
@@ -153,7 +194,7 @@ if(!defined('PHPOS'))	die();
 	$txt['explorer_right_db_desc'] = 'This folder is virtual and exists only in database filesystem. In this folders you can create your own folders and shortcuts to apps and more. Upload of files is not available in database folders.';
 	
 	$txt['explorer_right_local'] = 'Local HOME folder';
-	$txt['explorer_right_local_desc_drag_active'] = '<b>Drag & drop upload</b> is active in this window.<br />To upload your files from your computer drag them into this window';
+	$txt['explorer_right_local_desc_drag_active'] = '<b>Drag & drop upload</b> is active in this window. To upload your files from your computer drag them into this window. You can drop here <b>few files at once</b>';
 	
 	$txt['folder_is_empty'] = 'This folder is empty';	
 	
@@ -1033,7 +1074,7 @@ if(!defined('PHPOS'))	die();
 	$txt['bugtracker_name_desc'] = 'Name is not required, but you can specify this if you want';
 	
 	$txt['fs_cloud_gdrive'] = 'Google Drive Cloud';
-	$txt['fs_clouds_right'] = 'Clouds';
+	$txt['fs_clouds_right'] = 'Google Drive';
 	$txt['cloud_google_connected'] = 'Connected to Google API';
 	
 	$txt['connecting_ftp_wait'] = 'Connecting to FTP. Please wait...';

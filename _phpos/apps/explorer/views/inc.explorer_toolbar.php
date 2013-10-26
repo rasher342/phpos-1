@@ -40,7 +40,7 @@ if(!defined('PHPOS'))	die();
 							<input type="hidden" name="phpos_upload" value="1"> 
 							<input type="hidden" name="posttest" value="postyes"> 
 						
-							<img style="height:29px" valign="middle" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/themes/default/windows/explorer_upload_icon.png"><input type="file" name="file" style="background: transparent; color:white; font-size:10px">
+							<img style="height:29px" valign="middle" src="<?php echo THEME_URL;?>windows/explorer_upload_icon.png"><input type="file" name="file" style="background: transparent; color:white; font-size:10px">
 							<input type="submit" value="<?php echo txt('upload');?>">
 						
 						</form>

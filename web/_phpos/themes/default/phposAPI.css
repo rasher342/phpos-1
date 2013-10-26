@@ -1634,30 +1634,63 @@ pre{
 .phpos_explorer_list_toolbar {
 	width:90%;
 	text-align:right;
-	padding:20px;
+	padding:10px;
 	padding-top:0px;
-	border-bottom:1px dotted silver;
+	padding-bottom:0px;
+	margin-bottom:0px;
+	
 }
 .phpos_explorer_list_toolbar img {
-	height:30px;
+	height:15px;
 	border:1px solid transparent;
 	padding: 10px;
 	display:inline-block;
 	vertical-align:middle;
 }
-.phpos_explorer_list_toolbar .img_hover {	
+.phpos_explorer_list_toolbar .hover {	
 	border:1px solid silver;	
 }
-.phpos_explorer_list_toolbar span{
+
+
+.phpos_explorer_list_toolbar_item {
+	padding:5px;
+	display:inline-block;
+	vertical-align:middle;
+	border:1px solid transparent;
+	text-align:center;
+}
+
+.phpos_explorer_list_toolbar_item a{	
+	font-weight:bold;
+	color:#000;
+	font-size:10px;
+}
+.phpos_explorer_list_toolbar_item a:hover{
+	font-weight:bold;
+	text-decoration:none;
+	color:#000;	
+}
+.phpos_explorer_list_toolbar_select {
+	padding-left: 5px;
+	padding-bottom:5px;
+	text-align:left;
+	border-bottom:1px dotted silver;
+}
+.phpos_explorer_list_toolbar_select img{
+	display:inline-block;
+	vertical-align:middle;
+	width:10px;
+	padding-left:5px;
+}
+.phpos_explorer_list_toolbar_select span{
 	font-weight:bold;
 	display:inline-block;
 	vertical-align:middle;
 }
-.phpos_explorer_list_toolbar a{
+.phpos_explorer_list_toolbar_select a{
 	color:#686868;
 	text-decoration:none;
 }
-.phpos_explorer_list_toolbar a:hover{
-	color:#000;
-	
+.phpos_explorer_list_toolbar_select a:hover{
+	color:#000;	
 }

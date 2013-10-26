@@ -86,6 +86,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	function set_error_msg($msg)
 	{
 		$this->error_msg = $msg;
+		$this->connection_status = $msg;	
 	}
 		
 /*
@@ -182,10 +183,13 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$this->client = new Google_Client();
 			
 			$this->service = new Google_DriveService($this->client);
+			$userInfoService = new Google_Oauth2Service($this->client);
+			$userInfo = null;
 			
 			$this->client->setClientId($this->cloud->get_login());
 			$this->client->setClientSecret($this->cloud->get_password());
 			$this->client->setRedirectUri($this->cloud->get_url());
+		  $this->client->setAccessType("offline");
 			$this->client->setScopes(array('https://www.googleapis.com/auth/drive'));		
 							
 /*.............................................. */		
@@ -204,7 +208,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				}	catch (Exception $e) 
 				{
 					$this->connected = false;		
-					$this->set_status($e->getMessage());
+					//$this->set_error_msg('TOKEN#1: '.$e->getMessage());
+					//$this->set_status('TOKEN#1: '.$e->getMessage());
 					$this->set_authUrl($this->client->createAuthUrl());
 				}			
 			}	else {
@@ -219,8 +224,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				{				
 					$this->client->setAccessToken($_SESSION['token']);
 					$this->client->setUseObjects(true);
-					$userInfoService = new Google_Oauth2Service($this->client);
-					$userInfo = null;
+					
 	
 					$this->set_authUrl($this->client->createAuthUrl());
 					$this->connected = true;
@@ -228,8 +232,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				}	catch (Exception $e) 
 				{				
 					$this->connected = false;		
-					$this->set_error_msg($e->getMessage());
-					$this->set_status($e->getMessage());				
+					//$this->set_error_msg('TOKEN#2: '.$e->getMessage());
+					//$this->set_status('TOKEN#2: '.$e->getMessage());				
 					$this->set_authUrl($this->client->createAuthUrl());
 				}						
 			}			
@@ -300,7 +304,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			
 		} catch (Exception $e) 
 		{
-			$this->set_error_msg($e->getMessage());
+			//$this->set_error_msg('PARENT#1: '.$e->getMessage());
 		}
 	}	
 		

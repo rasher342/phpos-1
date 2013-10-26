@@ -669,7 +669,12 @@
 			}			
 		});	
 	}
+				 
+/*
+**************************
+*/	
 		
+	
 			this.list_select_all = function(win_id) {		
 				var i =0;
 				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){					
@@ -677,7 +682,12 @@
 				});
 				return false;
 			};
-			
+					 
+/*
+**************************
+*/	
+		
+	
 			this.list_unselect_all = function(win_id) {			
 				var i =0;
 				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){
@@ -686,7 +696,12 @@
 				});
 				return false;
 			};
-			
+				 
+/*
+**************************
+*/	
+		
+		
 			this.list_reverse_select = function(win_id) {			
 				var i =0;
 				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(i){
@@ -700,42 +715,87 @@
 				});
 				return false;
 			};
+			 
+/*
+**************************
+*/	
+		
 			
 			this.list_delete = function(win_id) {
-	 
-			//alert(win_id);	
-			
-			//#phpos_list_table_'.WIN_ID
-				//var tr_index = $(this).attr("phpos_index");
+
 				var a = new Array();
 				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
 				
-				if($(this).is(":checked")) 
-				{				
-					a.push($(this).val());
-					//alert($(this).val());
-				}								
-        
+						if($(this).is(":checked")) 
+						{				
+							a.push($(this).val());					
+						}	        
       });
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");
-				//alert(file_ids);
+				var file_ids = a.join(";;");			
 				explorer_delete_files(win_id, file_ids);
 				
-			} else {				
+			} else {	
+			
 				alert('Nothing selected!');
-			}
-			
-			
+			}				
 		 };	
 		 
 /*
 **************************
 */	
-		
-		
+			this.list_copy = function(win_id) {
+
+				var a = new Array();
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
+				
+						if($(this).is(":checked")) 
+						{				
+							a.push($(this).val());					
+						}	        
+      });
+			
+			if(a.length != 0)
+			{
+				var file_ids = a.join(";;");			
+				explorer_copy_multiple(win_id, file_ids);
+				
+			} else {	
+			
+				alert('Nothing selected!');
+			}				
+		 };	
+		 
+/*
+**************************
+*/	
+	this.list_cut = function(win_id) {
+
+				var a = new Array();
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
+				
+						if($(this).is(":checked")) 
+						{				
+							a.push($(this).val());					
+						}	        
+      });
+			
+			if(a.length != 0)
+			{
+				var file_ids = a.join(";;");			
+				explorer_cut_multiple(win_id, file_ids);
+				
+			} else {	
+			
+				alert('Nothing selected!');
+			}				
+		 };	
+		 
+/*
+**************************
+*/		
 	}; // end of class phposAPI
 	
 		 

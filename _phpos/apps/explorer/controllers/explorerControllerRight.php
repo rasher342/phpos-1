@@ -45,8 +45,7 @@ if(APP_ACTION == 'index')
 			
 			case 'clouds_google_drive':
 				$html['right_items_title'] = txt('fs_clouds_right');
-				//$html['right_items_desc'] = $cloud_connect_status.txt('explorer_right_local_desc_drag_active');
-				$html['right_items_desc'] =  '<span style="font-size:14px;color:red">(alpha test)</span><br/>'.$cloud_connect_status.'<br>If you don\'t see any files after login, click one more time on cloud account of refresh this PHPOS window to refresh filelist from Google.';
+				$html['right_items_desc'] =  $cloud_connect_status.'<br />'.txt('googledrive_right_info_nologged');
 				$html['right_items_img'] = 'google_drive.png';
 			break;
 		}	

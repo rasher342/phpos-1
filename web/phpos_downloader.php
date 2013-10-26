@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.8, 2013.10.26
  
 **********************************
 */
@@ -75,6 +75,7 @@
 			case 'ftp_file':
 				//$folder_dir = PHPOS_HOME_DIR;
 				$folder_url = PHPOS_HOME_URL;
+				$folder_dir = PHPOS_HOME_DIR;
 				$file_unhashed = str_replace(PHPOS_HOME_DIR, '', $filename);
 				//$file_unhashed = str_replace(array('../', './', ':'), '', $file_unhashed);
 				

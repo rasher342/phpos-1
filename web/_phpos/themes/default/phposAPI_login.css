@@ -148,7 +148,7 @@ a:active {
 	padding:20px;
 	height: auto;
 	top:20px;
-	right:20px;
+	left:20px;
 	background-image:url('../../logo_bg.png');
 	border:1px solid silver;
 	text-align:center;
@@ -208,3 +208,37 @@ a:active {
 	color: #FFF;
 	margin-top:7px;
 }	
+
+/* LOGO */	
+#phpos_desktop_info {
+	position:fixed;
+	z-index:99999999;
+	width: 300px;
+	padding:20px;
+	height: auto;
+	bottom:20px;
+	left:20px;
+	background-image:url('../../logo_bg.png');
+	border:1px solid silver;
+	text-align:center;
+	color:#FFF;	
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}
+#phpos_desktop_info img{
+	width:120px;
+}
+
+#phpos_desktop_www {
+	position:fixed;
+	z-index:99999999;
+	width: 400px;
+	padding:20px;
+	height: 15px;
+	bottom:20px;
+	right:20px;
+	font-size:20px;
+	border:none;
+	text-align:center;
+	color:#FFF;	
+	text-shadow: #000 0.1em 0.1em 0.2em;
+}

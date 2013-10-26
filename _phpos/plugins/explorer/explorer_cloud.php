@@ -37,10 +37,21 @@ $records = $clouds->get_my_clouds();
 	
 $tmp_header = '<span class="explorer_tree_header">'.$txt['cloud_folders'].'</span>';
 if($my_app->get_param('fs') == 'clouds_google_drive') $tmp_header = '<span class="explorer_tree_header_marked">'.$txt['cloud_folders'].'</span>';
+/*
 $html['left_tree'].= '<br/><br/>
 <ul id="tt2" class="easyui-tree">
 	<li data-options="iconCls:\'icon-clouds\'">
          <span><a title="'.$txt['cloud_folders'].'" href="javascript:void(0);" onclick="'.link_action('clouds', 'tmp_shared_id:0,ftp_id:0,shared_id:0,cloud_id:0,workgroup_id:0,fs:clouds_google_drive').'">'.$tmp_header.'</a></span>
+				<ul>
+				'.$items.'
+				</ul>
+	</li>
+</ul>';
+*/
+$html['left_tree'].= '<br/><br/>
+<ul id="tt2" class="easyui-tree">
+	<li data-options="iconCls:\'icon-clouds\'">
+         <span>'.$tmp_header.'</span>
 				<ul>
 				'.$items.'
 				</ul>

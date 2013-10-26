@@ -197,7 +197,39 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			
 /*.............................................. */			
 	
-				case 'copy_server':
+				case 'copy_multiple':
+					
+					$connect_id = null;
+					$ftp_id = param('ftp_id');
+					if(!empty($ftp_id)) $connect_id = $ftp_id;	
+					
+					$file_hashes = param('action_param');
+					param('action_param2', param('fs'));
+					
+					if(!empty($file_hashes))
+					{
+						$clipboard = new phpos_clipboard;
+						$clipboard->reset_clipboard();
+						$clipboard->set_multiple(true);
+							
+						$e = explode(";;", $file_hashes);
+						$c = count($e);
+						for($i=0;$i<$c;$i++)
+						{							
+							param('action_param', base64_decode($e[$i]));								
+							$phposFS->clipboard_copy();	
+						}	
+								
+						echo $clipboard->debug_clipboard();
+					}					
+									
+					msg::ok(txt('copied_to_clip'));		
+					
+				break;
+			
+/*.............................................. */	
+
+					case 'copy_server':
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
@@ -217,7 +249,40 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$phposFS->clipboard_cut();					
 					msg::ok(txt('cutted_to_clip'));			
 					
-				break;				
+				break;		
+					
+/*.............................................. */		
+
+				case 'cut_multiple':
+					
+					$connect_id = null;
+					$ftp_id = param('ftp_id');
+					if(!empty($ftp_id)) $connect_id = $ftp_id;	
+					
+					$file_hashes = param('action_param');
+					param('action_param2', param('fs'));
+					
+					if(!empty($file_hashes))
+					{
+						$clipboard = new phpos_clipboard;
+						$clipboard->reset_clipboard();
+						$clipboard->set_multiple(true);
+							
+						$e = explode(";;", $file_hashes);
+						$c = count($e);
+						for($i=0;$i<$c;$i++)
+						{							
+							param('action_param', base64_decode($e[$i]));								
+							$phposFS->clipboard_cut();	
+						}	
+								
+						echo $clipboard->debug_clipboard();
+					}					
+									
+					msg::ok(txt('cutted_to_clip'));	
+					
+				break;		
+
 			
 /*.............................................. */				
 
@@ -227,20 +292,79 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					$clipboard->get_clipboard();
 					$mode = $clipboard->get_mode();						
 					
-					if($mode == 'copy')
-					{						
-						if($phposFS->clipboard_paste(param('action_param'), 'copy'))	msg::ok(txt('file_pasted'));	
-						echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
-						
-					} elseif($mode == 'cut') {
-						
-						$source_win = $clipboard->get_source_win();
-						if($phposFS->clipboard_paste(param('action_param'), 'cut')) 	
-						{
-							echo '<script>phpos.windowRefresh("'.$source_win.'", ""); phpos.windowRefresh("'.WIN_ID.'", "");</script>';
-							msg::ok(txt('file_pasted'));							
+					if(!$clipboard->is_multiple())
+					{
+						if($mode == 'copy')
+						{						
+							if($phposFS->clipboard_paste(param('action_param'), 'copy'))	msg::ok(txt('file_pasted'));	
+							echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
+							
+						} elseif($mode == 'cut') {
+							
+							$source_win = $clipboard->get_source_win();
+							if($phposFS->clipboard_paste(param('action_param'), 'cut')) 	
+							{
+								echo '<script>phpos.windowRefresh("'.$source_win.'", ""); phpos.windowRefresh("'.WIN_ID.'", "");</script>';
+								msg::ok(txt('file_pasted'));							
+							}
 						}
-					}					
+						
+					} else {
+					
+						$clipboard_ids_array = $clipboard->get_file_id();	 
+				  	$clipboard_names_array = $clipboard->get_name();	
+						$clipboard_fs = $clipboard->get_file_fs();
+						$clipboard_source_win = $clipboard->get_source_win();
+						$clipboard_connect_id = $clipboard->get_file_connect_id();
+					  $clipboard_is_server = $clipboard->is_server();
+						
+						$c = count($clipboard_ids_array);
+						for($i=0; $i<$c; $i++)
+						{
+							$clipboard->reset_clipboard();
+							
+							$clipboard->set_mode($mode);
+							$clipboard->set_name($clipboard_names_array[$i]);
+							$clipboard->set_server($clipboard_is_server);
+							$clipboard->set_source_win($clipboard_source_win);
+							$clipboard->add_clipboard($clipboard_ids_array[$i], $clipboard_fs, $clipboard_connect_id);	
+							
+							if($mode == 'copy')
+							{						
+								$phposFS->clipboard_paste(param('action_param'), 'copy');									
+								
+							} elseif($mode == 'cut') {
+								
+								$source_win = $clipboard->get_source_win();
+								$phposFS->clipboard_paste(param('action_param'), 'cut');								
+							}					
+						}
+						
+						if($mode == 'copy')
+						{							
+							// Restore clipboard
+							$clipboard->reset_clipboard();
+							
+							$clipboard->set_mode($mode);	
+							$clipboard->set_server($clipboard_is_server);
+							$clipboard->set_source_win($clipboard_source_win);
+							$clipboard->set_multiple(true);
+							
+							for($i=0; $i<$c; $i++)
+							{							
+								$clipboard->set_name($clipboard_names_array[$i]);							
+								$clipboard->add_clipboard($clipboard_ids_array[$i], $clipboard_fs, $clipboard_connect_id);										
+							}
+							
+							echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
+							msg::ok(txt('file_pasted'));	
+							
+						} elseif($mode == 'cut') {					
+							
+								echo '<script>phpos.windowRefresh("'.$clipboard->set_source_win.'", ""); phpos.windowRefresh("'.WIN_ID.'", "");</script>';
+								msg::ok(txt('file_pasted'));							
+						}					
+					}
 					
 				break;			
 			}	

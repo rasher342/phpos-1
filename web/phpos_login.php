@@ -162,6 +162,23 @@ error_reporting(E_ERROR | E_PARSE);
 <?php echo PHPOS_BUILD;?><br />
 <?php //echo 'Language:'.strtoupper(cfg::get('lang'));?>
 </div>
+
+<div id="phpos_desktop_www" style="display:none">
+<b>Official site of PHPOS:</b> <a href="http://www.phpos.pl" target="_blank">www.phpos.pl</a>
+</div>
+
+<div id="phpos_desktop_info" style="display:none">
+<div style="width:50%; float:left">
+<img src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/logo_gdrive.png"/>
+</div>
+<div style="text-align:left;width:50%; float:left">
+<?php echo txt('googledrive_loginscreen_info'); ?>
+</div>
+<div style="clear:both"></div>
+<?php //echo 'Language:'.strtoupper(cfg::get('lang'));?>
+</div>
+
+
 <script>
 
 
@@ -194,10 +211,12 @@ $(document).ready(function() {
 	
 	}
 	?>
- 	
+	$('#phpos_desktop_www').delay(1000).show('fast');
+ 	$('#phpos_desktop_info').delay(1500).show('fast');
+	//$('#phpos_desktop_info').fadeIn('slow').delay(30000).fadeOut('slow');	
 
 	$('#phpos_desktop_logo').delay(2500).show('fast');
-	$('#phpos_desktop_logo').fadeIn('slow').delay(30000).fadeOut('slow');		
+	//$('#phpos_desktop_logo').fadeIn('slow').delay(30000).fadeOut('slow');		
 	
 	$('.form_login_btn').mouseenter(function() {
 		$(this).removeClass('btn_mouseleave').addClass('btn_mouseenter');	

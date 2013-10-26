@@ -149,7 +149,8 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			try {	
 				
 				$this->conn_id = @ftp_connect($this->ftp->get_host(), null, 10); 				
-			
+				
+				
 			} catch (Exception $e) {
 			
 					$this->conn = false;
@@ -161,6 +162,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 					$this->connected = 1;					
 					
 					$login_result = @ftp_login($this->conn_id, $this->ftp->get_login(), $this->ftp->get_password()); 
+					ftp_pasv($this->conn_id, true);
 					if($login_result !== FALSE)
 					{							
 						$this->logged = 1;	
@@ -307,7 +309,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 */
  
 	public function get_files_list()
-	{	
+	{		
 		
 		$files_array = array();		
 		
@@ -327,29 +329,32 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 					$file_info = array();
 					$pathinfo =  pathinfo($file);
 					
-					$file_info['id'] = $file;
-					$file_info['dirname'] = ftp_pwd($this->conn_id);
-					$file_info['basename'] = $pathinfo['basename'];	
-					$file_info['extension'] = $pathinfo['extension'];	
-					$file_info['filename'] = $pathinfo['filename'];				
-					$file_info['modified_at'] = ftp_mdtm($this->conn_id, $file);
-					$file_info['created_at'] = ftp_mdtm($this->conn_id, $file);
-					$file_info['size'] = ftp_size($this->conn_id, $file);
-					$file_info['chmod'] = 0;
-					$file_info['icon'] = '';		
-					
-					if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
-					$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
-					$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
-				
-					if($this->is_directory($file_info))
+					if(!empty($pathinfo['filename']) && $pathinfo['filename']!='.')
 					{
-						$list_dirs[] = $file_info;
-					} else {
 					
-						$list_files[] = $file_info;
+						$file_info['id'] = $file;
+						$file_info['dirname'] = ftp_pwd($this->conn_id);
+						$file_info['basename'] = $pathinfo['basename'];	
+						$file_info['extension'] = $pathinfo['extension'];	
+						$file_info['filename'] = $pathinfo['filename'];				
+						$file_info['modified_at'] = ftp_mdtm($this->conn_id, $file);
+						$file_info['created_at'] = ftp_mdtm($this->conn_id, $file);
+						$file_info['size'] = ftp_size($this->conn_id, $file);
+						$file_info['chmod'] = 0;
+						$file_info['icon'] = '';		
+						
+						if(empty($file_info['modified_at'])) $file_info['modified_at'] = $file_info['created_at'];
+						$file_info['created_at'] = date("Y.m.d H:i:s", $file_info['created_at']);
+						$file_info['modified_at'] = date("Y.m.d H:i:s", $file_info['modified_at']);
+					
+						if($this->is_directory($file_info))
+						{
+							$list_dirs[] = $file_info;
+						} else {
+						
+							$list_files[] = $file_info;
+						}
 					}
-					
 				
 				}		
 				array_sort($list_dirs, 'basename');
@@ -394,7 +399,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		if(is_array($file)) $f = $file['id'];
 		
 		//if(ftp_chdir($this->conn_id, $f)) return true;
-		if(ftp_size($this->conn_id, $f) == -1)  return true;
+		if(ftp_size($this->conn_id, $f) == -1 && empty($file['extension']))  return true;
 	}
 		 
 /*

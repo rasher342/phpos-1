@@ -19,22 +19,22 @@ global $readonly, $my_app, $context_fs, $tmp_shared_id;
 
 // View change
 
-$item_view['icons'] = 'Icons';
-$item_view['list'] = 'List';
-$item_view['thumbs'] = 'Thumbnails';
+$item_view['icons'] = txt('view_icons');
+$item_view['list'] = txt('view_list');
+$item_view['thumbs'] = txt('view_thumbs');
 
 switch($my_app->get_param('view_type'))
 {
 	case 'icons':
-		$item_view['icons'] = '<b>Icons</b>';
+		$item_view['icons'] = '<b>'.txt('view_icons').'</b>';
 	break;
 	
 	case 'list':
-		$item_view['list'] = '<b>List</b>';
+		$item_view['list'] = '<b>'.txt('view_list').'</b>';
 	break;
 	
 	case 'thumbs':
-		$item_view['thumbs'] = '<b>Thumbnails</b>';
+		$item_view['thumbs'] = '<b>'.txt('view_thumbs').'</b>';
 	break;
 }
 
@@ -43,10 +43,7 @@ switch($my_app->get_param('view_type'))
 $app_menu = 
 	array(				
 			
-				'title:<b>'.txt('new_folder').'</b>,action:actionNewFolder,icon:icon-folder_files',
-				'title:'.txt('my_server').',action:actionGoServer,icon:icon-myserver',
-				'title:'.txt('control_panel').',action:actionGoCP,icon:icon-login'				
-									
+				'title:<b>'.txt('new_folder').'</b>,action:actionNewFolder,icon:icon-folder_files'									
 	);								
 		
 	
@@ -77,20 +74,20 @@ if(!empty($tmp_shared_id))
 	
 	$app_menu[] = 'title:'.$item_view['thumbs'].',view_type:thumbs,check:view_type,if:'.$my_app->get_param('view_type').',action:actionChangeView,icon:icon-application';	
 	
-	$app_menu[] = 'title:Sort by,action:actionChangeIcons,icon:icon-application';
+	$app_menu[] = 'title:'.txt('view_sortby').',action:actionChangeIcons,icon:icon-application';
 		$app_menu[] = array(
-							'title:Type,sort_by:extension,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
-							'title:Name,sort_by:filename,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
-							'title:Date,sort_by:modified_at,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
-							'title:Size,sort_by:size,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
-							'title:<b>Ascending</b>,sort_order:asc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder',
-							'title:<b>Descending</b>,sort_order:desc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder'
+							'title:'.txt('view_sortby_type').',sort_by:extension,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:'.txt('view_sortby_name').',sort_by:filename,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:'.txt('view_sortby_date').',sort_by:modified_at,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:'.txt('view_sortby_size').',sort_by:size,check:sort_by,if:'.$my_app->get_param('sort_by').',action:actionChangeSort',
+							'title:<b>'.txt('view_sortby_asc').'</b>,sort_order:asc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder',
+							'title:<b>'.txt('view_sortby_desc').'</b>,sort_order:desc,check:sort_order,if:'.$my_app->get_param('sort_order').',action:actionChangeSortOrder'
 								);
 								
-	$app_menu[] = 'title:File Extensions,action:actionChangeIcons,icon:icon-application';
+	$app_menu[] = 'title:'.txt('view_extensions').',action:actionChangeIcons,icon:icon-application';
 		$app_menu[] = array(
-							'title:Show,show_extensions:1,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt',
-							'title:Hide,show_extensions:0,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt'
+							'title:'.txt('view_extensions_show').',show_extensions:1,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt',
+							'title:'.txt('view_extensions_hide').',show_extensions:0,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt'
 								);
 	
 	

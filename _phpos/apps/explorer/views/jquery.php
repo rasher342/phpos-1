@@ -28,6 +28,11 @@ $(document).ready(function() {
 <script>
 
 	<?php echo $explorer->renderJs(); ?>
+	
+/*
+**************************
+*/
+
 
 // == Create new folder
 	function explorer_newfolder()
@@ -38,7 +43,12 @@ $(document).ready(function() {
 			};
 		});
 	}
-	
+		
+/*
+**************************
+*/
+
+
 	function explorer_delete_file(win_id, file_id, file_name)
 	{	
 		$.messager.confirm('<?php echo txt('delete');?>', '<?php echo txt('delete_confirm');?>: '+file_name+ '?', function(r){
@@ -47,7 +57,12 @@ $(document).ready(function() {
 			}
 		});	
 	}
-	
+		
+/*
+**************************
+*/
+
+
 	function explorer_delete_files(win_id, file_ids)
 	{	
 		$.messager.confirm('<?php echo txt('delete');?>', '<?php echo txt('delete_confirm');?>?', function(r){
@@ -57,23 +72,59 @@ $(document).ready(function() {
 		});	
 	}
 	
+/*
+**************************
+*/
+
 	function explorer_cut(win_id, file_id, file_name, file_type)
 	{	
 		//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
 		//phpos.windowRefresh('1', '');	
 		phpos.windowRefresh(win_id, 'action_id:cut,action_param:'+file_id+',action_param2:'+file_type);		
 	}
-	
+		
+/*
+**************************
+*/
+	function explorer_cut_multiple(win_id, file_ids, file_name, file_type)
+	{	
+			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
+			//phpos.windowRefresh('1', '');	
+			phpos.windowRefresh(win_id, 'action_id:cut_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+	}
+		
+/*
+**************************
+*/
+
 	function explorer_copy(win_id, file_id, file_name, file_type)
 	{			
 		phpos.windowRefresh(win_id, 'action_id:copy,action_param:'+file_id+',action_param2:'+file_type);		
 	}
-	
+		
+/*
+**************************
+*/
+
+	function explorer_copy_multiple(win_id, file_ids)
+	{			
+			phpos.windowRefresh(win_id, 'action_id:copy_multiple,action_param:'+file_ids);		
+	}
+		
+/*
+**************************
+*/
+
 	function explorer_copy_server(win_id, file_id, file_name, file_type)
 	{			
 		phpos.windowRefresh(win_id, 'action_id:copy_server,action_param:'+file_id+',action_param2:'+file_type);		
 	}
-		
+			
+/*
+**************************
+*/
+
+
 	function explorer_paste(win_id, to_id, location)
 	{	
 		//alert('to_id:'+to_id);	
@@ -84,7 +135,12 @@ $(document).ready(function() {
 		}		
 		phpos.windowRefresh(win_id, 'action_id:paste,action_param:'+to_id+loc);	
 	}
-	
+		
+/*
+**************************
+*/
+
+
 	function explorer_paste_cut(win_id, source_win, to_id, location)
 	{	
 		//alert('to_id:'+to_id);	
@@ -97,14 +153,24 @@ $(document).ready(function() {
 		phpos.windowRefresh(win_id, 'action_id:paste,action_param:'+to_id+loc);	
 	}
 	
-	
+		
+/*
+**************************
+*/
+
+
 	function explorer_open_in_browser(file_id)
 	{		
 		var url = file_id;
 		window.open(url, '_blank');
 	}
 	
-	
+		
+/*
+**************************
+*/
+
+
 	function download_file(file_id)
 	{
 		 var url = file_id;
@@ -113,7 +179,12 @@ $(document).ready(function() {
 		 var w = window.open(url2, "_blank");
 		//alert(file_id);
 	}
-	
+		
+/*
+**************************
+*/
+
+
 // == File to clipoard
 	function to_clipboard(FileID, FileTitle, mode)
 	{		
@@ -124,19 +195,34 @@ $(document).ready(function() {
 			phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_AddToClipboardFileID_ID:'+FileID+',action_AddToClipboardFileID_Title:'+FileTitle+',no_increment:1,action_AddToClipboardFileID_mode:cut');
 		}
 	}
-	
+		
+/*
+**************************
+*/
+
+
 // == Paste from clipoard
 	function paste_from_clipboard(clipitem_id, to_dir_id)
 	{				
 		phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_PasteFromClipboardItemID_ID:'+clipitem_id+',action_PasteFromClipboardItemID_ToDirID:'+to_dir_id+',no_increment:1');			
 	}
-	
+		
+/*
+**************************
+*/
+
+
 // == Delete from clipoard
 	function delete_from_clipboard(clipitem_id)
 	{				
 		phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_deleteClipboardEntryID_ID:'+clipitem_id+',no_increment:1');			
 	}
 	
+	
+/*
+**************************
+*/
+
 
 	
 // == Clear Clipboard

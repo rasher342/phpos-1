@@ -69,6 +69,47 @@ if(!defined('PHPOS'))	die();
 	$txt['icon_size_s'] = 'Małe';
 	$txt['icon_size_m'] = 'Średnie';
 	
+		// Menu up files
+	$txt['view_icons'] = 'Widok ikonek';
+	$txt['view_list'] = 'Widok listy';
+	$txt['view_thumbs'] = 'Widok miniatur';
+	$txt['view_extensions'] = 'Rozszerzenia plików';
+	$txt['view_extensions_show'] = 'Pokazuj rozszerzenia';
+	$txt['view_extensions_hide'] = 'Ukryj rozszerzenia';
+	$txt['view_sortby'] = 'Sortuj pliki';
+	$txt['view_sortby_type'] = 'wg Typu';
+	$txt['view_sortby_name'] = 'wg Nazwy';
+	$txt['view_sortby_date'] = 'wg Daty modyfikacji';
+	$txt['view_sortby_size'] = 'wg Rozmiaru';
+	$txt['view_sortby_asc'] = 'Rosnąco';
+	$txt['view_sortby_desc'] = 'Malejąco';
+	
+	
+	// Toolbar list
+	$txt['list_copy_desc'] = 'Skopiuj zaznaczone pliki/foldery do schowka';
+	$txt['list_cut_desc'] = 'Wytnij zaznaczone pliki/foldery do schowka';
+	$txt['list_delete_desc'] = 'Usuń zaznaczone pliki/foldery';
+	$txt['list_select_all'] = 'Zaznacz wszystko';
+	$txt['list_select_none'] = 'Odznacz wszystko';
+	$txt['list_select_reverse'] = 'Odwróć zaznaczenie';
+	$txt['list_select_all_desc'] = 'Zaznacz wszystkie pliki i foldery';
+	$txt['list_select_none_desc'] = 'Odznacz wszystkie pliki i foldery';
+	$txt['list_select_reverse_desc'] = 'Odwróć zaznaczenie';
+	
+	
+	// GoogleDrive
+	$txt['googledrive_loginscreen_info'] = '<b>Pełne wsparcie dla Google Drive już jest!</b><br />Od wersji 1.28 systemu - Google Drive jest w pełni wspierane. Możesz zarządzać plikami na swoimDysku tak jak każdym innym folderem w systemie. Sprawdź na żywo!  // 2013.10.26';
+	$txt['googledrive_header_connected'] = 'Jesteś podłączony do Dysku Google';
+	$txt['googledrive_right_clickhere'] = 'Kliknij tutaj';
+	$txt['googledrive_right_clickhere_desc'] = 'aby zalogować się do Google Drive';
+	$txt['googledrive_header_must_login'] = 'Aby skorzystać z Dysku Google musisz się najpierw zalogować';
+	$txt['googledrive_auth_url'] = 'Zaloguj do konta Google';
+	$txt['googledrive_need_login_help'] = 'Google Drive wymaga zalogowania się do konta Google i potwierdzenia zgody na dostęp do plików z Dysku Google. Gdy klikniesz na przycisk logowania zostaniesz przeniesiony do strony logowania, na której wyrazić musisz zgodę na dostęp do Dysku. Musisz mieć również włączoną usługę dostępu do Google API w swoim koncie.<br /><br /><b>Pamiętaj, że PHPOS nie przechowuje żadnych prywatnych informacji związanych z Twoim kontem Google.</b>';
+	
+	$txt['googledrive_right_info_nologged'] = 'Dzięki zintegrowanemu z PHPOS API Google Drive możesz zarządzać swoimi plikami na Dysku Google tak jak normalnym folderem. Możesz tworzyć nowe pliki i foldery, usuwać je, przenosić, kopiować (także pomiędzy pozostałymi systemami plików), pobierać na serwer lub na swój dysk, a także wrzucać nowe pliki za pomocą <b>Drag&Drop</b>.';
+	
+	
+	
 // CONTEXT MENUS
 	$txt['open'] = 'Otwórz';
 	$txt['open_with'] = 'Otwórz za pomocą';
@@ -153,7 +194,7 @@ if(!defined('PHPOS'))	die();
 	$txt['explorer_right_db_desc'] = 'Ten folder nie istnieje fizycznie (znajduje się w bazie danych), lecz możesz się po nim poruszać tak jak po realnym folderze. W tym folderze możesz tworzyć nowe skróty do aplikacji i innych rzeczy. Wgrywanie plików jest niedostępne dla tego folderu.';
 	
 	$txt['explorer_right_local'] = 'Local HOME folder';
-	$txt['explorer_right_local_desc_drag_active'] = 'Wgrywanie plików za pomocą <b>Drag & drop</b> jest dostępne dla tego okna.<br />Aby wgrać tutaj plik po prostu przeciągnij go ze swojego komputera bezpośrednio do tego okna.';
+	$txt['explorer_right_local_desc_drag_active'] = 'Wgrywanie plików za pomocą <b>Drag & drop</b> jest dostępne dla tego okna. Aby wgrać tutaj plik po prostu przeciągnij go ze swojego komputera bezpośrednio do tego okna. Możesz wrzucać <b>kilka plików jednocześnie</b>';
 	
 	$txt['folder_is_empty'] = 'Folder jest pusty.';	
 	
@@ -1030,4 +1071,10 @@ if(!defined('PHPOS'))	die();
 	$txt['bugtracker_sended_msg'] = 'Dziękujemy. Twój raport został wysłany na nasz serwer.';
 	$txt['bugtracker_name'] = 'Twoje imię';
 	$txt['bugtracker_name_desc'] = 'Nie jest wymagane podawanie imienia, jednak jeśli chcesz, możesz je podać.';
+	
+	$txt['fs_cloud_gdrive'] = 'Chmura Google Drive';
+	$txt['fs_clouds_right'] = 'Google Drive';
+	$txt['cloud_google_connected'] = 'Podłączony do Google API';
+	
+	$txt['connecting_ftp_wait'] = 'Łączenie z serwerem FTP. Proszę czekać...';
 ?>
