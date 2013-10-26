@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.27 beta
+PHPOS Web Operating System<br>Version: 1.28 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,69 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+<b>1.28</b> (2013.10.26)</b>
+
+<br>
+Warning - if you updating from verison 1.26 and later, you must delete all old files<br>
+<br>
+Added new features:<br>
+<br>
+<< Most important in this update: >><br>
+<br>
+>> Added full Google Drive support, check the features:<br>
+<br>
+- one-click login procedure<br>
+- listing files and folders<br>
+- renaming files/folders<br>
+- folders navigation<br>
+- creating folders<br>
+- downloading files on server or local computer<br>
+- uploading files (also with drag&drop)<br>
+- copying files/folders (also between fsystems)<br>
+- moving files/folders (also between fsystems)<br>
+- deleting files/folders<br>
+-------------------------<br>
+<br>
+>> Rest of features:<br>
+<br>
+- moving and copying files between filesystems (local files/ftp/cloud)<br>
+- copying/cuting/pasting/deleting multiple files at once<br>
+- downloading files to server<br>
+- multiple files upload at once via drag&drop<br>
+- 2 new user libs: downloads and clipboard<br>
+- new view in explorer: list<br>
+- checking and operating on multiple files at once<br>
+- new option for sorting files by name/type/date/size (ascending or descending)<br>
+- new option: show/hide file extensions<br>
+- better navigation via back/next/up<br>
+<br>
+	+ lot of smallest things<br>
+
+<br><br>
+Bugs Fixed:<br><br>
+- navigation on folders fixed<br>
+- copying/pasting/cuting fully works<br>
+- fixed bugs with changing directory<br>
+- fixed bug with ftp view and download<br>
+- fixed bug with root ftp folder<br>
+- some language fixes<br>
+
+	+ lot of smallest bugs<br>
+
+
+
+<br><br>
+System Core changes:<br>
+- filesystems rebuilded<br>
+- added preloaders and afterloaders to plugins<br>
+- improved plugins features<br>
+- separated context menus to filesystems<br>
+- separates explorer requested actions to filesystems<br>
+- window loader speed up (ajax requests not rendering content now when launched in background)<br>
+<br>
+	+ lot of smallest changes<br>
+<br><br>
+
 
 <b>1.27</b> (2013.10.24)</b>
 <br>
