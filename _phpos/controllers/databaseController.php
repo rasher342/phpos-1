@@ -34,5 +34,7 @@ if(!defined('PHPOS'))	die();
 	$sql->set_dbname($db_dbname);
 	$sql->set_prefix($db_prefix);
 	
+	unset($db_host, $db_login, $db_password, $db_dbname, $db_prefix);
+	
 	$sql->connect() or die();
 ?>

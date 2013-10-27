@@ -421,8 +421,14 @@ class app_explorer {
 			$ftp->set_id($ftp_id);
 			$ftp->get_ftp();
 			
-			$address_bar = '<a 
-			onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>'.$ftp->get_login().'@'.$ftp->get_host().'</b></a>'.$separator;			
+			if(is_root() || globalconfig('demo_mode') != 1)
+			{			
+				$address_bar = '<a 
+				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>'.$ftp->get_login().'@'.$ftp->get_host().'</b></a>'.$separator;		
+			} else {
+				$address_bar = '<a 
+				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>demo@ftp_demo_server</b></a>'.$separator;	
+			}
 		}	
 		
 		return $address_bar;

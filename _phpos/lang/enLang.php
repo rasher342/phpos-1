@@ -105,7 +105,7 @@ if(!defined('PHPOS'))	die();
 	$txt['googledrive_right_clickhere_desc'] = 'to login to your Google Drive';
 	$txt['googledrive_header_must_login'] = 'At first you must login to your Google Drive Account here below';
 	$txt['googledrive_auth_url'] = 'Login to Google Account';
-	$txt['googledrive_need_login_help'] = 'Google Drive requires login and accept access to your files.<br />When you click on <b>Login to Google Account</b> you will be redirected to Google and you must accept<br/> request for agree to showing files from your Google Drive. Google Drive API must be enable in your account settings.<br/><b>PHPOS will <u>not store</u> any data about your Google Account.</b>';
+	$txt['googledrive_need_login_help'] = 'Google Drive requires login and accept access to your files. When you click on <b>Login to Google Account</b> you will be redirected to Google and you must accept request for agree to showing files from your Google Drive. Google Drive API must be enable in your account settings. <b>PHPOS will <u>not store</u> any data about your Google Account. <br />PHPOS Private Policy about usage Google Drive on this system is here: <a href="http://www.phpos.pl/?v=google_drive_policy" target="blank"><u>http://phpos.pl/?v=google_drive_policy</u></a></b>';
 	
 	$txt['googledrive_right_info_nologged'] = 'With Google Drive support you can manage your files like normal folder. You can creating new files and folders, deleting them, moving (between other filesystems also!), copying, downloading and uploading new files from other filesystems or from your computer via <b>Drag&Drop</b>.';
 
