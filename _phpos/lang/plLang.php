@@ -131,6 +131,7 @@ if(!defined('PHPOS'))	die();
 	$txt['never'] = 'Nigdy';
 	
 // DESKTOP CONTEXT MENU
+	$txt['link_on_desktop'] = 'Utwórz skrót do tego folderu na pulpicie';
 	$txt['change_desktop_wallpaper'] = 'Zmień tapetę pulpitu';
 	$txt['context_to_db'] = 'Przełącz na pulpit bazy danych';
 	$txt['context_to_local'] = 'Przełącz na pulpit katalogu domowego';

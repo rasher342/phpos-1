@@ -117,7 +117,7 @@ if(!defined('PHPOS'))	die();
 	$txt['download_to_disk'] = 'Download to your computer';
 	$txt['download_to_server'] = 'Download to server';
 	$txt['copy'] = 'Copy';
-	$txt['copy_server'] = 'Copy against filesystems';
+	$txt['copy_server'] = 'Copy between filesystems';
 	$txt['paste'] = 'Paste';
 	$txt['cut'] = 'Cut';
 	$txt['delete'] = 'Delete';
@@ -131,6 +131,7 @@ if(!defined('PHPOS'))	die();
 	$txt['never'] = 'Never';
 	
 // DESKTOP CONTEXT MENU
+	$txt['link_on_desktop'] = 'Create shortcut to this folder on desktop';
 	$txt['change_desktop_wallpaper'] = 'Change desktop wallpaper';
 	$txt['context_to_db'] = 'Switch to database desktop';
 	$txt['context_to_local'] = 'Switch to local files desktop';
@@ -194,7 +195,7 @@ if(!defined('PHPOS'))	die();
 	$txt['explorer_right_db_desc'] = 'This folder is virtual and exists only in database filesystem. In this folders you can create your own folders and shortcuts to apps and more. Upload of files is not available in database folders.';
 	
 	$txt['explorer_right_local'] = 'Local HOME folder';
-	$txt['explorer_right_local_desc_drag_active'] = '<b>Drag & drop upload</b> is active in this window. To upload your files from your computer drag them into this window. You can drop here <b>few files at once</b>';
+	$txt['explorer_right_local_desc_drag_active'] = '<b>Drag & drop upload</b> is active in this window. To upload your files from your computer drag them into this window. You can drop here <b>multiple files at once</b>';
 	
 	$txt['folder_is_empty'] = 'This folder is empty';	
 	

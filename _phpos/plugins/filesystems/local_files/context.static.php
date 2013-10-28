@@ -58,7 +58,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	$contextMenus['DIR'][] = '---';	
 			
 	$contextMenus['DIR'][]	=	
-				'shortcuts::Create shortcut on desktop::explorer_link_to_folder("'.base64_encode($icons[$i]['id']).'", "'.base64_encode($icons[$i]['basename']).'");::edit_add';
+				'shortcuts::'.txt('link_on_desktop').'::explorer_link_to_folder("'.base64_encode($icons[$i]['id']).'", "'.base64_encode($icons[$i]['basename']).'");::edit_add';
 				
 		
 	// WINDOW:
@@ -87,7 +87,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	
 						
 		$contextMenus['WINDOW'][]	=	
-				'shortcuts::Create shortcut on desktop::explorer_link_to_folder("'.base64_encode($context_dir_id).'", "'.base64_encode(basename($context_dir_id)).'");::edit_add';
+				'shortcuts::'.txt('link_on_desktop').'::explorer_link_to_folder("'.base64_encode($context_dir_id).'", "'.base64_encode(basename($context_dir_id)).'");::edit_add';
 	
 	
 	if(APP_ACTION == 'desktop')
