@@ -58,6 +58,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$root_directory_id,
 		$directory_id,
 		$parent_id,
+		$parents,
 		$address,
 		$authUrl,
 		$fs_prefix,	
@@ -75,8 +76,10 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	function __construct($cloud_id = null)
 	{				
 		$this->fs_prefix = 'clouds_google_drive';	
+		
 		$this->set_root_directory_id('root');
-		$this->client = $this->connect();			
+		$this->client = $this->connect();		
+		 		
 	}	
 		
 /*
@@ -257,6 +260,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	public function set_root_directory_id($dir_id)
 	{
 		$this->root_directory_id = $dir_id;	
+		
 	}
 		 
 /*
@@ -266,6 +270,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	public function set_directory_id($dir_id)
 	{
 		$this->directory_id = $dir_id;	
+		if($this->directory_id == '.') $this->directory_id = 'root';		
 	}
 		 
 /*
@@ -325,15 +330,23 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{
 		try 
 		{
-			$parents = $this->service->parents->listParents($fileId);
-
-			$parents_array = array();
-			foreach ($parents->getItems() as $parent) 
+			if(!is_array($this->parents))
 			{
-				$parents_array[] = $parent->getId();
+				$parents = $this->service->parents->listParents($fileId);
+
+				$parents_array = array();
+				foreach ($parents->getItems() as $parent) 
+				{
+					$parents_array[] = $parent->getId();
+				}
+				$this->parents = $parents_array;
+				return $parents_array;
+				
+			} else {
+			
+				return $this->parents;
 			}
 			
-			return $parents_array;
 			
 		} catch (Exception $e) 
 		{
@@ -349,6 +362,48 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		return $this->service;
 	}			
 
+	
+	public function get_tree($dir = 'root')
+	{
+		$dir_parents = $dir;
+		if(!empty($this->directory_id)) $dir_parents = $this->directory_id;
+		$this->get_parents($dir_parents);
+		
+		$root_files = $this->get_files_list($dir);
+		$c = count($root_files);
+		
+		$tree = '';
+		if($c != 0)
+		{
+			$tree.= '<ul>';
+			for($i=0; $i<$c; $i++)
+			{
+				if($this->is_directory($root_files[$i]))
+				{
+					$state = 'closed';
+					if(in_array($root_files[$i]['id'], $this->parents) || $root_files[$i]['id'] == $this->directory_id)					
+					{
+						$span = '<span style="color:black"><b>'.$root_files[$i]['basename'].'</b></span>';
+						//$items = $this->get_files_list($root_files[$i]['id']);
+						//$state = 'opened';						
+						
+					} else {
+					
+						$span = '<span style="color:black">'.$root_files[$i]['basename'].'</span>';				
+					}	
+										
+					
+					$tree.= '<li data-options="state:\''.$state.'\'"><span><a href="">'.$span.'</a></span></li>'.$items;
+				}		
+			}
+			
+			$tree.= '</ul>';
+		}
+		
+		
+		//print_r($root_files);
+		return $tree;	
+	}
 /*
 **************************
 */
@@ -397,7 +452,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 */
 
  
-	public function get_files_list()
+	public function get_files_list($directory_id = null)
 	{		
 		if($this->directory_id == '.') $this->directory_id = 'root';		 
 		$pageToken = NULL;
@@ -411,7 +466,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$parameters['pageToken'] = $pageToken;
 				}
 				
-				$parameters['q'] = '\''.$this->directory_id.'\' in parents';				
+				if($directory_id === null) $directory_id = $this->directory_id;			
+				
+				$parameters['q'] = '\''.$directory_id.'\' in parents';				
 				$parameters['fields'] = "items(id,title,mimeType,createdDate,modifiedDate,iconLink,webContentLink,webViewLink,quotaBytesUsed)";				
 				
 				$files = $this->service->files->listFiles($parameters);

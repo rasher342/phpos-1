@@ -218,10 +218,10 @@ if(!defined('PHPOS'))	die();
 ***************************
 */		
 	
-		
 	// Get left tree	
 
 	include MY_APP_DIR.'controllers/explorerControllerTree.php';
+
 				
 /*.............................................. */		
 
@@ -239,6 +239,8 @@ if(!defined('PHPOS'))	die();
 	// Get address bars, nav bar and footer
 		
 	include MY_APP_DIR.'controllers/explorerControllerNavBar.php';
+	
+
 		
 
 /*

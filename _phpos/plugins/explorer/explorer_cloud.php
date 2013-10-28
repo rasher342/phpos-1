@@ -26,7 +26,19 @@ $records = $clouds->get_my_clouds();
 			$tmp_title = '<span class="explorer_tree_item">'.string_cut($row['title'], 20).'</span>';			
 			if($my_app->get_param('fs') == 'clouds_google_drive' && $my_app->get_param('cloud_id') == $row['id']) $tmp_title = '<span  class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';
 			
-			$items.= '<li data-options="iconCls:\'icon-google_drive\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.link_action('index', 'tmp_shared_id:0,ftp_id:0,workgroup_id:0,dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:.,fs:clouds_google_drive').'"><span style="color: black;">'.$tmp_title.'</span></a></span></li>';		
+			$items.= '<li data-options="iconCls:\'icon-'.$row['cloud'].'\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.link_action('index', 'tmp_shared_id:0,ftp_id:0,workgroup_id:0,dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:root,fs:clouds_'.$row['cloud']).'"><span style="color: black;">'.$tmp_title.'</span></a></span>';		
+			
+			$my_fs = 'clouds_'.$row['cloud'];
+			if($my_app->get_param('fs') == $my_fs && $my_app->get_param('cloud_id') == $row['id']) 
+			{			
+				if(method_exists($phposFS, 'get_tree'))
+				{
+					$items.= $phposFS->get_tree();
+				}
+			
+			}
+			
+			$items.= '</li>';
 		} 
 
 	} else {
