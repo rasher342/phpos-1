@@ -27,7 +27,10 @@ if(count($records) != 0)
 		$tmp_title = '<span class="explorer_tree_item">'.string_cut($row['title'], 20).'</span>';			
 		if($my_app->get_param('workgroup_id') == $row['id']) $tmp_title = '<span class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';		
 		
-		$items.= '<li data-options="state:\'closed\', iconCls:\'icon-groupusers\'"><span><a title="'.$row['title'].' '.$row['desc'].'" href="javascript:void(0);" onclick="'.link_action('workgroup', 'cloud_id:0,tmp_shared_id:0,ftp_id:0,shared_id:0,workgroup_id:'.$row['id'].',fs:local_files').'">'.$tmp_title.'</a></span><ul>';
+		$state = 'state:\'closed\', ';
+		if(param('workgroup_id') == $row['id']) $state = '';
+		
+		$items.= '<li data-options="'.$state.'iconCls:\'icon-groupusers\'"><span><a title="'.$row['title'].' '.$row['desc'].'" href="javascript:void(0);" onclick="'.link_action('workgroup', 'cloud_id:0,tmp_shared_id:0,ftp_id:0,shared_id:0,workgroup_id:'.$row['id'].',fs:local_files').'">'.$tmp_title.'</a></span><ul>';
 		
 		$groups->set_id($row['id']);
 		$count_users = $groups->count_users();
@@ -38,7 +41,10 @@ if(count($records) != 0)
 			$u->set_id_user($group_user['id_user']);
 			$u->get_user_by_id();
 			
-			$items.= '<li data-options="iconCls:\'icon-user\'"><span><a title="'.$row['title'].' '.$row['desc'].'" href="javascript:void(0);" onclick="'.link_action('shared', 'cloud_id:0,tmp_shared_id:0,ftp_id:0,shared_id:0,workgroup_id:'.$row['id'].',workgroup_user_id:'.$group_user['id_user'].',fs:local_files').'">'.$u->get_user_login().'</a></span></li>';
+			$user_name = $u->get_user_login();
+			if(param('workgroup_user_id') == $group_user['id_user']) $user_name = '<b>'.$u->get_user_login().'</b>';
+			
+			$items.= '<li data-options="iconCls:\'icon-user\'"><span><a title="'.$row['title'].' '.$row['desc'].'" href="javascript:void(0);" onclick="'.link_action('shared', 'cloud_id:0,tmp_shared_id:0,ftp_id:0,shared_id:0,workgroup_id:'.$row['id'].',workgroup_user_id:'.$group_user['id_user'].',fs:local_files').'">'.$user_name.'</a></span></li>';
 		}
 		
 		

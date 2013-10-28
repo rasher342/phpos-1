@@ -227,7 +227,7 @@ if(!defined('PHPOS'))	die();
 	$txt['created'] = 'Utworzono';
 	$txt['uploaded'] = 'Wgrano na serwer';
 	$txt['deleted'] = 'Usunięty';
-	$txt['shared'] = 'Udostępniony';	
+	$txt['shared'] = 'Udostępnione';	
 	$txt['owner'] = 'Właściciel';		
 	$txt['icon'] = 'Ikonka';
 	$txt['your_icons_tip'] = 'Możesz wgrać swoje własne ikony do biblioteki \'Ikony\'';
