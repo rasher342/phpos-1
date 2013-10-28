@@ -776,7 +776,15 @@ if(!defined('PHPOS'))	die();
 // WORKGROUPS
 	$txt['workgroups'] = 'Workgroups';
 	$txt['workgroups_empty'] = 'You are not in any group.';
+	$txt['workgroups_last_owner_activity'] = 'Last owner\'s activity:';
+	$txt['workgroups_last_user_activity'] = 'Last user\'s activity:';
+	$txt['workgroups_nosharing_title'] = 'No shared folders';
+	$txt['workgroups_nosharing_desc'] = 'This user not sharing any folders.';
 	$txt['workgroup_users'] = 'Users';
+	$txt['quest'] = 'Guest';
+	$txt['workgroup_num_folders'] = 'Folders';
+	$txt['workgroup_shared_fullaccess'] = 'Full access';
+	$txt['workgroup_shared_readonly'] = 'Read Only';
 	$txt['explorer_right_group_users'] = 'Users in group';
 	$txt['explorer_right_group_users_desc'] = 'Select user to see shared folders';
 	$txt['explorer_right_groups'] = 'Workgroups';

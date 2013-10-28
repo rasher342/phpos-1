@@ -36,12 +36,12 @@ if(APP_ACTION == 'workgroup')
 				
 				$html['icons'].= $layout->area_start($title);
 				$html['icons'].= $layout->txtdesc(txt('shared_folders_serv_desc'));
+				$html['icons'].= $layout->area_start(txt('explorer_right_group_users')).$layout->txtdesc(txt('explorer_right_group_users_desc')).$layout->area_end();
 				
 				if($count_users != 0)
 				{				
 					foreach($records as $row)
-					{			
-						
+					{							
 						$action_open = link_action('shared', 'workgroup_id:'.$group_id.',workgroup_user_id:'.$row['id_user'].',fs:local_files');
 						
 						$contextMenu_shared = array(				
@@ -61,8 +61,9 @@ if(APP_ACTION == 'workgroup')
 							$user_info = $tmp_usr->get_user_by_id($row['id_user']);
 							$owner = '';
 							
-							if($row['id_user'] == $group->get_id_owner()) $owner = txt('owner').'';
-							$html['icons'].='<div id="groups_shared_list_'.$row['id_user'].WIN_ID.'" class="phpos_server_icon" title="<b>'.$group->get_title().'</b> / '.$user_info['user_login'].'"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'accounts/user-icon.png" /></a><p><b>'.$user_info['user_login'].'</b><br />'.$user_info['user_email'].'<br /><span class="desc">'.$owner.'</span></p></div>';	
+							$owner = txt('guest');
+							if($row['id_user'] == $group->get_id_owner()) $owner = txt('owner');
+							$html['icons'].='<div id="groups_shared_list_'.$row['id_user'].WIN_ID.'" class="phpos_server_icon" title="'.$group->get_title().' / '.$user_info['user_login'].'"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'accounts/user-icon.png" /></a><p><b>'.$user_info['user_login'].'</b><br />'.txt('workgroups_last_user_activity').' <b>'.date('Y.m.d H:i:s', $user_info['last_activity']).'</b><br /><span class="desc">'.$owner.'</span></p></div>';	
 						}
 					}
 					
@@ -175,59 +176,6 @@ if(APP_ACTION == 'workgroup')
 				
 			$html['icons'].= $layout->area_start(txt('ftp_folders')).txt('ftp_no_accounts').$layout->txtdesc(txt('st_ftp')).$layout->area_end();						
 		}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 				
 	

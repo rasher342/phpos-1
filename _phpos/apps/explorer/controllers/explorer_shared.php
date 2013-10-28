@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.9, 2013.10.28
  
 **********************************
 */
@@ -15,7 +15,7 @@ if(!defined('PHPOS'))	die();
 
 
 if(APP_ACTION == 'shared')
-	{
+{
 
 		$html['right_items_img'] = 'shared1.png';
 					
@@ -47,24 +47,40 @@ if(APP_ACTION == 'shared')
 				$html['icons'].= $layout->area_start($title);
 				$html['icons'].= $layout->txtdesc(txt('st_shared'));
 				$html['icons'].= $layout->subtitle($group_user->get_user_login(), ICONS.'user.png');
+				$html['icons'].= txt('workgroups_last_user_activity').' <b>'.date('Y.m.d H:i', $group_user->get_last_activity()).'</b><br/>';
 				
-				foreach($records as $row)
+				$c = count($records);
+				
+				if($c!=0)
 				{
-					$tmp_usr = new phpos_users;
-					$user_info = $tmp_usr->get_user_by_id($row['id_user']);		
+					foreach($records as $row)
+					{
+						$tmp_usr = new phpos_users;
+						$user_info = $tmp_usr->get_user_by_id($row['id_user']);		
 
 
-						$action_open = link_action('index', 'reset_shared:0,shared_id:'.$row['id'].',in_shared:1,fs:local_files');						
-						$contextMenu_shared_folders = array(				
-							'open::'.txt('open').'::'.$action_open.'::folder_open'					
-						);				
-							
-						$apiWindow->setContextMenu($contextMenu_shared_folders);
-						$js.= $apiWindow->contextMenuRender('groups_shared_folders_'.$row['id'].WIN_ID, 'img');	
-						$apiWindow->resetContextMenu();				
+							$action_open = link_action('index', 'reset_shared:0,shared_id:'.$row['id'].',in_shared:1,fs:local_files');						
+							$contextMenu_shared_folders = array(				
+								'open::'.txt('open').'::'.$action_open.'::folder_open'					
+							);				
+								
+							$apiWindow->setContextMenu($contextMenu_shared_folders);
+							$js.= $apiWindow->contextMenuRender('groups_shared_folders_'.$row['id'].WIN_ID, 'img');	
+							$apiWindow->resetContextMenu();				
+						
+						
+						$access = txt('workgroup_shared_fullaccess');
+						if($row['readonly'] == '1') $access = txt('workgroup_shared_readonly');
+						
+						$desc = '';
+						if(!empty($row['description'])) $desc = ' - '.$row['description'];
 					
+						$html['icons'].='<div id="groups_shared_folders_'.$row['id'].WIN_ID.'" title="'.$row['title'].' '.$desc.'" class="phpos_server_icon"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/shared1.png" /></a><p><b>'.$row['title'].'</b><br /><img src="'.ICONS.'group_access.png" style="display:inline-block; verical-align:middle; width:15px" /><b>'.$access.'</b><br /><span class="desc">'.txt('owner').': <b>'.$user_info['user_login'].'</b></span></p></div>';				
+					}
+					
+				} else {
 				
-					$html['icons'].='<div id="groups_shared_folders_'.$row['id'].WIN_ID.'" title="<b>'.$row['title'].'</b> '.$row['desc'].'" class="phpos_server_icon"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/shared1.png" /></a><p><b>'.$row['title'].'</b><br />'.string_cut($row['description'], 20).'<br /><span class="desc">'.$user_info['user_login'].'</span></p></div>';				
+					$html['icons'].= $layout->area_start(txt('workgroups_nosharing_title')).$layout->txtdesc(txt('workgroups_nosharing_desc')).$layout->area_end();
 				}
 				
 				$html['icons'].= $layout->area_end();
@@ -89,7 +105,11 @@ if(APP_ACTION == 'shared')
 							$usr_data->set_id_user($grp_user['id_user']);
 							$usr_data->get_user_by_id();
 							
-							$right_item['name'] = $usr_data->get_user_login();
+							$shared = new phpos_shared;							
+							$shared->set_id_user($grp_user['id_user']);
+							$num_shared = $shared->count_user_shared();							
+							
+							$right_item['name'] = $usr_data->get_user_login().' <span style="color:#606060">('.txt('workgroup_num_folders').': '.$num_shared.')</span>';
 							$right_item['onclick'] = link_action('shared', 'workgroup_id:'.$workgroup_id.',workgroup_user_id:'.$grp_user['id_user'].',fs:local_files');
 							$right_item['icon'] = 'user.png';
 							$right_item['marked'] = false;

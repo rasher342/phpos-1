@@ -457,13 +457,15 @@ class phpos_users
  	
 	public function activity()
 	{
-		global $sql;			
-		$sql->cond('id_user', $this->id_user);
+		global $sql;	
+		$id = $this->get_logged_user();
+		$this->update_session();
+		$sql->cond('id_user', $id);
 		
 		$data = array(	
 		'last_activity' => time()		
 		);
-		$this->update_session();
+		
 		if($sql->update($this->db_users, $data)) return true;	
 	}	
 	   

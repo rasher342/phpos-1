@@ -775,7 +775,15 @@ if(!defined('PHPOS'))	die();
 // WORKGROUPS
 	$txt['workgroups'] = 'Grupy robocze';
 	$txt['workgroups_empty'] = 'Nie jesteś członkiem żdanej grupy.';
+	$txt['workgroups_last_owner_activity'] = 'Ost. aktywność usera:';
+	$txt['workgroups_last_user_activity'] = 'Ostatnia aktywność tego użytkownika';
+	$txt['workgroups_nosharing_title'] = 'Brak udostępnionych folderów';
+	$txt['workgroups_nosharing_desc'] = 'Ten użytkownik nie udostępnia żadnych plików, ani folderów.';
 	$txt['workgroup_users'] = 'Członkowie';
+	$txt['quest'] = 'Gość';
+	$txt['workgroup_shared_fullaccess'] = 'Pełny dostęp';
+	$txt['workgroup_shared_readonly'] = 'Tylko do odczytu';
+	$txt['workgroup_num_folders'] = 'Foldery';
 	$txt['explorer_right_group_users'] = 'Członkowie grupy';
 	$txt['explorer_right_group_users_desc'] = 'Kliknij na nazwie użytkownika, aby zobaczyć udostępnione przez niego w grupie pliki';
 	$txt['explorer_right_groups'] = 'Grupy robocze';

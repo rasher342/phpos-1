@@ -47,11 +47,7 @@ $app_menu =
 	);								
 		
 	
-if(!empty($tmp_shared_id))
-{
-	$shared = new phpos_shared;
-	if($shared->is_my($tmp_shared_id))	$app_menu[] = 'title:'.txt('stop_share_folder').',action:actionStopShare,icon:icon-cancel';
-}
+
 	
 	if(!$readonly && $context_fs != 'db_mysql')
 	{
@@ -90,7 +86,11 @@ if(!empty($tmp_shared_id))
 							'title:'.txt('view_extensions_hide').',show_extensions:0,check:show_extensions,if:'.$my_app->get_param('show_extensions').',action:actionChangeExt'
 								);
 	
-	
+	if(!empty($tmp_shared_id))
+{
+	$shared = new phpos_shared;
+	if($shared->is_my($tmp_shared_id))	$app_menu[] = 'title:'.txt('stop_share_folder').',action:actionStopShare,icon:icon-cancel';
+}
 	
 
 function actionEditFtp($menu_item)
