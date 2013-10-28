@@ -44,10 +44,20 @@ $(document).ready(function() {
 		});
 	}
 		
+		
+
 /*
 **************************
 */
 
+	function explorer_link_to_folder(dir_id, dir_title)
+	{
+		phpos.windowRefresh('<?php echo WIN_ID;?>', 'action_id:explorer_link_to_folder,action_param:'+dir_id+',action_param2:'+dir_title+',no_increment:1');		
+	}
+		
+/*
+**************************
+*/
 
 	function explorer_delete_file(win_id, file_id, file_name)
 	{	

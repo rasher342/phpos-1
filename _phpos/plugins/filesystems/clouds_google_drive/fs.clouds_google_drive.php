@@ -352,7 +352,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		{
 			$this->set_error_msg($e->getMessage());
 		}
-	}	 		 
+	}	 
+	
 /*
 **************************
 */
@@ -360,8 +361,11 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	public function google_service()
 	{		
 		return $this->service;
-	}			
-
+	}	
+	
+/*
+**************************
+*/
 	
 	public function get_tree($dir = 'root')
 	{
@@ -383,9 +387,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$state = 'closed';
 					if(in_array($root_files[$i]['id'], $this->parents) || $root_files[$i]['id'] == $this->directory_id)					
 					{
-						$span = '<span style="color:black"><b>'.$root_files[$i]['basename'].'</b></span>';
-						//$items = $this->get_files_list($root_files[$i]['id']);
-						//$state = 'opened';						
+						$span = '<span style="color:black"><b>'.$root_files[$i]['basename'].'</b></span>';									
 						
 					} else {
 					
@@ -398,10 +400,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			}
 			
 			$tree.= '</ul>';
-		}
+		}		
 		
-		
-		//print_r($root_files);
 		return $tree;	
 	}
 /*

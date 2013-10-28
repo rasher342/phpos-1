@@ -38,6 +38,8 @@ if(!defined("PHPOS_IN_EXPLORER"))
 			
 	$contextMenus['FILE'][]	=	
 				'download::'.txt('download_to_disk').'::'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $icons[$i]['id']))).'::download';
+				
+	
 					
 			
 	// DIR:
@@ -52,6 +54,11 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		$contextMenus['DIR'][] =		
 		'rename::'.txt('rename').'::'.winmodal(txt('rename'), 'app', 'app_id:shortcuts@folder','location:'.$context_location.',dir_id:'.$context_dir_id.',edit_id:'.base64_encode($icons[$i]['id']).',old_name:'.base64_encode($icons[$i]['basename']).',after_reload:'.WIN_ID).'::edit';
 	}
+	
+	$contextMenus['DIR'][] = '---';	
+			
+	$contextMenus['DIR'][]	=	
+				'shortcuts::Create shortcut on desktop::explorer_link_to_folder("'.base64_encode($icons[$i]['id']).'", "'.base64_encode($icons[$i]['basename']).'");::edit_add';
 				
 		
 	// WINDOW:
@@ -65,7 +72,10 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		{
 			$contextMenus['WINDOW'][] = 			
 				'upload::'.txt('upload_here').'::'.winmodal('Nowa ikona', 'app', 'app_id:shortcuts@upload,width:300,height:350','desktop:1,location:'.$context_location.',back:null,dir_id:'.$context_dir_id.',after_reload:'.WIN_ID).'::disk';
-		}		
+		}	
+
+
+		
 		
 	} else {
 	
@@ -73,6 +83,11 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		'read::This folder is readonly::;::login'		
 		);
 	}
+	
+	
+		$contextMenus['WINDOW'][] = '---';				
+		$contextMenus['WINDOW'][]	=	
+				'shortcuts::Create shortcut on desktop::explorer_link_to_folder("'.base64_encode($context_dir_id).'", "'.base64_encode(basename($context_dir_id)).'");::edit_add';
 	
 	
 	if(APP_ACTION == 'desktop')

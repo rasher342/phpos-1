@@ -109,8 +109,10 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					cache_param('action_status_msg');					
 					msg::error($txt('access_denied'));				
 				}
-			}
+	}
 		
+		
+	
 /*.............................................. */	
 		
 			if(form_submit('new_folder')) 
@@ -165,6 +167,16 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			{			
 				case 'delete':			
 					if($phposFS->delete(param('action_param'))) msg::ok(txt('file_deleted'));				
+				break;	
+				
+				
+				case 'explorer_link_to_folder':		
+					
+					$shortcut = new phpos_shortcuts;					
+					$shortcut->add(base64_decode(param('action_param2')), 'app', 'explorer', 'index', 'folder.png', array('root_id' => base64_decode(param('action_param')), 'fs' => 'local_files','dir_id' => base64_decode(param('action_param'))), 'desktop', 0, null);
+					echo '<script>phpos.windowRefresh("1", "");</script>';
+					msg::ok(txt('updated'));							
+					
 				break;	
 				
 /*.............................................. */		

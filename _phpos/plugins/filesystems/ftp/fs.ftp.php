@@ -245,7 +245,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		
 		if($this->is_directory($f))
 		{	
-			if(dirname($f) != '')
+			if(dirname($f) != '' && $f!='' && $f!='.')
 			{
 				return true;
 			}		
@@ -278,9 +278,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				$parents[] = $file;
 				$i++;
 			}	
-		}			
-		
-		
+		}	
 		return $parents;		
 	}	
 		 

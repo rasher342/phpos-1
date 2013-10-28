@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.9, 2013.10.28
  
 **********************************
 */
@@ -17,7 +17,6 @@ if(!defined('PHPOS'))	die();
 if(!defined('PHPOS_EXPLORER_PLUGIN')) die();
 
 $items = null;
-
 
 $u = new phpos_users;
 $u->set_id_user(logged_id());
@@ -99,37 +98,49 @@ if($my_app->get_param('fs') == 'local_files' && APP_ACTION == 'index')
 $tmp_header = '<span class="explorer_tree_header">'.txt('libs').'</span>';
 if($mark_lib == 1) $tmp_header = '<span class="explorer_tree_header_marked">'.txt('libs').'</span>';
 
+  $my_fs = 'local_files';
+	$filesystem_class = 'phpos_fs_plugin_'.$my_fs;
+	$treeFS = new $filesystem_class; 
+	$tree_explorer = new app_explorer;
+	$tree_explorer->set_fs($my_fs);	
+	$tree_explorer->assign_filesystem($treeFS);
+	$tree_explorer->assign_window($apiWindow);
+	$tree_explorer->assign_my_app($my_app);		
+
+	
+	$tree_libs_list = array();
+	$tree_libs_list['desktop'] = array(txt('lib_desktop'), $dir.'_Desktop');
+	$tree_libs_list['docs'] = array(txt('lib_docs'), $dir.'_Documents');
+	$tree_libs_list['download'] = array(txt('lib_download'), $dir.'_Download');
+	$tree_libs_list['pics'] = array(txt('lib_pics'), $dir.'_Pictures');
+	$tree_libs_list['wallpapers'] = array(txt('lib_wallpapers'), $dir.'_Wallpapers');
+	$tree_libs_list['icons'] = array(txt('lib_icons'), $dir.'_Icons');
+	$tree_libs_list['video'] = array(txt('lib_media'), $dir.'_Video');
+	$tree_libs_list['clipboard'] = array(txt('lib_clipboard'), $dir.'_Clipboard');
+	$tree_libs_list['temp'] = array(txt('lib_temp'), $dir.'_Temp');
+	
+	
 
 $html['left_tree'].= '
 <ul id="explorer_tree'.WIN_ID.'" class="easyui-tree">
 	<li data-options="iconCls:\'icon-favs\'">
         <span><a title="'.txt('lib_desktop').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Desktop,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')">'.$tmp_header.'</a></span>
-				<ul>
+				<ul>';
 				
-				
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_desktop').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Desktop,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['desktop'].'">'.txt('lib_desktop').'</span></a></span></li>
-				
-				<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_download').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Download,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['download'].'">'.txt('lib_download').'</span></a></span></li>
-				
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_docs').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Documents,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['docs'].'">'.txt('lib_docs').'</span></a></span></li>
+				foreach($tree_libs_list as $k => $tree_item)
+				{
+					$state = ',state:\'closed\'';
+					$span = $default_span;
+					if(strstr($my_app->get_param('dir_id'), $tree_item[1]) || $my_app->get_param('dir_id') == $tree_item[1]) 
+					{
+						$state = '';
+						$span = $marked_span;
+					}
 					
-						<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_pics').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Pictures,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['pics'].'">'.txt('lib_pics').'</span></a></span></li>
+					$html['left_tree'].= '<li data-options="iconCls:\'icon-folder\''.$state.'"><span><a title="'.$tree_item[0].'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$tree_item[1].',root_id:'.$tree_item[1].',in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span.'">'.$tree_item[0].'</span></a></span><ul>'.$tree_explorer->get_tree($tree_item[1]).'</ul></li>';	
+				}		
 				
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_wallpapers').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Wallpapers,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['wallpapers'].'">'.txt('lib_wallpapers').'</span></a></span></li>
-					
-							<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_music').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Icons,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['icons'].'">'.txt('lib_icons').'</span></a></span></li>
-					
-				
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_media').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Video,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['video'].'">'.txt('lib_media').'</span></a></span></li>
-					
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_clipboard').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Clipboard,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['clipboard'].'">'.txt('lib_clipboard').'</span></a></span></li>
-					
-					
-					<li data-options="iconCls:\'icon-folder\'"><span><a title="'.txt('lib_temp').'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'reset_shared:1,dir_id:'.$dir.'_Temp,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span['temp'].'">'.txt('lib_temp').'</span></a></span></li>
-				
-			
-				
-				</ul>
+				$html['left_tree'].= '</ul>
 	</li>
 </ul>';
 
