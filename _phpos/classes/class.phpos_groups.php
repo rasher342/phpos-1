@@ -120,7 +120,12 @@ class phpos_groups {
 			foreach($records as $row)
 			{
 				$sql->cond('id', $row['id_group']);
-				$group_data[] = $sql->get_row($this->db_groups);
+				if($sql->is_row($this->db_groups))
+				{
+					$sql->cond('id', $row['id_group']);
+					$group_data[] = $sql->get_row($this->db_groups);
+				}
+				
 			}
 		}			
 		
