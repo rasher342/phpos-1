@@ -38,7 +38,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 					if($address_items[$i] != $this->filesystem->get_root_directory_id())
 					{
 						$item = $this->filesystem->get_file_info($address_items[$i]);
-						$links[] = $item['id'];	
+						if(!empty($item['id'])) $links[] = $item['id'];	
 					}					
 				}
 				
@@ -47,7 +47,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 				
 				if($item['id'] != $this->filesystem->get_root_directory_id())
 				{
-					$links[] = $item['id'];	
+					if(!empty($item['id'])) $links[] = $item['id'];	
 				}	
 			}	
 		}	

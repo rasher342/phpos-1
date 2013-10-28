@@ -119,7 +119,7 @@ if(empty($link_param))
 		
 		if($back == 1)	$html.= $layout->back_button(txt('shortcuts_window_back_to_apps'), link_action('app', 'link_param:0'), txt('shortcuts_window_back_to_apps'), null);
 		$html.= $layout->subtitle($app->get_title(), $app->get_icon());
-		$html.= $layout->subtitle(txt('shortcuts_app_form_choose_params'),MY_RESOURCES.'upload.png');
+		$html.= $layout->subtitle(txt('shortcuts_app_form_choose_params'),MY_RESOURCES_URL.'upload.png');
 		$html.= $layout->txtdesc(txt('shortcuts_app_form_choose_params_desc'));
 		
 		$form = new phpos_forms;
@@ -163,7 +163,7 @@ if(empty($link_param))
 		$c = count($actions);
 		if($c != 0)
 		{
-			$form->title(txt('start_window'), '', MY_RESOURCES.'start.png');						
+			$form->title(txt('start_window'), '', MY_RESOURCES_URL.'start.png');						
 			$items = array();		
 			
 			foreach($actions as $key => $data)
@@ -190,7 +190,7 @@ if(empty($link_param))
 		$c = count($params);
 		if($c != 0)
 		{			
-			$form->title(txt('start_parameters'), '', MY_RESOURCES.'params.png');
+			$form->title(txt('start_parameters'), '', MY_RESOURCES_URL.'params.png');
 			
 			foreach($params as $key => $data)
 			{
@@ -233,7 +233,7 @@ if(empty($link_param))
 				$items[$icon_name] = $icon_name;
 			}						
 		}
-		$form->title(txt('shortcuts_icon_for_title'), '', MY_RESOURCES.'icon.png');
+		$form->title(txt('shortcuts_icon_for_title'), '', MY_RESOURCES_URL.'icon.png');
 		$form->select('new_link_icon', txt('shortcuts_icon_for_name'), txt('shortcuts_icon_for_desc'),  $items, $db_shortcut['icon']);
 	$html.= $form->render();	
 	

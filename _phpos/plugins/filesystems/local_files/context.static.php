@@ -85,7 +85,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	}
 	
 	
-		$contextMenus['WINDOW'][] = '---';				
+						
 		$contextMenus['WINDOW'][]	=	
 				'shortcuts::Create shortcut on desktop::explorer_link_to_folder("'.base64_encode($context_dir_id).'", "'.base64_encode(basename($context_dir_id)).'");::edit_add';
 	

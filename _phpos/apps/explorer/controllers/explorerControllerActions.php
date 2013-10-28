@@ -173,7 +173,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				case 'explorer_link_to_folder':		
 					
 					$shortcut = new phpos_shortcuts;					
-					$shortcut->add(base64_decode(param('action_param2')), 'app', 'explorer', 'index', 'folder.png', array('root_id' => base64_decode(param('action_param')), 'fs' => 'local_files','dir_id' => base64_decode(param('action_param'))), 'desktop', 0, null);
+					$shortcut->add(base64_decode(param('action_param2')), 'app', 'explorer', 'index', 'folder_shortcut.png', array('root_id' => param('root_id'), 'workgroup_id' => param('workgroup_id'), 'workgroup_user_id' => param('workgroup_user_id'), 'in_shared' => param('in_shared'),'shared_id' => param('shared_id'),'tmp_shared_id' => param('tmp_shared_id'), 'fs' => 'local_files','dir_id' => base64_decode(param('action_param'))), 'desktop', 0, null);
 					echo '<script>phpos.windowRefresh("1", "");</script>';
 					msg::ok(txt('updated'));							
 					

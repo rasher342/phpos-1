@@ -55,7 +55,7 @@ echo $layout->start();
 	} else {
 	
 		$layout->set_id('phpos_explorer_footer');
-		$footer_data = '<img class="phpos_explorer_footer_icon" src="'.MY_RESOURCES.'shortcuts.png">'.txt('shortcuts_index_footer').'</span>';
+		$footer_data = '<img class="phpos_explorer_footer_icon" src="'.MY_RESOURCES_URL.'shortcuts.png">'.txt('shortcuts_index_footer').'</span>';
 		echo $layout->footer($footer_data, true); 
 		echo $layout->end('footer');
 	
