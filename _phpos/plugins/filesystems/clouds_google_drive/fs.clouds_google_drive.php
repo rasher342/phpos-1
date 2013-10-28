@@ -393,7 +393,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					}	
 										
 					
-					$tree.= '<li data-options="state:\''.$state.'\'"><span><a href="">'.$span.'</a></span></li>'.$items;
+					$tree.= '<li data-options="state:\''.$state.'\'"><span><a href="javascript:void(0);" onclick="'.helper_reload(array('parent_id' => $this->directory_id,'shared_id' => 0, 'reset_shared' => 0, 'dir_id' => $root_files[$i]['id'])).'">'.$span.'</a></span></li>'.$items;
 				}		
 			}
 			
