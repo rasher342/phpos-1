@@ -34,7 +34,33 @@ if(!defined('PHPOS'))	die();
 			$tmp_title = '<span class="explorer_tree_item">'.string_cut($row['title'], 20).'</span>';			
 			if($my_app->get_param('fs') == 'ftp' && $my_app->get_param('ftp_id') == $row['id']) $tmp_title = '<span  class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';
 			
-			$items.= '<li data-options="iconCls:\'icon-ftp\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.infomonit(txt('connecting_ftp_wait'),'noscript').link_action('index', 'tmp_shared_id:0,workgroup_id:0,cloud_id:0,dir_id:.,ftp_id:'.$row['id'].',fs:ftp').'"><span style="color: black">'.$tmp_title.'</span></a></span></li>';
+			$items.= '<li data-options="iconCls:\'icon-ftp\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.infomonit(txt('connecting_ftp_wait'),'noscript').link_action('index', 'tmp_shared_id:0,workgroup_id:0,cloud_id:0,dir_id:.,ftp_id:'.$row['id'].',fs:ftp').'"><span style="color: black">'.$tmp_title.'</span></a></span>';
+			
+			if($my_app->get_param('fs') == 'ftp' && $my_app->get_param('ftp_id') == $row['id']) 
+			{				
+				$filesystem_class = 'phpos_fs_plugin_ftp';	
+			
+				$treeFS = new $filesystem_class; // start filesytem		
+				$tree_explorer = new app_explorer;
+				$tree_explorer->set_fs('ftp');				
+				$tree_explorer->assign_filesystem($treeFS);
+				$tree_explorer->assign_window($apiWindow);
+				$tree_explorer->assign_my_app($my_app);				
+				$root_id = $treeFS->get_root_directory_id();
+				
+				// If connected
+									
+					if($dir_id == $root_id || $global_fs != $my_fs || $mark_lib == 1)
+					{
+						$closed = ',state:\'closed\'';
+					}
+					
+					$items.= '	
+					<ul>'.$tree_explorer->get_tree($treeFS->get_root_directory_id()).'</ul>';
+						
+			}
+			
+			$items.='</li>';			
 		} 
 
 	} else {

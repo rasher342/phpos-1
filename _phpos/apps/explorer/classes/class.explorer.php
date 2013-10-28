@@ -31,19 +31,7 @@ class app_explorer {
 */
  	
 	public function __construct()
-	{
-		global $apiWIndow, $my_app;
-		
-		if(is_object($apiWindow))
-		{
-			$this->window = $apiWindow;
-		}
-		
-		if(is_object($my_app))
-		{
-			$this->my_app = $my_app;
-		}		
-		
+	{		
 		$this->hidden_icons = array(
 		'_Desktop',
 		'_Documents',
@@ -119,7 +107,7 @@ class app_explorer {
 **************************
 */
  	
-	public function assign_filesystem($fs_object)
+	public function assign_filesystem(phpos_filesystems $fs_object)
 	{
 		$this->filesystem = $fs_object;
 	}
@@ -128,16 +116,16 @@ class app_explorer {
 **************************
 */
  	
-	public function assign_my_app($my_app_object)
+	public function assign_my_app(phpos_app $app_object)
 	{
-		$this->my_app = $my_app_object;
+		$this->my_app = $app_object;
 	}
 				 
 /*
 **************************
 */
  	
-	public function assign_window($window_object)
+	public function assign_window(api_wintask $window_object)
 	{
 		$this->window = $window_object;
 	}
@@ -163,9 +151,7 @@ class app_explorer {
 		$files = $fs->get_files_list();
 		$c = count($files);
 		
-		$item_parents_array = $fs->get_parents($dir_id);
-	
-		
+		$item_parents_array = $fs->get_parents($dir_id);		
 					
 /*.............................................. */		
 	
@@ -215,39 +201,7 @@ class app_explorer {
  	
 	public function get_address_links()
 	{	
-		$dir_id = $this->my_app->get_param('dir_id');		
 		
-		if($dir_id != '.')
-		{
-		$links = array();		
-		$address_items = $this->filesystem->get_parents($dir_id);	
-
-		if(is_array($address_items))
-		{
-			$c = count($address_items);
-			asort($address_items);			
-			
-			for($i=0; $i< $c; $i++)
-			{
-				if($address_items[$i] != $this->filesystem->get_root_directory_id())
-				{
-					$item = $this->filesystem->get_file_info($address_items[$i]);
-					$links[] = $item['id'];	
-				}					
-			}
-			
-			// Last item
-			$item = $this->filesystem->get_file_info($this->filesystem->get_directory_id());	
-			
-			if($item['id'] != $this->filesystem->get_root_directory_id())
-			{
-				$links[] = $item['id'];	
-			}	
-
-			}	
-		}	
-		
-		return $links;
 	}
 	
 					 
@@ -258,55 +212,10 @@ class app_explorer {
 	
 	public function render_address_links()
 	{
-		$links = $this->get_address_links();
-		$c = count($links);
 		
 		$separator = '<img class="arrow" 
-		src="'.THEME_URL.'icons/arrow_small_right.png">';
+		src="'.THEME_URL.'icons/arrow_small_right.png">';		
 		
-		global $my_app;
-		$tmp_shared_id = $my_app->get_param('tmp_shared_id');	
-		
-		if(!empty($tmp_shared_id))
-		{
-			$shared = new phpos_shared;
-			$shared->set_id($tmp_shared_id);
-			$shared->get_shared();
-			$shared_dir = $shared->get_folder_id();
-		}
-			
-		$in_shared = $my_app->get_param('in_shared');
-				
-/*.............................................. */		
-			
-		// If not in shared:
-		if(!$in_shared)
-		{
-			if($c!=0)
-			{
-				for($i = 0; $i < $c; $i++)
-				{
-					$item = $this->filesystem->get_file_info($links[$i]);
-					
-					if($item['id'] != $shared_dir)
-					{
-						if(is_root()) $item = $this->root_homedir_address_parse($item);
-						
-						$address.= '<a 
-						onclick="'.helper_reload(array('dir_id' => $item['id'])).'" 
-						href="javascript:void(0);">'.$item['basename'].'</a>'.$separator;	
-					}
-				}	
-			}
-		}
-		
-		$address_start = '<a onclick="'.helper_reload(
-		array(
-		'dir_id' => $this->filesystem->get_root_directory_id())
-		).'" 
-		href="javascript:void(0);"><b>'.$this->filesystem->protocol_name.'</b></a>';
-					
-/*.............................................. */		
 		
 		if(APP_ACTION == 'my_server')
 		{
@@ -334,7 +243,7 @@ class app_explorer {
 		{
 			
 			$group = new phpos_groups;
-			$group_id = $my_app->get_param('workgroup_id');			
+			$group_id = $this->my_app->get_param('workgroup_id');			
 				
 			if(!empty($group_id))
 			{
@@ -342,7 +251,7 @@ class app_explorer {
 				$group->get_group();
 				
 				$group_user = new phpos_users;
-				$id_user = $my_app->get_param('workgroup_user_id');
+				$id_user = $this->my_app->get_param('workgroup_user_id');
 				$group_user->set_id_user($id_user);
 				$group_user->get_user_by_id();				
 			
@@ -365,7 +274,7 @@ class app_explorer {
 		{
 		
 			$group = new phpos_groups;
-			$group_id = $my_app->get_param('workgroup_id');
+			$group_id = $this->my_app->get_param('workgroup_id');
 			
 			if(!empty($group_id))
 			{			
@@ -381,55 +290,22 @@ class app_explorer {
 		}
 		
 		
-		$in_shared = $my_app->get_param('in_shared');
-		$tmp_shared_id = $my_app->get_param('tmp_shared_id');
-					
-/*.............................................. */		
-		
-		if(APP_ACTION == 'index' && (defined('SHARED') || $in_shared))
-		{
-			$group = new phpos_groups;
-			$group_id = $my_app->get_param('workgroup_id');
-			$group->set_id($group_id);
-			$group->get_group();		
-			
-				
-			$shared_id = $my_app->get_param('tmp_shared_id');	
-			$shared = new phpos_shared;
-			$shared->set_id($shared_id);
-			$shared->get_shared();
-			
-			$group_user = new phpos_users;
-			$id_user = $shared->get_id_user();
-			$group_user->set_id_user($id_user);
-			$group_user->get_user_by_id();	
-		
-			$address_start = '<a 
-			onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'shared\', \'workgroup_id:'.$group_id.',workgroup_user_id:'.$id_user.',fs:local_files\')" href="javascript:void(0);"><b>'.$group_user->get_user_login().'</b></a>'.$separator.'<a onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'shared_id:'.$shared_id.',in_shared:1,fs:local_files\')" href="javascript:void(0);"><b>'.$shared->get_title().'</b></a>';
-		}
-				
-/*.............................................. */		
-			
-		//if(APP_ACTION != 'index') $address = '';
 		$address_bar = $address_start.$separator.$address;
 		
-		$ftp_id = $my_app->get_param('ftp_id');
-		
-		if(!empty($ftp_id)) {		
+/*.............................................. */		
+				
 			
-			$ftp = new phpos_ftp;
-			$ftp->set_id($ftp_id);
-			$ftp->get_ftp();
-			
-			if(is_root() || globalconfig('demo_mode') != 1)
-			{			
-				$address_bar = '<a 
-				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>'.$ftp->get_login().'@'.$ftp->get_host().'</b></a>'.$separator;		
-			} else {
-				$address_bar = '<a 
-				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>demo@ftp_demo_server</b></a>'.$separator;	
-			}
-		}	
+		if(APP_ACTION == 'index')
+		{
+			// Load filesystem plugin address
+			if(file_exists(PHPOS_DIR.'plugins/filesystems/'.$this->fs.'/explorer.address.php'))
+			{
+				include PHPOS_DIR.'plugins/filesystems/'.$this->fs.'/explorer.address.php';	
+			}				
+		}			
+
+				
+/*.............................................. */				
 		
 		return $address_bar;
 	}
@@ -439,9 +315,8 @@ class app_explorer {
 */
  	
 	public function root_homedir_parse($icon)
-	{
-			global $my_app;
-			$home_dir = $my_app->get_param('dir_id').'/';
+	{		
+			$home_dir = $this->my_app->get_param('dir_id').'/';
 			
 			if(PHPOS_HOME_DIR == $home_dir)
 			{
@@ -457,8 +332,7 @@ class app_explorer {
 */
  	
 	public function root_homedir_address_parse($icon)
-	{
-			global $my_app;
+	{		
 			$home_dir = dirname($icon['id']).'/';
 			
 			if(PHPOS_HOME_DIR == $home_dir)

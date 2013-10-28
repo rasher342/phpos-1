@@ -240,9 +240,12 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
  
 	public function have_parent($file)
 	{		
-		if($this->is_directory($file))
+		$f = $file;
+		if(is_array($file)) $f = $file['id'];
+		
+		if($this->is_directory($f))
 		{	
-			if(dirname($file) != '')
+			if(dirname($f) != '')
 			{
 				return true;
 			}		
@@ -276,6 +279,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 				$i++;
 			}	
 		}			
+		
 		
 		return $parents;		
 	}	
