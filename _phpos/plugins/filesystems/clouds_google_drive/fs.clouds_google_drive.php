@@ -321,7 +321,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 **************************
 */
  		 
-	function getParents($fileId) 
+	function get_parents($fileId) 
 	{
 		try 
 		{
@@ -348,37 +348,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{		
 		return $this->service;
 	}			
-				 
-/*
-**************************
-*/
- 
-	public function get_parents($file)
-	{
-		/*$this->get_filelist();
-		$parents = array();
-		//echo '<br>file:'.$file.'<br><br>';
-		if($this->have_parent($file))
-		{			
-			//echo '<br>maparenta:'.$file.'<br><br>';
-			
-			$i=0;
-			while($this->have_parent($file) && $i < 50)
-			{
-				$file = $this->get_parent_dir($file);
-			
-				if($file != ".") 
-				{
-						//echo '<br>pobieram parenta, pobrano: '.$file.'<br>';
-						$parents[] = $file;
-					
-				}
-				$i++;
-			}	
-		}			*/
-		//return $parents;		
-	}	
-		 
+
 /*
 **************************
 */
