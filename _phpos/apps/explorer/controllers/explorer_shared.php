@@ -19,7 +19,7 @@ if(APP_ACTION == 'shared')
 
 		$html['right_items_img'] = 'shared1.png';
 					
-					$shared_id = $my_app->get_param('shared_id');
+		$shared_id = $my_app->get_param('shared_id');
 		$workgroup_id = $my_app->get_param('workgroup_id');
 		$address_icon = ICONS.'server/shared1.png';
 		
@@ -75,7 +75,7 @@ if(APP_ACTION == 'shared')
 						$desc = '';
 						if(!empty($row['description'])) $desc = ' - '.$row['description'];
 					
-						$html['icons'].='<div id="groups_shared_folders_'.$row['id'].WIN_ID.'" title="'.$row['title'].' '.$desc.'" class="phpos_server_icon"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/shared1.png" /></a><p><b>'.$row['title'].'</b><br /><img src="'.ICONS.'group_access.png" style="display:inline-block; verical-align:middle; width:15px" /><b>'.$access.'</b><br /><span class="desc">'.txt('owner').': <b>'.$user_info['user_login'].'</b></span></p></div>';				
+						$html['icons'].='<div id="groups_shared_folders_'.$row['id'].WIN_ID.'" title="'.$row['title'].' '.$desc.'" class="phpos_server_icon"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/shared1.png" /></a><p><b>'.$row['title'].'</b><br /><img src="'.ICONS.'group_access.png" style="display:inline-block; verical-align:middle; width:15px" /><span class="desc"><b>'.$access.'</b><br />'.txt('owner').': <b>'.$user_info['user_login'].'</b></span></p></div>';				
 					}
 					
 				} else {
@@ -133,10 +133,64 @@ if(APP_ACTION == 'shared')
 		
 		} else {		
 			
+				// get my shared, without group
+				
 				$tmp_html = '';				
-				include(PHPOS_DIR.'plugins/server.explorer_shared.php');
-				$html['icons'].= $layout->area_start($server_item_title).$layout->txtdesc(txt('st_shared')).$tmp_html.$layout->area_end();			
-				$tmp_html = '';			
+				//include(PHPOS_DIR.'plugins/server.explorer_shared.php');
+				
+				
+				$shared = new phpos_shared;
+				$shared_id_user = logged_id();
+				$shared->set_id_user($shared_id_user);
+				$records = $shared->get_user_shared();				
+				
+				$group_user = new phpos_users;
+				$group_user->set_id_user($shared_id_user);
+				$group_user->get_user_by_id();
+			
+				$title = '<img src="'.ICONS.'server/shared1.png'.'" style="width:30px; display:inline-block; vertical-align:middle" /> <span style="color:black">'.txt('shared').'</span>';
+				
+				$html['icons'].= $layout->area_start($title);
+				$html['icons'].= $layout->txtdesc(txt('st_shared'));
+				$html['icons'].= $layout->subtitle($group_user->get_user_login(), ICONS.'user.png');
+				$html['icons'].= txt('workgroups_last_user_activity').' <b>'.date('Y.m.d H:i', $group_user->get_last_activity()).'</b><br/>';
+				
+				$c = count($records);
+				
+				if($c!=0)
+				{
+					foreach($records as $row)
+					{
+						$tmp_usr = new phpos_users;
+						$user_info = $tmp_usr->get_user_by_id($row['id_user']);		
+
+
+							$action_open = link_action('index', 'reset_shared:0,shared_id:'.$row['id'].',in_shared:1,fs:local_files');						
+							$contextMenu_shared_folders = array(				
+								'open::'.txt('open').'::'.$action_open.'::folder_open'					
+							);				
+								
+							$apiWindow->setContextMenu($contextMenu_shared_folders);
+							$js.= $apiWindow->contextMenuRender('groups_shared_folders_'.$row['id'].WIN_ID, 'img');	
+							$apiWindow->resetContextMenu();				
+						
+						
+						$access = txt('workgroup_shared_fullaccess');
+						if($row['readonly'] == '1') $access = txt('workgroup_shared_readonly');
+						
+						$desc = '';
+						if(!empty($row['description'])) $desc = ' - '.$row['description'];
+					
+						$html['icons'].='<div id="groups_shared_folders_'.$row['id'].WIN_ID.'" title="'.$row['title'].' '.$desc.'" class="phpos_server_icon"><a href="javascript:void(0);" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/shared1.png" /></a><p><b>'.$row['title'].'</b><br /><img src="'.ICONS.'group_access.png" style="display:inline-block; verical-align:middle; width:15px" /><span class="desc"><b>'.$access.'</b><br />'.txt('owner').': <b>'.$user_info['user_login'].'</b></span></p></div>';				
+					}
+					
+				} else {
+				
+					$html['icons'].= $layout->area_start(txt('workgroups_nosharing_title')).$layout->txtdesc(txt('workgroups_nosharing_desc')).$layout->area_end();
+				}
+				
+				$html['icons'].= $layout->area_end();					
+			
 		}
 	}
 	

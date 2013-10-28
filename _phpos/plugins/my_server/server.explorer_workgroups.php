@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.2.9, 2013.10.28
  
 **********************************
 */
@@ -48,17 +48,6 @@ if(count($records) != 0)
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		$groups->set_id($row['id']);
 		$c = $groups->count_users();
 		$tmp_html.='<div id="groups_list_'.$row['id'].WIN_ID.'" class="phpos_server_icon"  title="<b>'.$row['title'].'</b> '.$row['description'].'" ondblclick="'.$action_open.'"><img src="'.ICONS.'server/workgroup.png" /><p><b>'.$row['title'].'</b><br />'.txt('workgroup_users').': '.$c.'<br /><span class="desc">'.string_cut($row['description'],20).'</span></p></div>';
@@ -67,8 +56,5 @@ if(count($records) != 0)
 
 	$tmp_html = txt('workgroups_empty');
 }
-
-
-
 ?> 			
 				

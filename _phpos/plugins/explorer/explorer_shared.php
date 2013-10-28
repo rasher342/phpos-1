@@ -29,7 +29,7 @@ if(count($records) != 0)
 		if($my_app->get_param('tmp_shared_id') == $row['id']) $tmp_title = '<span  class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';
 		
 		
-		$items.= '<li data-options="iconCls:\'icon-sharedfolder\'"><span><a title="'.$row['title'].' '.$row['desc'].'"  href="javascript:void(0);" onclick="'.link_action('index', 'workgroup_id:0,reset_shared:0,in_shared:1,shared_id:'.$row['id'].',user_id:'.$root_id.',fs:local_files').'">'.$tmp_title.'</a></span>	</li>';
+		$items.= '<li data-options="iconCls:\'icon-sharedfolder\'"><span><a title="'.$row['title'].' '.$row['desc'].'"  href="javascript:void(0);" onclick="'.link_action('index', 'workgroup_id:0,reset_shared:0,in_shared:1,tmp_shared_id:'.$row['id'].',shared_id:'.$row['id'].',fs:local_files').'">'.$tmp_title.'</a></span>	</li>';
 	}	
 } else {
 	

@@ -30,9 +30,9 @@ if(!defined('PHPOS'))	die();
 
 					<?php 
 					if(APP_ACTION == 'index' && 
-					$my_app->get_param('fs') == 'ftp' || $my_app->get_param('fs') == 'clouds_google_drive' || 
+					($my_app->get_param('fs') == 'ftp' || $my_app->get_param('fs') == 'clouds_google_drive' || 
 					($my_app->get_param('fs') == 'local_files' && (!$readonly && globalconfig('disable_upload') !=1  || 
-					is_root()))) 
+					is_root())))) 
 					{ ?>
 					<div id="phpos_explorer_uploader_container" class="easyui-tooltip" title="<?php echo txt('tip_explorer_upload_file');?>">
 						<form enctype="multipart/form-data" method="post" action="<?php echo helper_post('null', array('fs' => $app_param['fs'])); ?>" id="upload" style="background: transparent"> 

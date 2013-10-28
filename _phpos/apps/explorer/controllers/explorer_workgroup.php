@@ -130,34 +130,38 @@ if(APP_ACTION == 'workgroup')
 		/* ================================================== */		
 		} else {
 			
+				$group = new phpos_groups;			
+				$groups = new phpos_groups;		
+				$address_icon = ICONS.'server/workgroup.png';				
+				$records = $groups->get_my_groups();
+				
+				$html['right_items_title'] = txt('explorer_right_groups');
+				$html['right_items_img'] = 'workgroup.png';
+				
+				// right items
+				
+					$html['right_items_title'] = txt('explorer_right_groups');					
+					$html['right_items_img'] = 'workgroup.png';			
+		
+		
 				$tmp_html = '';	
+				$title = '<img src="'.ICONS.'server/workgroup.png'.'" style="width:30px; display:inline-block; vertical-align:middle" /> <span style="color:black">'.txt('workgroups').'</span>';
 				
-				include(PHPOS_DIR.'plugins/server.explorer_workgroups.php');
-				$html['icons'].= $layout->area_start($server_item_title).$layout->txtdesc(txt('groups_serv_desc')).$tmp_html.$layout->area_end();				
+				$html['icons'].= $layout->area_start($title);
+				$html['icons'].= $layout->txtdesc(txt('groups_serv_desc'));
+				
+				$html['icons'].= $layout->area_start(txt('choose_group')).$layout->txtdesc(txt('explorer_right_groups_desc'));					
 			
-				
-				
-				
-		$group = new phpos_groups;		
-		$groups = new phpos_groups;		
-		$address_icon = ICONS.'server/workgroup.png';
-		$ftp = new phpos_ftp;
-		$records = $groups->get_my_groups();
-		
-		$html['right_items_title'] = txt('explorer_right_groups');
-		//$html['right_items_desc'] = txt('explorer_right_groups_desc');
-		$html['right_items_img'] = 'workgroup.png';
-		
-		//$group->get_group();	
-		
 		
 		if(count($records) != 0)
 		{		
 			foreach($records as $row)
 			{						
-				$action_open = link_action('workgroup', 'workgroup_id:'.$row['id'].',fs:local_files');
-			
+				$group = new phpos_groups;										
+				$group->set_id($row['id']);	
+				$num_users = $group->count_users();
 				
+				$action_open = link_action('workgroup', 'workgroup_id:'.$row['id'].',fs:local_files');			
 				$contextMenu_group = array(				
 					'open::'.txt('open').'::'.$action_open.'::folder_open'							
 					);				
@@ -166,11 +170,10 @@ if(APP_ACTION == 'workgroup')
 				$js.= $apiWindow->contextMenuRender('group_list_'.$row['id'].WIN_ID, 'img');	
 				$apiWindow->resetContextMenu();							
 				
-				$html['icons'].=	'<div id="group_list_'.$row['id'].WIN_ID.'" ondblclick="'.$action_open.'" class="phpos_server_icon" title="'.$row['title'].' '.$row['host'].'"><img src="'.ICONS.'server/group.png" /><p><b>'.string_cut($row['title'],30).'</b><br />'.string_cut($row['description'], 30).'<br /><span class="desc">'.string_cut($row['host'], 30).'</span></p></div>';
-			
+				$html['icons'].=	'<div id="group_list_'.$row['id'].WIN_ID.'" ondblclick="'.$action_open.'" class="phpos_server_icon" title="'.$row['title'].' '.$row['description'].'"><img src="'.ICONS.'server/group.png" /><p><b>'.string_cut($row['title'],30).'</b><br />'.string_cut($row['description'], 30).'<br /><span class="desc">'.txt('workgroup_users').': '.$num_users.'</span></p></div>';			
 			}
 			
-			$html['icons'].= $layout->area_end();
+				$html['icons'].= $layout->area_end().$layout->area_end();	
 			
 		} else {	
 				
