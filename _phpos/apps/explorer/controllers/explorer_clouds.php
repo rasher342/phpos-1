@@ -40,42 +40,41 @@ if(APP_ACTION == 'clouds')
 			foreach($records as $row)
 			{				
 				
-				// --- context menu ---
-			$action_open = link_action('index', 'shared_id:0,tmp_shared_id:0,ftp_id:0,workgroup_id:0,dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:root,fs:clouds_'.$row['cloud']);
-			$action_edit = winopen(txt('dsc_cloud_a_edit'), 'cp', 'app_id:clouds@index','cloud_type:'.$row['cloud'].',section:edit_account,cloud_id:'.$row['id']);					
-			$action_delete = "
-				$.messager.confirm('".txt('delete')."', '".txt('delete_confirm')."?', function(r){
-				if (r){				
-					".winopen(txt('dsc_cloud_a_edit'), 'cp', 'app_id:clouds@index','section:list,after_refresh:'.WIN_ID.',action:delete,cloud_id:'.$row['id'].',delete_id:'.$row['id'])."				
+			// --- context menu ---
+				$action_open = link_action('index', 'shared_id:0,tmp_shared_id:0,ftp_id:0,workgroup_id:0,dir_id:.,cloud_id:'.$row['id'].',reset_google_token:1,root_id:root,fs:clouds_'.$row['cloud']);
+				$action_edit = winopen(txt('dsc_cloud_a_edit'), 'cp', 'app_id:clouds@index','cloud_type:'.$row['cloud'].',section:edit_account,cloud_id:'.$row['id']);					
+				$action_delete = "
+					$.messager.confirm('".txt('delete')."', '".txt('delete_confirm')."?', function(r){
+					if (r){				
+						".winopen(txt('dsc_cloud_a_edit'), 'cp', 'app_id:clouds@index','section:list,after_refresh:'.WIN_ID.',action:delete,cloud_id:'.$row['id'].',delete_id:'.$row['id'])."				
+					}
+					});";		
+				
+				$contextMenu_cloud = array(				
+					'open::'.txt('connect_to').'::'.$action_open.'::reload'						
+				);	
+				
+				if($clouds->is_my_cloud($row['id']) || is_root())
+				{
+					$contextMenu_cloud[] = 'edit::'.txt('dsc_cloud_a_edit').'::'.$action_edit.'::edit';
+					$contextMenu_cloud[] = 'delete::'.txt('delete').'::'.$action_delete.'::cancel';
 				}
-				});";		
+				
+				$apiWindow->setContextMenu($contextMenu_cloud);
+				$js = $apiWindow->contextMenuRender('clouds_list_'.$row['id'].WIN_ID, 'img');	
+				jquery_function($js);
+				unset($js);
+				$apiWindow->resetContextMenu();	
+			// --- context menu ---	
 			
-			$contextMenu_cloud = array(				
-				'open::'.txt('connect_to').'::'.$action_open.'::reload'						
-			);	
 			
-			if($clouds->is_my_cloud($row['id']) || is_root())
-			{
-				$contextMenu_cloud[] = 'edit::'.txt('dsc_cloud_a_edit').'::'.$action_edit.'::edit';
-				$contextMenu_cloud[] = 'delete::'.txt('delete').'::'.$action_delete.'::cancel';
-			}
-			
-			$apiWindow->setContextMenu($contextMenu_cloud);
-			$js = $apiWindow->contextMenuRender('clouds_list_'.$row['id'].WIN_ID, 'img');	
-			jquery_function($js);
-			unset($js);
-			$apiWindow->resetContextMenu();	
-		// --- context menu ---	
-		
-		
-		$html['icons'].='
-			<div id="clouds_list_'.$row['id'].WIN_ID.'" ondblclick="'.$action_open.'" class="phpos_server_icon" title="'.$row['title'].' '.$row['description'].'">
-			<img src="'.PHPOS_URL.'plugins/filesystems/clouds_'.$row['cloud'].'/resources/fs.icon_big.png" />
-			<p><b>'.string_cut($row['title'],30).'</b>
-			<br />'.string_cut($row['description'], 30).'
-			<br /><span class="desc">'.$row['cloud'].'</span></p>
-			</div>';
-			
+				$html['icons'].='
+				<div id="clouds_list_'.$row['id'].WIN_ID.'" ondblclick="'.$action_open.'" class="phpos_server_icon" title="'.$row['title'].' '.$row['description'].'">
+				<img src="'.PHPOS_URL.'plugins/filesystems/clouds_'.$row['cloud'].'/resources/fs.icon_big.png" />
+				<p><b>'.string_cut($row['title'],30).'</b>
+				<br />'.string_cut($row['description'], 30).'
+				<br /><span class="desc">'.$row['cloud'].'</span></p>
+				</div>';			
 			}
 		
 			
@@ -84,7 +83,7 @@ if(APP_ACTION == 'clouds')
 			$html['icons'].= $layout->area_start(txt('cloud_folders')).txt('cloud_no_accounts').$layout->txtdesc(txt('st_cloud')).$layout->area_end();						
 		}
 		
-		
+	// --- window context menu ---		
 		$contextWindow = array(		
 				'newcloud::'.txt('clouds_upmenu_new').'::'.winopen(txt('clouds'), 'cp', 'app_id:clouds@index','section:list').'::edit_add',
 				'manageclouds::'.txt('clouds_upmenu_manage').'::'.winopen(txt('clouds'), 'cp', 'app_id:clouds@index','section:new_account').'::cloud'			
@@ -95,5 +94,6 @@ if(APP_ACTION == 'clouds')
 		jquery_function($js);
 		unset($js);
 		$apiWindow->resetContextMenu();	
+	// --- window context menu ---	
 }
 ?>

@@ -153,9 +153,13 @@ if(APP_ACTION == 'shared')
 			/* ================================================== */			
 			} else {
 				
-				$html['icons']= $layout->area_start(txt('shared_error')).$layout->txtdesc(txt('st_shared')).txt('shared_not_exists').$layout->area_end();
-			
+				$html['icons']= $layout->area_start(txt('shared_error')).$layout->txtdesc(txt('st_shared')).txt('shared_not_exists').$layout->area_end();			
 			}
+			
+			
+		
+			
+			
 			
 		/* ================================================== */	
 		

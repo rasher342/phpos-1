@@ -137,6 +137,8 @@ if(!defined('PHPOS'))	die();
 		
 		//echo $share_dir_id;
 		$shared_id = $shared->find_shared($share_dir_id);
+		
+		$address_icon = ICONS.'server/shared1.png';
 				
 /*.............................................. */		
 			

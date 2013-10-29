@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.2.9, 2013.10.29
  
 **********************************
 */
@@ -562,48 +562,20 @@ class app_explorer {
 		
 /*.............................................. */
 		
-		if($this->filesystem->have_parent($dir_id))
-		{			
-			$parent_dir = $this->filesystem->get_parent_dir($dir_id);		
-			
-			$in_shared = $this->my_app->get_param('in_shared');
-			
-			if(!$in_shared)
-			{
-				// not shared
-				$navBar.='<a 
-				class="easyui-tooltip" 
-				title="'.txt('tip_nav_go_to').': '.$parent_dir.'" 
-				href="javascript:void(0);" 
-				onclick="'.helper_reload(
-				array(
-				'dir_id' => $parent_dir, 
-				'dir_navigation_index' => $navigation['next']['index_id'])
-				)
-				.'"><img class="nav_top"  
-				src="'.THEME_URL.'windows/explorer_header_nav_top.png"></a>';	
+		// Navigation Level Up
+		
+		
+		if(APP_ACTION =='index')
+		{
+			if($this->filesystem->have_parent($dir_id))
+			{			
+				$parent_dir = $this->filesystem->get_parent_dir($dir_id);		
 				
-/*.............................................. */		
-	
-			} else {
-			
-				// shared, if(not) parent shared
-				$shared = new phpos_shared;			
+				$in_shared = $this->my_app->get_param('in_shared');
 				
-				$check_dir_id = $dir_id;
-				
-				if(substr($check_dir_id, -1) == '/')		
+				if(!$in_shared)
 				{
-					$check_dir_id = substr($check_dir_id, 0, -1);
-				}
-						
-				$check = $shared->find_shared($check_dir_id);
-					
-/*.............................................. */		
-				
-				if($check == 0)
-				{
-					// can up, parent is not outside shared
+					// not shared
 					$navBar.='<a 
 					class="easyui-tooltip" 
 					title="'.txt('tip_nav_go_to').': '.$parent_dir.'" 
@@ -613,21 +585,185 @@ class app_explorer {
 					'dir_id' => $parent_dir, 
 					'dir_navigation_index' => $navigation['next']['index_id'])
 					)
-					.'"><img 
-					class="nav_top" 
-					src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';	
-				
+					.'"><img class="nav_top"  
+					src="'.THEME_URL.'windows/explorer_header_nav_top.png"></a>';	
+					
+	/*.............................................. */		
+		
 				} else {
 				
-					$navBar.='<img 
-					class="nav_top_inactive" 
-					src="'.THEME_URL.'windows/explorer_header_nav_top_transparent.png /">';					
-				}			
+					// shared, if(not) parent shared
+					$shared = new phpos_shared;			
+					
+					$check_dir_id = $dir_id;
+					
+					if(substr($check_dir_id, -1) == '/')		
+					{
+						$check_dir_id = substr($check_dir_id, 0, -1);
+					}
+							
+					$check = $shared->find_shared($check_dir_id);
+						
+	/*.............................................. */		
+					
+					if($check == 0)
+					{
+						// can up, parent is not outside shared
+						$navBar.='<a 					
+						title="'.txt('tip_nav_go_to').': '.$parent_dir.'" 
+						href="javascript:void(0);" 
+						onclick="'.helper_reload(
+						array(
+						'dir_id' => $parent_dir, 
+						'dir_navigation_index' => $navigation['next']['index_id'])
+						)
+						.'"><img 
+						class="nav_top" 
+						src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';	
+					
+					} else {
+					
+						$navBar.='<img 
+						class="nav_top_inactive" 
+						src="'.THEME_URL.'windows/explorer_header_nav_top_transparent.png /">';					
+					}			
+				}
+				
+			} else {
+			
+				switch($this->my_app->get_param('fs'))
+				{
+					case 'ftp':
+					
+						$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('ftp_folders').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('ftp', 'fs:local_files, ftp_id:0').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';	
+					break;
+					
+					case 'local_files':
+					
+						$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('my_server').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';
+					break;
+					
+					case 'db_mysql':
+					
+						$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('my_server').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';
+					break;
+							
+					default:
+					
+						$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('clouds_title').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('clouds', 'fs:local_files, cloud_id:0').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';					
+					
+				}				
 			}
 			
 		} else {
+		
+			// Not index
+			switch(APP_ACTION)
+			{
+				case 'clouds':
+				
+						if($this->my_app->get_param('cloud_id') == null)
+						{
+							$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('my_server').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';
+						}
+						
+				break;
+				
+				case 'ftp':
+				
+						if($this->my_app->get_param('ftp_id') == null)
+						{
+							$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('my_server').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';							
+						} 
+						
+				break;
 			
-			$navBar.='<img class="nav_top_inactive" src="'.THEME_URL.'windows/explorer_header_nav_top_transparent.png">';			
+				case 'workgroup':
+				
+						if($this->my_app->get_param('workgroup_id') == null)
+						{
+							$navBar.='<a 					
+							title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+							href="javascript:void(0);" 
+							onclick="'.link_action('my_server').'"><img 
+							class="nav_top" 
+							src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';
+							
+						} else {							
+							
+							$navBar.='<a 					
+								title="'.txt('tip_nav_go_to').': '.txt('workgroups').'" 
+								href="javascript:void(0);" 
+								onclick="'.link_action('workgroup', 'workgroup_id:0,workgroup_user_id:0').'"><img 
+								class="nav_top" 
+								src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';												
+						}
+						
+				break;
+				
+				case 'shared':
+				
+						if($this->my_app->get_param('shared_id') == null && $this->my_app->get_param('tmp_shared_id') == null)
+						{
+							if($this->my_app->get_param('workgroup_user_id') == null)
+							{
+								$navBar.='<a 					
+								title="'.txt('tip_nav_go_to').': '.txt('my_server').'" 
+								href="javascript:void(0);" 
+								onclick="'.link_action('my_server').'"><img 
+								class="nav_top" 
+								src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';
+						
+							} else {
+								
+								$group = new phpos_groups;
+								$group->set_id($this->my_app->get_param('workgroup_id'));
+								$group->get_group();
+								$navBar.='<a 					
+									title="'.txt('tip_nav_go_to').': '.$group->get_title().'" 
+									href="javascript:void(0);" 
+									onclick="'.link_action('workgroup', 'workgroup_id:'.$this->my_app->get_param('workgroup_id').',workgroup_user_id:0').'"><img 
+									class="nav_top" 
+									src="'.THEME_URL.'windows/explorer_header_nav_top.png" /></a>';							
+							}								
+						}
+						
+				break;
+
+				default:
+				 $navBar.='<img class="nav_top_inactive" src="'.THEME_URL.'windows/explorer_header_nav_top_transparent.png">';	
+				
+			}		
 		}
 	
 		return $navBar;

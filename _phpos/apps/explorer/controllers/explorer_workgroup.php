@@ -133,7 +133,22 @@ if(APP_ACTION == 'workgroup')
 			} else {				
 			
 				$html['icons']= $layout->area_start(txt('group_error')).txt('group_not_exists').$layout->area_end();			
-			}			
+			}	
+			
+			// --- window context menu ---	
+			if($groups->im_owner($my_app->get_param('workgroup_id')) || is_root())
+			{		
+				$contextWindow = array(		
+					'edit::'.txt('group_section_edit_group').'::'.winopen(txt('group_section_edit_group'), 'cp', 'app_id:groups@groups_admin','section:edit_group,group_id:'.$my_app->get_param('workgroup_id')).'::edit'	
+				);
+				
+				$apiWindow->setContextMenu($contextWindow);
+				$js= $apiWindow->contextMenuRender('phpos_explorer_div'.div(1), 'td');	
+				jquery_function($js);
+				unset($js);
+				$apiWindow->resetContextMenu();	
+			}	
+			// --- window context menu ---	
 		
 		} else {
 		
@@ -211,6 +226,19 @@ if(APP_ACTION == 'workgroup')
 			// No workgroups
 			$html['icons'].= $layout->area_start(txt('ftp_folders')).txt('ftp_no_accounts').$layout->txtdesc(txt('st_ftp')).$layout->area_end();						
 		}	
+		
+		if(is_root() || is_admin())
+		{
+			$contextWindow = array(		
+					'newgroup::'.txt('group_section_new_group').'::'.winopen(txt('group_section_new_group'), 'cp', 'app_id:groups@groups_admin','section:new_group').'::edit_add'
+			);
+			
+			$apiWindow->setContextMenu($contextWindow);
+			$js= $apiWindow->contextMenuRender('phpos_explorer_div'.div(1), 'td');	
+			jquery_function($js);
+			unset($js);
+			$apiWindow->resetContextMenu();	
+		}		
 	}
 }
 ?>

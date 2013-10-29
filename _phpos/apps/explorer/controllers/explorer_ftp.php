@@ -74,15 +74,14 @@ if(APP_ACTION == 'ftp')
 			<p><b>'.string_cut($row['title'],30).'</b>
 			<br />'.string_cut($row['description'], 30).'
 			<br /><span class="desc">'.string_cut($row['host'], 30).'</span></p>
-			</div>';
-		
+			</div>';		
 		}	
 		
 	} else {	
 			
 		$html['icons'].= $layout->area_start(txt('ftp_folders')).txt('ftp_no_accounts').$layout->txtdesc(txt('st_ftp')).$layout->area_end();						
 	}
-	
+	// --- window context menu ---	
 		$contextWindow = array(		
 				'newcloud::'.txt('ftp_upmenu_new').'::'.winopen(txt('ftp'), 'cp', 'app_id:ftp@index','section:list').'::edit_add',
 				'manageclouds::'.txt('ftp_upmenu_manage').'::'.winopen(txt('ftp'), 'cp', 'app_id:ftp@index','section:new_account').'::ftpfolders'			
@@ -93,6 +92,6 @@ if(APP_ACTION == 'ftp')
 		jquery_function($js);
 		unset($js);
 		$apiWindow->resetContextMenu();	
-	
+	// --- window context menu ---	
 }
 ?>

@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.9, 2013.10.28
+	File version: 1.3.0, 2013.10.29
  
 **********************************
 */
@@ -51,15 +51,17 @@ if(!defined('PHPOS_EXPLORER_PLUGIN')) die();
 	$tree_libs_list['temp'] = array(txt('lib_temp'), $dir.'_Temp');
 	
 	$tmp_items = '';
+	$in_library = false;
 	foreach($tree_libs_list as $k => $tree_item)
 	{
 		$state = ',state:\'closed\'';
 		$span = $default_span;
-		if($my_fs == $my_app->get_param('fs') && (strstr($my_app->get_param('dir_id'), $tree_item[1]) || $my_app->get_param('dir_id') == $tree_item[1])) 
+		if($my_fs == $my_app->get_param('fs') && (strstr($my_app->get_param('dir_id'), $tree_item[1]) || $my_app->get_param('dir_id') == $tree_item[1]) && $my_app->get_param('shared_id') == null && $my_app->get_param('tmp_shared_id') == null) 
 		{
 			$state = '';
 			$span = $marked_span;
 			$mark_lib = 1;
+			$in_library = true;
 		}
 		
 		$tmp_items.= '<li data-options="iconCls:\'icon-folder\''.$state.'"><span><a title="'.$tree_item[0].'" href="javascript:void(0);" onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\' , \'ftp_id:0,cloud_id:0,reset_shared:1,dir_id:'.$tree_item[1].',root_id:'.$tree_item[1].',in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files\')"><span class="'.$span.'">'.$tree_item[0].'</span></a></span><ul>'.$tree_explorer->get_tree($tree_item[1]).'</ul></li>';	
