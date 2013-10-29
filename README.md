@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.28 beta
+PHPOS Web Operating System<br>Version: 1.30 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,35 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.30 (2013.10.29)</b><br>
+- Navigation on files fixed and extended<br>
+- Explorer API (opening/saving)extended<br>
+- Left tree extended and fixed<br>
+- Navigation on workgroups, clouds and FTP fixed and extended<br>
+- Filesystems extended<br>
+- Plugins extended<br>
+- Context menus now available for all<br>
+- Quick access to edit/creating items via context menu<br>
+- Language fixes<br>
+- Clouds now visible in my server<br>
+- And lot of small fixes and features<br>
+
+
+<b>1.29 (2013.10.28)</b><br>
+- Installer error reporting Fix<br>
+- Workgroups/shared fixed<br>
+- Workgroups/shared new features<br>
+- FTP root folders tree on left added<br>
+- Clouds root folders tree on left added<br>
+- Libraries folders tree on left added<br>
+- FTP and Clouds folders in address bar added<br>
+- Added option for creating folder shortcuts on desktop<br>
+- Last user activity bug fix<br>
+- Icons in recources fix (in shortcuts)<br>
+- Some fixes<br>
+
+
 <b>1.28</b> (2013.10.26)</b>
 
 <br>
