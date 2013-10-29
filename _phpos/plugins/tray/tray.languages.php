@@ -40,8 +40,7 @@ if(!defined('INSTALLER'))
 		} else {
 			
 			$config_lang = $config->get_user('lang');
-		}
-	
+		}	
 	}
 	
 } else {

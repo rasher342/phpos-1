@@ -113,6 +113,7 @@ if(!defined('PHPOS'))	die();
 // CONTEXT MENUS
 	$txt['open'] = 'Open';
 	$txt['open_with'] = 'Open with';
+	$txt['connect_to'] = 'Connect';
 	$txt['download'] = 'Download';
 	$txt['download_to_disk'] = 'Download to your computer';
 	$txt['download_to_server'] = 'Download to server';
@@ -866,9 +867,14 @@ if(!defined('PHPOS'))	die();
 	$txt['dsc_users_account_wallpapers'] = 'You can change desktop wallpaper here.';
 	
 	
-	
+	$txt['ftp_upmenu_new'] = 'Add FTP Account';
+	$txt['ftp_upmenu_manage'] = 'Manage FTP Accounts';
 // CLOUDS
 	$txt['clouds_title'] = 'Cloud folders';
+	$txt['clouds_upmenu_new'] = 'Add Cloud Account';
+	$txt['clouds_upmenu_manage'] = 'Manage Cloud Accounts';
+	$txt['clouds_right_desc'] = 'With Cloud Accounts you have access to your files in clouds just like to normal folder. You can create new accounts via Control Panel.';
+	$txt['clouds_right_desc2'] = 'Click on cloud icon to connect to your cloud. In most cases you will be asked for confirm access to displaying and managing your files via PHPOS. ';
 	$txt['cloud_folders_desc'] = 'Setup cloud connections';
 	$txt['cloud_my'] = 'My Clouds';
 	$txt['cloud_all'] = 'All Clouds';
@@ -889,8 +895,8 @@ if(!defined('PHPOS'))	die();
 	$txt['cloud_google_help_step2'] = '<b>Step 2:</b> In next step, you must create Google API Client ID. Click on the <b>\'API Access section\'</b> and create new <b>Google OAuth 2.0 Client ID.</b>';	
 	$txt['cloud_google_help_step3'] = '<b>Step 3:</b> In next step, you must create new Google project. Specify the name, e.g. \'My project\'. Logo is not required. Click \'next\' and save your project. In <b>Client ID</b> settings set to <b>Web application</b> and paste the URL of your PHP installation. For your installation it is: <b>'.$_SESSION['PHPOS_NETURL'].'</b>';		
 	$txt['cloud_google_help_step4'] = '<b>Step 4:</b> Client ID and Client Secret will be generated. Paste them at right side at this form and click on the create/update button. Your account will be added to PHPOS and will be available on this server.';	
-	$txt['cloud_connected'] = 'Connected to FTP account.';
-	$txt['cloud_not_connected'] = 'Error to connect to your FTP account.';	
+	$txt['cloud_connected'] = 'Connected to Cloud account.';
+	$txt['cloud_not_connected'] = 'Error to connect to your Cloud account.';	
 	$txt['cloud_folders'] = 'Clouds';	
 	$txt['dsc_cloud_title'] = 'You can create and manage Cloud accounts here. <br />With your own Cloud accounts you can access to your files on ftp servers just like local files.';	
 	$txt['dsc_cloud_public'] = 'Public account will be available to ALL users.';		

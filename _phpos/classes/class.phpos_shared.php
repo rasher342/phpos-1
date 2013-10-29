@@ -231,7 +231,11 @@ class phpos_shared {
 			return $sql->records($this->db_shared);		
 		}
 	}
-	
+		 
+/*
+**************************
+*/
+ 		
 		public function count_user_shared()
 	{
 		if(!empty($this->id_user))

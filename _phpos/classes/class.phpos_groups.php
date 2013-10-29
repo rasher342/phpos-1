@@ -274,11 +274,10 @@ class phpos_groups {
 */
  	
 	public function im_owner($group)
-	{
-		
+	{		
 		$my_id = logged_id();		
 		global $sql;
-		$sql->cond('id_group', $group);
+		$sql->cond('id', $group);
 		$sql->cond('id_owner', $my_id);
 		
 		if($sql->is_row($this->db_groups)) return true;	
@@ -295,8 +294,7 @@ class phpos_groups {
 		if(!empty($this->id) && $this->group_exists())
 		{
 			$sql->cond('id_group', $this->id);
-			return $sql->records($this->db_groups_records);	
-			
+			return $sql->records($this->db_groups_records);				
 		}	
 	}
 			 

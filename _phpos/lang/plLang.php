@@ -114,6 +114,7 @@ if(!defined('PHPOS'))	die();
 	$txt['open'] = 'Otwórz';
 	$txt['open_with'] = 'Otwórz za pomocą';
 	$txt['download'] = 'Pobierz';
+	$txt['connect_to'] = 'Połącz';
 	$txt['download_to_disk'] = 'Pobierz na swój komputer';
 	$txt['download_to_server'] = 'Pobierz na serwer';
 	$txt['copy'] = 'Kopiuj';
@@ -870,6 +871,10 @@ if(!defined('PHPOS'))	die();
 // CLOUDS
 	$txt['clouds_title'] = 'Chmury';
 	$txt['cloud_folders_desc'] = 'Konfiguacja połączeń';
+	$txt['clouds_upmenu_new'] = 'Dodaj konto w chmurze';
+	$txt['clouds_upmenu_manage'] = 'Zarządzaj kontami w chmurze';
+	$txt['clouds_right_desc'] = 'Dzięki kontom w chmurze masz dostęp do swoich plików tak jak do każdego innego zwykłego folderu.<br /> Nowe konta możesz tworzyć w Panelu sterowania.';
+	$txt['clouds_right_desc2'] = 'Kliknij na chmurze, aby połączyć się z zewnętrzną chmurą. Zostaniesz poproszony o zaakceptowanie dostępu do chmury dla PHPOS-a. ';
 	$txt['cloud_my'] = 'Moje chmury';
 	$txt['cloud_all'] = 'Wszystkie chmury';
 	$txt['cloud_public'] = 'Publiczne chmury';

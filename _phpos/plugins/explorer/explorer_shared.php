@@ -7,12 +7,11 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.2.9, 2013.10.29
  
 **********************************
 */
 if(!defined('PHPOS'))	die();	
-
 
 if(!defined('PHPOS_EXPLORER_PLUGIN')) die();
 
@@ -37,10 +36,8 @@ if(count($records) != 0)
 }
 
 
-
 $tmp_header = '<span class="explorer_tree_header">'.txt('shared_folders').'</span>';
 if(APP_ACTION == 'shared' || $my_app->get_param('shared_id') != null || $my_app->get_param('shared') == 1 || $my_app->get_param('in_shared') == 1) $tmp_header = '<span class="explorer_tree_header_marked">'.txt('shared_folders').'</span>';
-
 
 
 $html['left_tree'].= '<br/><br/>
@@ -53,6 +50,5 @@ $html['left_tree'].= '<br/><br/>
 	</li>
 </ul>';
 
-$items = null;
-
+unset($items, $tmp_header, $tmp_title, $shared, $records, $row);
 ?>

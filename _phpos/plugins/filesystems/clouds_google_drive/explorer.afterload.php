@@ -40,5 +40,8 @@ function explorer_clouds_google_drive_serverdownload(file_id)
 		phpos.windowRefresh('".WIN_ID."', 'action_id:googledrive_download_server,action_param:'+file_id);		
 	}
 	";
-$explorer->addJs($js_menus);
+	$explorer->addJs($js_menus);
+
+
+		
 ?>

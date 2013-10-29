@@ -17,8 +17,8 @@ if(!defined('PHPOS'))	die();
 $app_menu = 
 	array(				
 			
-				'title:Add FTP account,action:actionNewFTP,icon:icon-edit_add',				
-				'title:Manage FTP accounts,action:actionManageFTP,icon:icon-ftpfolder'
+				'title:'.txt('ftp_upmenu_new').',action:actionNewFTP,icon:icon-edit_add',				
+				'title:'.txt('ftp_upmenu_manage').',action:actionManageFTP,icon:icon-ftpfolders'
 									
 	);								
 		

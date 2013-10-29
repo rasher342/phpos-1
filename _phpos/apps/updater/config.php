@@ -17,7 +17,7 @@ if(!defined('PHPOS'))	die();
 	$app_id = 'updater';
 	
 	$plugin = 'app';
-	$access_level = 3;	
+	$access_level = 2;	
 	$hidden = 0;
 	$default_action = 'index';		
 	$multiple_windows = true;	
@@ -34,7 +34,7 @@ if(!defined('PHPOS'))	die();
 	$icon = 'logo.png';
 	
 	$actions['index'] = array(		
-		'access_level' => 3,
+		'access_level' => 2,
 		'name' => 'Updates',
 	);
 

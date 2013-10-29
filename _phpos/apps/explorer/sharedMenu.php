@@ -22,7 +22,7 @@ $app_menu =
 	array(	
 			
 							
-				'title:'.txt('group_back_to').',action:actionBackToGroup,icon:icon-group'
+				'title:'.txt('group_back_to').',action:actionBackToGroup,icon:icon-back'
 									
 	);								
 

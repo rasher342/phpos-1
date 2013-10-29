@@ -18,5 +18,6 @@ if(!defined("PHPOS_IN_EXPLORER"))
 {
 	die();
 }
-?>			
+?>	
+<?php winset('title', txt('shared')); ?>			
 <?php include MY_APP_DIR.'views/inc.layout.php'; ?>		

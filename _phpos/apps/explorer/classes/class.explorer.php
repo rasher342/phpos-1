@@ -225,6 +225,24 @@ class app_explorer {
 			).'" 
 			href="javascript:void(0);"><b>'.txt('my_server').'</b></a>';
 		}
+		
+		if(APP_ACTION == 'clouds')
+		{
+			$address_start = '<a onclick="'.helper_reload(
+			array(
+			'cloud_id' => 0)
+			).'" 
+			href="javascript:void(0);"><b>'.txt('clouds_title').'</b></a>';
+		}
+		
+		if(APP_ACTION == 'ftp')
+		{
+			$address_start = '<a onclick="'.helper_reload(
+			array(
+			'ftp_id' => 0)
+			).'" 
+			href="javascript:void(0);"><b>'.txt('ftp_folders').'</b></a>';
+		}
 						
 /*.............................................. */		
 	
@@ -401,10 +419,16 @@ class app_explorer {
  	
 	public function get_icon_protocol()
 	{
+		if(file_exists(PHPOS_DIR.'plugins/filesystems/'.$this->my_app->get_param('fs').'/resources/address_icon.png'))
+		{
+			return PHPOS_URL.'plugins/filesystems/'.$this->my_app->get_param('fs').'/resources/address_icon.png';
+		}
+		
+		global $address_icon;
 		$icon = MY_RESOURCES_URL.'fs_icons/default.png';
 		
 		if(file_exists(MY_RESOURCES_DIR.'fs_icons/'.$this->fs.'.png')) $icon = MY_RESOURCES_URL.'fs_icons/'.$this->fs.'.png';
-		
+		if(!empty($address_icon)) $icon = $address_icon;
 		return $icon;
 	}
 					 

@@ -320,7 +320,7 @@ if(!defined('PHPOS'))	die();
  	
 		public function render_tasks()
 		{
-			echo $this->count_windows();
+			
 			
 			$this->set_tasks();			
 			$tasks = $this->get_tasks();

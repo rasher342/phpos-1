@@ -53,7 +53,17 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	
 	if(APP_ACTION == 'index' && $context_fs == 'clouds_google_drive')
 	{	
-		$html['icons'].=	$layout->subtitle($cloud_header_msg, ICONS.'server/google_drive.png');	
+		$title = '
+		<img src="'.ICONS.'server/cloud.png" style="width:30px; display:inline-block; vertical-align:middle" /> 
+		<a title="'.$txt['cloud_folders'].'" href="javascript:void(0);" onclick="'.link_action('clouds', 'ftp_id:0,tmp_shared_id:0,shared_id:0,cloud_id:0,in_shared:0,workgroup_id:0,fs:local_files').'">
+		'.txt('cloud_folders').'
+		</a>
+		<img src="'.THEME_URL.'icons/arrow_small_right.png" style="width:15px; display:inline-block; vertical-align:middle; padding-left:10px;padding-right:10px"/> 
+		<img src="'.PHPOS_URL.'plugins/filesystems/clouds_google_drive/resources/fs.icon_big.png" style="width:30px; display:inline-block; vertical-align:middle" /> 	
+		Google Drive'; 
+		
+		
+		$html['icons'].= $layout->subtitle($title);	
 		$html['icons'].= $login_area;
 	}
 	

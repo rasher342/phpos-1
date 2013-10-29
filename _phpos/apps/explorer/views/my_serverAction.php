@@ -18,5 +18,6 @@ if(!defined("PHPOS_IN_EXPLORER"))
 {
 	die();
 }
-?>			
+?>	
+<?php winset('title', txt('my_server')); ?>			
 <?php include MY_APP_DIR.'views/inc.layout.php'; ?>		

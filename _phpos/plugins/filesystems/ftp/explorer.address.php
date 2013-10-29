@@ -17,6 +17,19 @@ if(!defined("PHPOS_IN_EXPLORER"))
 {
 	die();
 }
+	
+	if($this->my_app->get_param('ftp_id') != null) 
+	{				
+		$ftp = new phpos_ftp;
+		$ftp->set_id($this->my_app->get_param('ftp_id'));
+		$ftp->get_ftp();
+		
+		$ftp_address_host = '<a onclick="'.helper_reload(
+		array(
+		'dir_id' => $this->my_app->get_param('root_id'))
+		).'" 
+		href="javascript:void(0);"><b>'.$ftp->get_host().'</b></a>'.$separator;			
+	}
 
 
 // Address links	
@@ -57,25 +70,10 @@ if(!defined("PHPOS_IN_EXPLORER"))
 
 /*.............................................. */		
 // Prefix
-	
-	$tmp_shared_id = $this->my_app->get_param('tmp_shared_id');	
-		
-		if(!empty($tmp_shared_id))
-		{
-			$shared = new phpos_shared;
-			$shared->set_id($tmp_shared_id);
-			$shared->get_shared();
-			$shared_dir = $shared->get_folder_id();
-		}
-			
-		$in_shared = $this->my_app->get_param('in_shared');
 					
 					
 /*.............................................. */				
-// If not in shared
-
-		if(!$in_shared)
-		{
+		
 			if($c!=0)
 			{
 				for($i = 0; $i < $c; $i++)
@@ -92,39 +90,14 @@ if(!defined("PHPOS_IN_EXPLORER"))
 					}
 				}	
 			}
-		}
 		
-		$address_start = '<a onclick="'.helper_reload(
-		array(
-		'dir_id' => $this->filesystem->get_root_directory_id())
-		).'" 
-		href="javascript:void(0);"><b>'.$this->filesystem->protocol_name.'</b></a>';
+		
+		$address_start = '<a onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'ftp\', \'dir_id:.,ftp_id:0,in_shared:0,fs:local_files\')" 
+		href="javascript:void(0);"><b>'.txt('ftp_folders').'</b></a>';	
+		
 			
-		$address_bar = $address_start.$separator.$address;	
+		$address_bar = $address_start.$separator.$ftp_address_host.$address;	
 			
-/*.............................................. */				
-		
-		$ftp_id = $this->my_app->get_param('ftp_id');
-		
-		/*
-		if(!empty($ftp_id)) {		
-			
-			$ftp = new phpos_ftp;
-			$ftp->set_id($ftp_id);
-			$ftp->get_ftp();
-			
-			if(is_root() || globalconfig('demo_mode') != 1)
-			{			
-				$address_bar = '<a 
-				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>'.$ftp->get_login().'@'.$ftp->get_host().'</b></a>'.$separator;		
-			} else {
-				$address_bar = '<a 
-				onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'dir_id:.,ftp_id:'.$ftp_id.',in_shared:1,fs:ftp\')"  href="javascript:void(0);"><b>demo@ftp_demo_server</b></a>'.$separator;	
-			}
-		}	
-		*/
-		
-		
-		
+/*.............................................. */			
 
 ?>

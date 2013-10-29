@@ -43,7 +43,18 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		$ftp_info->set_id($my_app->get_param('ftp_id'));
 		$ftp_info->get_ftp();
 		
-		$title = '<span style="color:black">FTP:</span> '.$ftp_info->get_host();
-		$html['icons'].=	 $layout->subtitle($title, ICONS.'server/ftp.png');
+		$title = '<img src="'.ICONS.'server/ftp.png" style="width:30px; display:inline-block; vertical-align:middle" /> 
+		<a title="'.txt('ftp_folders').'" href="javascript:void(0);" onclick="'.link_action('ftp', 'ftp_id:0,tmp_shared_id:0,shared_id:0,cloud_id:0,in_shared:0,workgroup_id:0,fs:ftp').'">
+		'.txt('ftp_folders').'
+		</a>
+		<img src="'.THEME_URL.'icons/arrow_small_right.png" style="width:15px; display:inline-block; vertical-align:middle; padding-left:10px;padding-right:10px"/> 
+		'.$ftp_info->get_host();			
+		
+		
+		
+		
+		
+		//$title = '<span style="color:black">FTP:</span> '.$ftp_info->get_host();
+		$html['icons'].=	 $layout->subtitle($title);
 	}
 ?>

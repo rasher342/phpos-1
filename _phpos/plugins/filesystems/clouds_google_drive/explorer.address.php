@@ -18,6 +18,21 @@ if(!defined("PHPOS_IN_EXPLORER"))
 	die();
 }
 
+	if($this->my_app->get_param('cloud_id') != null) 
+	{				
+		$cloud = new phpos_clouds;
+		$cloud->set_id($this->my_app->get_param('cloud_id'));
+		$cloud->get_cloud();
+		
+		$cloud_address_name = '<a onclick="'.helper_reload(
+		array(
+		'dir_id' => ($this->my_app->get_param('root_id')))
+		).'" 
+		href="javascript:void(0);"><b>'.$cloud->get_title().'</b></a>';			
+	}
+
+
+
 
 // Address links	
 
@@ -55,27 +70,9 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		
 		$c = count($links);
 
-/*.............................................. */		
-// Prefix
-	
-	$tmp_shared_id = $this->my_app->get_param('tmp_shared_id');	
-		
-		if(!empty($tmp_shared_id))
-		{
-			$shared = new phpos_shared;
-			$shared->set_id($tmp_shared_id);
-			$shared->get_shared();
-			$shared_dir = $shared->get_folder_id();
-		}
-			
-		$in_shared = $this->my_app->get_param('in_shared');
-					
 					
 /*.............................................. */				
-// If not in shared
-
-		if(!$in_shared)
-		{
+		
 			if($c!=0)
 			{
 				for($i = 0; $i < $c; $i++)
@@ -83,53 +80,23 @@ if(!defined("PHPOS_IN_EXPLORER"))
 					$item = $this->filesystem->get_file_info($links[$i]);
 					
 					if($item['id'] != $shared_dir)
-					{
-						if(is_root()) $item = $this->root_homedir_address_parse($item);
-						
+					{						
 						$address.= '<a 
 						onclick="'.helper_reload(array('dir_id' => $item['id'])).'" 
 						href="javascript:void(0);">'.$item['basename'].'</a>'.$separator;	
 					}
 				}	
 			}
-		}
 		
-		$address_start = '<a onclick="'.helper_reload(
-		array(
-		'dir_id' => $this->filesystem->get_root_directory_id())
-		).'" 
-		href="javascript:void(0);"><b>'.$this->filesystem->protocol_name.'</b></a>';
+		
+		$address_start = '<a onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'clouds\', \'dir_id:.,ftp_id:0,in_shared:0,fs:local_files\')" 
+		href="javascript:void(0);"><b>'.txt('clouds_title').'</b></a>'.$separator.$cloud_address_name;
 			
 			
 /*.............................................. */				
 // Shared	
 		
-		$in_shared = $this->my_app->get_param('in_shared');
-		$tmp_shared_id = $this->my_app->get_param('tmp_shared_id');				
 
-		
-		if(defined('SHARED') || $in_shared)
-		{
-			$group = new phpos_groups;
-			$group_id = $this->my_app->get_param('workgroup_id');
-			$group->set_id($group_id);
-			$group->get_group();		
-			
-				
-			$shared_id = $this->my_app->get_param('tmp_shared_id');	
-			$shared = new phpos_shared;
-			$shared->set_id($shared_id);
-			$shared->get_shared();
-			
-			$group_user = new phpos_users;
-			$id_user = $shared->get_id_user();
-			$group_user->set_id_user($id_user);
-			$group_user->get_user_by_id();	
-		
-			$address_start = '<a 
-			onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'shared\', \'workgroup_id:'.$group_id.',workgroup_user_id:'.$id_user.',fs:local_files\')" href="javascript:void(0);"><b>'.$group_user->get_user_login().'</b></a>'.$separator.'<a onclick="phpos.windowActionChange(\''.WIN_ID.'\', \'index\', \'shared_id:'.$shared_id.',in_shared:1,fs:local_files\')" href="javascript:void(0);"><b>'.$shared->get_title().'</b></a>';
-		}
-		
 		
 		$address_bar = $address_start.$separator.$address;
 

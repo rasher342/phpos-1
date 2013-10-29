@@ -15,7 +15,7 @@ if(!defined('PHPOS'))	die();
 
 
 if(APP_ACTION == 'my_server')
-	{
+{
 		$address_icon = ICONS.'server/bg.png';
 		$tmp_html = '';	
 		$html['icons'] = '';
@@ -30,6 +30,6 @@ if(APP_ACTION == 'my_server')
 		}
 		
 		$tmp_html = '';	
-	}
+}
 
 ?>

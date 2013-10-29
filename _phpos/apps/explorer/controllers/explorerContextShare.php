@@ -33,7 +33,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 			} else {
 			
 				$icons[$i]['is_shared'] = true;
-				$plugged_context_menu[] = 'share::'.txt('stop_share_folder').'::'.winmodal(txt('share_folder'), 'app', 'app_id:shortcuts@share,width:300,height:350','stop_share:1,desktop:1,location:'.$context_location.',dir_id:'.$context_dir_id.',shared_id:'.base64_encode($icons[$i]['id']).',after_reload:'.WIN_ID).'::ftpfolder';					
+				$plugged_context_menu[] = 'share::'.txt('stop_share_folder').'::'.winmodal(txt('share_folder'), 'app', 'app_id:shortcuts@share,width:300,height:350','stop_share:1,desktop:1,location:'.$context_location.',dir_id:'.$context_dir_id.',shared_id:'.base64_encode($icons[$i]['id']).',after_reload:'.WIN_ID).'::cancel';					
 			}
 		}						
 	}
