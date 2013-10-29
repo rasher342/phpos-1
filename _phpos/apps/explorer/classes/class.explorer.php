@@ -289,8 +289,7 @@ class app_explorer {
 /*.............................................. */		
 	
 		if(APP_ACTION == 'workgroup')
-		{
-		
+		{		
 			$group = new phpos_groups;
 			$group_id = $this->my_app->get_param('workgroup_id');
 			
@@ -481,25 +480,27 @@ class app_explorer {
 	public function render_nav_bar()
 	{		
 		global $my_app;
-		$dir_id = $this->my_app->get_param('dir_id');
-	
+		$dir_id = $this->my_app->get_param('dir_id');	
 		
 		$nav = new phpos_navigation;	
 		
-		if(!$my_app->get_param('minus_index'))
+		if($this->my_app->get_param('action_id') == null)
 		{
-			$nav->next_index();
-			$nav->add_item();
-			$_SESSION['phpos_navigation_stopindex'][WIN_ID] = true;
+			if(!$my_app->get_param('minus_index'))
+			{
+				$nav->next_index();
+				$nav->add_item();
+				$_SESSION['phpos_navigation_stopindex'][WIN_ID] = true;
+				
+			} else {
 			
-		} else {
-		
-			$nav->set_index($my_app->get_param('set_index'));			
-			$nav->add_item();
-			$my_app->set_param('minus_index', null);
-			$my_app->set_param('set_index', null);
-			cache_param('minus_index');
-			cache_param('set_index');
+				$nav->set_index($my_app->get_param('set_index'));			
+				$nav->add_item();
+				$my_app->set_param('minus_index', null);
+				$my_app->set_param('set_index', null);
+				cache_param('minus_index');
+				cache_param('set_index');
+			}
 		}
 		//$nav->debug();
 		
@@ -521,9 +522,8 @@ class app_explorer {
 			$go_to_index = $nav->get_prev_index();
 			$action = 'phpos.windowActionChange(\''.WIN_ID.'\', \''.$nav->get_action($go_to_index).'\', \''.$nav->parse_params($go_to_index).',minus_index:1,set_index:'.$link_index.'\');';			
 			
-			$navBar.='<a 
-			class="easyui-tooltip" 
-			title="'.txt('tip_nav_go_to').': '.$link_index.'" 
+			$navBar.='<a 			
+			title="'.txt('navi_prev').'" 
 			href="javascript:void(0);" 
 			onclick="'.$action.'"><img 
 			class="nav_back" 
@@ -547,9 +547,8 @@ class app_explorer {
 			$action = 'phpos.windowActionChange(\''.WIN_ID.'\', \''.$nav->get_action($go_to_index).'\', \''.$nav->parse_params($go_to_index).',minus_index:0,set_index:'.$link_index.'\');';			
 			
 			
-			$navBar.='<a 
-			class="easyui-tooltip" 
-			title="'.txt('tip_nav_go_to').': '.$link_index.'" 
+			$navBar.='<a 		
+			title="'.txt('navi_next').'" 
 			href="javascript:void(0);" 
 			onclick="'.$action.'"><img 
 			class="nav_next" 
@@ -576,9 +575,8 @@ class app_explorer {
 				if(!$in_shared)
 				{
 					// not shared
-					$navBar.='<a 
-					class="easyui-tooltip" 
-					title="'.txt('tip_nav_go_to').': '.$parent_dir.'" 
+					$navBar.='<a 					
+					title="'.txt('navi_up').'" 
 					href="javascript:void(0);" 
 					onclick="'.helper_reload(
 					array(

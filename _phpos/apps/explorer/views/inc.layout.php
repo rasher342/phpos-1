@@ -23,8 +23,8 @@ $explorerAPI = $my_app->get_param('api_dialog');
 
 if($explorerAPI)
 {	
-	winset('width', 850);
-	winset('height', 500);	
+	winset('width', 1100);
+	winset('height', 600);	
 	wincenter();
 }
 

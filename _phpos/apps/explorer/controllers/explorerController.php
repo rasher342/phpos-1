@@ -46,6 +46,7 @@ if(!defined('PHPOS'))	die();
 	param('noindex', null);
 	param('this_index', null);
 	param('prev_index', null);
+	param('in_library', null);
 	param('readonly', null);
 	param('action_param', null);
 	param('action_param2', null);
@@ -98,6 +99,11 @@ if(!defined('PHPOS'))	die();
 /*
 **************************
 */	
+	if($my_app->get_param('api_dialog') != null)
+	{
+		$my_app->set_param('view_type', 'list');
+		cache_param('view_type');
+	}
 	
 	// Check dirs	
 	if(!is_dir(MY_HOME_DIR.'_Temp'))

@@ -167,7 +167,7 @@ class phpos_forms {
 **************************
 */
  	
-	public function input($type = 'text', $name, $title, $tip = null,  $value = null)
+	public function input($type = 'text', $name, $title, $tip = null,  $value = null, $styles = '')
 	{
 		$item = array();
 		$item['type'] = $type;
@@ -175,6 +175,7 @@ class phpos_forms {
 		$item['tip'] = $tip;
 		$item['input_name'] = $name;		
 		$item['input_value'] = $value;		
+		$item['styles'] = $styles;	
 		
 		if($this->form_required['required'] == true)
 		{		
@@ -343,7 +344,7 @@ class phpos_forms {
 */
  	
 	
-	public function render_select($name, $txt, $tip = null, $items = null,  $selected = null)
+	public function render_select($name, $txt, $tip = null, $items = null,  $selected = null, $style = null)
 	{			
 		if(is_array($items))
 		{
@@ -542,13 +543,15 @@ class phpos_forms {
 **************************
 */
  	
-	public function render_input($name, $txt, $tip = null,  $default_value = '', $type = 'text')
+	public function render_input($name, $txt, $tip = null,  $default_value = '', $type = 'text', $styles = null)
 	{		
 		if(!empty($tip)) $tip_class =  ' easyui-tooltip" title="'.$tip.'"';
+		$class = 'input ';
+		if(!empty($styles)) $class = '';
 		$str ='
 		<div class="form_area_row input_row_mouseleave'.$tip_class.'">
 				<div class="form_area_left">'.$txt.'</div>
-				<div class="form_area_right"><input title="'.$txt.'" name="'.$name.'" value="'.$default_value.'" class="input input_mouseleave" type="'.$type.'" /></div>';				
+				<div class="form_area_right"><input title="'.$txt.'" name="'.$name.'" value="'.$default_value.'" class="'.$class.'input_mouseleave" type="'.$type.'" /></div>';				
 				
 		$str.= $this->render_tip($tip);			
 		
@@ -641,7 +644,7 @@ class phpos_forms {
 				switch($this->form_items[$i]['type'])
 				{
 					case 'text':
-						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value']);
+						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value'], $this->form_items[$i]['styles']);
 					break;	
 					
 					case 'textarea':
@@ -653,15 +656,15 @@ class phpos_forms {
 					break;
 					
 					case 'password':
-						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value'], 'password');
+						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value'], 'password', $this->form_items[$i]['style']);
 					break;	
 					
 					case 'file':
-						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value'], 'file');
+						$str.= $this->render_input($this->form_items[$i]['input_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['input_value'], 'file', $this->form_items[$i]['style']);
 					break;
 					
 					case 'select':					
-						$str.= $this->render_select($this->form_items[$i]['select_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['items'], $this->form_items[$i]['selected']);
+						$str.= $this->render_select($this->form_items[$i]['select_name'], $this->form_items[$i]['title'], $this->form_items[$i]['tip'], $this->form_items[$i]['items'], $this->form_items[$i]['selected'], $this->form_items[$i]['style']);
 					break;	
 					
 					case 'radio':					

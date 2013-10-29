@@ -29,7 +29,7 @@ if(!defined('PHPOS'))	die();
 					</div>
 
 					<?php 
-					if(APP_ACTION == 'index' && 
+					if(!$explorerAPI && APP_ACTION == 'index' && 
 					($my_app->get_param('fs') == 'ftp' || $my_app->get_param('fs') == 'clouds_google_drive' || 
 					($my_app->get_param('fs') == 'local_files' && (!$readonly && globalconfig('disable_upload') !=1  || 
 					is_root())))) 

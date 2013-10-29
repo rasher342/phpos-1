@@ -31,7 +31,7 @@ if(!defined('PHPOS'))	die();
 		echo $layout->column('60%');
 		
 		$form->condition('not_null', true, txt('name_empty'));					
-		$form->input('text','explorer_save_as_filename', txt('explorer_api_file_name'), '',  $default_value);
+		$form->input('text','explorer_save_as_filename', txt('explorer_api_file_name'), null,  null, 'width:800px');
 		$form->submit('', txt('explorer_api_file_btn'));
 		echo $form->render();			
 		echo $form->form_end();		

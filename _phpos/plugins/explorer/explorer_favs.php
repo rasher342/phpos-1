@@ -61,6 +61,7 @@ if(!defined('PHPOS_EXPLORER_PLUGIN')) die();
 			$state = '';
 			$span = $marked_span;
 			$mark_lib = 1;
+			$my_app->set_param('in_library', 1);
 			$in_library = true;
 		}
 		

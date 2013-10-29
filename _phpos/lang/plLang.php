@@ -42,6 +42,13 @@ if(!defined('PHPOS'))	die();
 	$txt['no'] = 'Nie';
 	$txt['active'] = 'Aktywny';
 	
+		
+// NAV
+	$txt['navi_prev'] = 'Przejdź wstecz';
+	$txt['navi_next'] = 'Przejdź dalej';
+	$txt['navi_up'] = 'Przejdź do góry';
+	
+	
 // ICONS
 	$txt['my_server'] = 'Mój serwer';
 	$txt['my_documents'] = 'Moje dokumenty';
@@ -168,7 +175,20 @@ if(!defined('PHPOS'))	die();
 	$txt['lib_wallpapers'] = 'Tapety';
 	$txt['lib_pics'] = 'Obrazy';
 	$txt['lib_media'] = 'Media';
-	$txt['lib_icons'] = 'Ikony';	
+	$txt['lib_icons'] = 'Ikony';
+	$txt['lib_temp'] = 'Pliki tymczasowe';	
+	
+
+// LIBS	RENAME	
+	$txt['lib_Clipboard'] = $txt['lib_clipboard'];
+	$txt['lib_Download'] = $txt['lib_download'];
+	$txt['lib_Desktop'] = $txt['lib_desktop'];
+	$txt['lib_Documents'] = $txt['lib_docs'];
+	$txt['lib_Wallpapers'] = $txt['lib_wallpapers'];
+	$txt['lib_Pictures'] = $txt['lib_pics'];
+	$txt['lib_Video'] = $txt['lib_media'];
+	$txt['lib_Icons'] = $txt['lib_icons'];
+	$txt['lib_Temp'] = $txt['lib_temp'];	
 		
 	
 // USER TYPES
@@ -1073,7 +1093,7 @@ if(!defined('PHPOS'))	die();
 	$txt['copied_to_clip'] = 'Skopiowano do schowka';
 	$txt['cutted_to_clip'] = 'Wycięto do schowka';
 	$txt['wait_for_download'] = 'Proszę czekać. Pobieranie danych...';
-	$txt['lib_temp'] = 'Pliki tymczasowe';
+
 	$txt['start_ip'] = 'IP serwera';
 	$txt['start_db'] = 'Baza danych';
 	

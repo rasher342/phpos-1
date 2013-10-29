@@ -189,7 +189,7 @@ class phpos_explorerAPI {
 			$allowed = $this->parse_allowed_extensions();
 		}
 		
-		$str.= winmodal(txt('explorer_api_window_open_title'), 'app', 'app_id:explorer@index,width:700,height:450','api_dialog:1,api_dialog_type:open_file,fs:'.$this->fs.',win_id:'.$this->window_id.$allowed);
+		$str.= winmodal(txt('explorer_api_window_open_title'), 'app', 'app_id:explorer@index,width:900,height:500','api_dialog:1,api_dialog_type:open_file,fs:'.$this->fs.',win_id:'.$this->window_id.$allowed);
 		return $str;	
 	}
 	 
@@ -204,7 +204,7 @@ class phpos_explorerAPI {
 		{	
 			$this->fs = $my_app->get_param('loadFS');
 		
-			$str.= winmodal(txt('explorer_api_window_open_title'), 'app', 'app_id:explorer@index,width:700,height:450','api_dialog:1,api_dialog_type:open_file,api_open_id:'.$my_app->get_param('loadID').',fs:'.$this->fs.',win_id:'.$this->window_id);
+			$str.= winmodal(txt('explorer_api_window_open_title'), 'app', 'app_id:explorer@index,width:900,height:500','api_dialog:1,api_dialog_type:open_file,api_open_id:'.$my_app->get_param('loadID').',fs:'.$this->fs.',win_id:'.$this->window_id);
 			$my_app->set_param('loadAPI', null);
 			cache_param('loadAPI');
 			if($noecho === null)
@@ -232,7 +232,7 @@ class phpos_explorerAPI {
 		}
 		
 		//$this->cache_data_to_save($data);
-		$str.= winmodal(txt('explorer_api_window_save_title'), 'app', 'app_id:explorer@index,width:700,height:450','api_dialog:1,api_dialog_type:save_as_file,api_file_ext:'.$this->file_extension.',fs:'.$this->fs.',win_id:'.$this->window_id.$allowed);
+		$str.= winmodal(txt('explorer_api_window_save_title'), 'app', 'app_id:explorer@index,width:900,height:500','api_dialog:1,api_dialog_type:save_as_file,api_file_ext:'.$this->file_extension.',fs:'.$this->fs.',win_id:'.$this->window_id.$allowed);
 		return $str;	
 	}
 	 

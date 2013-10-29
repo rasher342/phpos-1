@@ -86,9 +86,18 @@ if(!defined("PHPOS_IN_EXPLORER"))
 					{
 						if(is_root()) $item = $this->root_homedir_address_parse($item);
 						
+						$link_name = $item['basename'];
+						
+						
+						if($this->my_app->get_param('in_library') == 1) 
+						{
+							$translate_lib = txt('lib'.$item['basename']);
+							if($translate_lib != 'lib'.$item['basename'])	$link_name = $translate_lib;
+						}
+						
 						$address.= '<a 
 						onclick="'.helper_reload(array('dir_id' => $item['id'])).'" 
-						href="javascript:void(0);">'.$item['basename'].'</a>'.$separator;	
+						href="javascript:void(0);">'.$link_name.'</a>'.$separator;	
 					}
 				}	
 			}
