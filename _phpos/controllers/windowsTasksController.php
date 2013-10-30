@@ -41,6 +41,7 @@ error_reporting(E_ERROR | E_PARSE);
 // Load all classes and functions
 	require_once(PHPOS_DIR.'controllers/databaseController.php');	
 	require_once(PHPOS_DIR.'classes/class.phpos_filters.php');
+	require_once(PHPOS_DIR.'classes/class.phpos_console.php');
 	require_once(PHPOS_DIR.'classes/class.users.php');
 	
 	require_once(PHPOS_DIR.'classes/class.phpos_config.php');

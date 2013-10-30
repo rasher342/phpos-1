@@ -50,17 +50,28 @@ if(!empty($_FILES))
 			if(!$stop_upload)
 			{
 				$_FILES['file']['name'] = filter::fname($_FILES['file']['name']);
+				console::log('EXPLORER.action: Upload ("'.$_FILES['file']['name'].'")');	 
 				if($phposFS->upload_file($_FILES['file'])) 
 				{					
-					param('action_status','ok');
-					param('action_status_msg', txt('uploaded'));
-					cache_param('action_status');	
-					cache_param('action_status_msg');					
-					//msg::error(txt('access_denied'));											
+					console::log('EXPLORER.action: Uploaded', 'ok');	
+					if($my_app->get_param('hide_upload_status') == null)
+					{
+						
+						param('action_status','ok');
+						param('action_status_msg', txt('uploaded'));
+						cache_param('action_status');	
+						cache_param('action_status_msg');					
+						//msg::error(txt('access_denied'));						
+					} 
+					
+				} else {
+					
+					console::log('EXPLORER.action: Upload error', 'error');
 				}
 				
 			} else {				
 				
+				console::log('EXPLORER.action: Upload error [STOP UPLOAD]', 'error');
 				param('action_status','error');
 				param('action_status_msg', $upload_error);
 				cache_param('action_status');	
@@ -71,6 +82,7 @@ if(!empty($_FILES))
 			
 		} else {
 		
+			console::log('EXPLORER.action: Upload error [READONLY/DEMO]', 'error');
 			param('action_status','error');
 			param('action_status_msg',txt('access_denied'));
 			cache_param('action_status');	
@@ -92,17 +104,24 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	{
 				if($readonly != 1) // 0
 				{
+					console::log('EXPLORER.action:Rename ("ID:'.$_POST['edit_id'].'", NEW_NAME:"'.filter::fname($_POST['new_folder_name']).'")');
 					if($phposFS->rename(strip_tags($_POST['edit_id']), filter::fname($_POST['new_folder_name']))) 
 					{
+						console::log('EXPLORER.action: Renamed', 'ok');
 						param('action_status','ok');					
 						param('action_status_msg', txt('renamed'));
 						cache_param('action_status');	
 						cache_param('action_status_msg');	
-						msg::ok($txt('updated'));						
-					} 					
+						msg::ok($txt('updated'));	
+						
+					} else {
+						
+						console::log('EXPLORER.action: Error renaming', 'error');
+					}
 					
 				} else {
 				
+					console::log('EXPLORER.action: Error renaming [READONLY]', 'error');
 					param('action_status','error');
 					param('action_status_msg',txt('access_denied'));
 					cache_param('action_status');	
@@ -119,8 +138,10 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			{
 				if($readonly != 1) // 0
 				{
+					console::log('EXPLORER.action:NewDir ("NEW_DIR_NAME:"'.filter::fname($_POST['new_folder_name']).'")');
 					if($phposFS->new_dir(strip_tags(filter::fname($_POST['new_folder_name'])))) 
 					{
+						console::log('EXPLORER.action:NewDir created', 'ok');
 						param('action_status','ok');						
 						param('action_status_msg', txt('folder_created'));
 						cache_param('action_status');	
@@ -129,6 +150,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 						
 					} else {
 						
+						console::log('EXPLORER.action:Error creating dir', 'error');
 						param('action_status','error');
 						param('action_status_msg',txt('folder_create_error'));
 						cache_param('action_status');	
@@ -139,6 +161,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 				} else {
 				
+					console::log('EXPLORER.action:Error creating dir [READONLY]', 'error');
 					param('action_status','error');
 					param('action_status_msg',txt('access_denied'));
 					cache_param('action_status');	
@@ -165,13 +188,24 @@ if(globalconfig('demo_mode') != 1 || is_root())
 		
 			switch($action_id)
 			{			
-				case 'delete':			
-					if($phposFS->delete(param('action_param'))) msg::ok(txt('file_deleted'));				
+				case 'delete':	
+					console::log('EXPLORER.action:Delete ("ID:"'.param('action_param').'")');
+					if($phposFS->delete(param('action_param'))) 
+					{
+						console::log('EXPLORER.action:Deleted', 'ok');
+						msg::ok(txt('file_deleted'));
+						
+					} else {
+					
+						console::log('EXPLORER.action:Not deleted', 'error');
+					}
+					
 				break;	
 				
 				
 				case 'explorer_link_to_folder':		
 					
+					console::log('EXPLORER.action:NewLinkOnDesktop ("ID:"'.base64_decode(param('action_param')).'")');
 					$shortcut = new phpos_shortcuts;					
 					$shortcut->add(base64_decode(param('action_param2')), 'app', 'explorer', 'index', 'folder_shortcut.png', array('root_id' => param('root_id'), 'workgroup_id' => param('workgroup_id'), 'workgroup_user_id' => param('workgroup_user_id'), 'in_shared' => param('in_shared'),'shared_id' => param('shared_id'),'tmp_shared_id' => param('tmp_shared_id'), 'fs' => 'local_files','dir_id' => base64_decode(param('action_param'))), 'desktop', 0, null);
 					echo '<script>phpos.windowRefresh("1", "");</script>';
@@ -182,11 +216,13 @@ if(globalconfig('demo_mode') != 1 || is_root())
 /*.............................................. */		
 	
 				case 'delete_list':		
+					
 					$file_hashes = param('action_param');
 					if(!empty($file_hashes))
 					{
 						$e = explode(";;", $file_hashes);
 						$c = count($e);
+						console::log('EXPLORER.action:DeleteList ("Files:"'.$c.'")');
 						for($i=0;$i<$c;$i++)
 						{
 							$phposFS->delete(base64_decode($e[$i]));
@@ -201,7 +237,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;					
+					if(!empty($ftp_id)) $connect_id = $ftp_id;	
+					console::log('EXPLORER.action:Copy ("Param1:"'.param('action_param').'", "Param2:"'.param('action_param2').'")');					
 					$phposFS->clipboard_copy();							
 					msg::ok(txt('copied_to_clip'));		
 					
@@ -226,13 +263,14 @@ if(globalconfig('demo_mode') != 1 || is_root())
 							
 						$e = explode(";;", $file_hashes);
 						$c = count($e);
+						console::log('EXPLORER.action:CopyMultiple ("Files:"'.$c.'")');	
 						for($i=0;$i<$c;$i++)
 						{							
 							param('action_param', base64_decode($e[$i]));								
 							$phposFS->clipboard_copy();	
 						}	
 								
-						echo $clipboard->debug_clipboard();
+						//echo $clipboard->debug_clipboard();
 					}					
 									
 					msg::ok(txt('copied_to_clip'));		
@@ -245,9 +283,17 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;									
-					$phposFS->clipboard_copy_server();							
-					msg::ok(txt('copied_to_clip'));		
+					if(!empty($ftp_id)) $connect_id = $ftp_id;	
+					console::log('EXPLORER.action:CopyServer ("Param1:"'.param('action_param').'", "Param2:"'.param('action_param2').'")');						
+					if($phposFS->clipboard_copy_server())
+					{
+						console::log('EXPLORER.action:Copied to server clipboard', 'ok');
+						msg::ok(txt('copied_to_clip'));	
+						
+					} else {
+					
+						console::log('EXPLORER.action:Unable to copy to server clipboard', 'error');
+					}
 					
 				break;
 					
@@ -257,7 +303,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
-					if(!empty($ftp_id)) $connect_id = $ftp_id;					
+					if(!empty($ftp_id)) $connect_id = $ftp_id;
+					console::log('EXPLORER.action:Cut ("Param1:"'.param('action_param').'", "Param2:"'.param('action_param2').'")');	
 					$phposFS->clipboard_cut();					
 					msg::ok(txt('cutted_to_clip'));			
 					
@@ -282,13 +329,14 @@ if(globalconfig('demo_mode') != 1 || is_root())
 							
 						$e = explode(";;", $file_hashes);
 						$c = count($e);
+						console::log('EXPLORER.action:CutMultiple ("Files:"'.$c.'")');	
 						for($i=0;$i<$c;$i++)
 						{							
 							param('action_param', base64_decode($e[$i]));								
 							$phposFS->clipboard_cut();	
 						}	
 								
-						echo $clipboard->debug_clipboard();
+						//echo $clipboard->debug_clipboard();
 					}					
 									
 					msg::ok(txt('cutted_to_clip'));	
@@ -306,9 +354,21 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					
 					if(!$clipboard->is_multiple())
 					{
+						console::log('EXPLORER.action:Paste ("Param1:"'.param('action_param').'", "Param2:"'.param('action_param2').'")');	
+						
 						if($mode == 'copy')
 						{						
-							if($phposFS->clipboard_paste(param('action_param'), 'copy'))	msg::ok(txt('file_pasted'));	
+							if($phposFS->clipboard_paste(param('action_param'), 'copy'))	
+							{
+								console::log('EXPLORER.action:Pasted [copy]', 'ok');	
+								msg::ok(txt('file_pasted'));
+								
+							}	 else {	
+							
+								console::log('EXPLORER.action:not pasted [copy]', 'error');		
+							}
+						
+							
 							echo '<script>phpos.windowRefresh("'.WIN_ID.'", "");</script>';
 							
 						} elseif($mode == 'cut') {
@@ -316,8 +376,13 @@ if(globalconfig('demo_mode') != 1 || is_root())
 							$source_win = $clipboard->get_source_win();
 							if($phposFS->clipboard_paste(param('action_param'), 'cut')) 	
 							{
+								console::log('EXPLORER.action:Pasted [cut]', 'ok');
 								echo '<script>phpos.windowRefresh("'.$source_win.'", ""); phpos.windowRefresh("'.WIN_ID.'", "");</script>';
-								msg::ok(txt('file_pasted'));							
+								msg::ok(txt('file_pasted'));	
+								
+							} else {	
+							
+								console::log('EXPLORER.action:not pasted [cut]', 'error');		
 							}
 						}
 						
@@ -331,6 +396,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					  $clipboard_is_server = $clipboard->is_server();
 						
 						$c = count($clipboard_ids_array);
+						console::log('EXPLORER.action:PasteMultiple ("Files:"'.$c.'")');	
 						for($i=0; $i<$c; $i++)
 						{
 							$clipboard->reset_clipboard();
@@ -343,12 +409,26 @@ if(globalconfig('demo_mode') != 1 || is_root())
 							
 							if($mode == 'copy')
 							{						
-								$phposFS->clipboard_paste(param('action_param'), 'copy');									
+								if($phposFS->clipboard_paste(param('action_param'), 'copy')) 
+								{
+								 console::log('EXPLORER.action:Pasted [multi] [copy]', 'ok');		
+								 
+								} else {
+								
+								 console::log('EXPLORER.action:not pasted [multi] [copy]', 'error');		
+								}
 								
 							} elseif($mode == 'cut') {
 								
 								$source_win = $clipboard->get_source_win();
-								$phposFS->clipboard_paste(param('action_param'), 'cut');								
+								if($phposFS->clipboard_paste(param('action_param'), 'cut'))
+								{
+									console::log('EXPLORER.action:Pasted [multi] [cut]', 'ok');
+									
+								} else {		
+								
+								  console::log('EXPLORER.action:not pasted [multi] [cut]', 'error');		
+								}									
 							}					
 						}
 						

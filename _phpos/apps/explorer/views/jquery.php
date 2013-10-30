@@ -434,7 +434,7 @@ $(document).ready(function() {
 			//$("a[rel^='prettyPhoto']").prettyPhoto();
 			
 		
-		
+	
 			
 	}); // end !document.ready
 
@@ -447,4 +447,6 @@ $(document).ready(function() {
 	});
 
 <?php if(!$clear_post && is_array($_SESSION['post'])) unset($_SESSION['post']); ?>
+
+
 </script>

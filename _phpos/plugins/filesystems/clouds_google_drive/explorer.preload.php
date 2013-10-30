@@ -23,6 +23,8 @@ if(!defined("PHPOS_IN_EXPLORER"))
 // Cloud connection status		
 		if($my_app->get_param('fs') == 'clouds_google_drive')
 		{			
+			$address_icon ='aaa';
+			
 			if($phposFS->get_authUrl() != '')
 			{
 					//$auth_url = '<a href="'.$phposFS->get_authUrl().'"><b>'.txt('googledrive_right_clickhere').'</b></a> '.txt('googledrive_right_clickhere_desc');

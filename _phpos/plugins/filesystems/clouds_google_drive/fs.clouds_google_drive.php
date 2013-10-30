@@ -90,6 +90,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{
 		$this->error_msg = $msg;
 		$this->connection_status = $msg;	
+		console::log('GoogleDrive.Exeption: "'.$msg.'"', 'error');
 	}
 		
 /*
@@ -203,6 +204,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				{					
 						$_GET['code'] = $_SESSION['google_token'];
 						$_SESSION['token'] = $this->client->authenticate($_GET['code']);
+						console::log('GoogleDrive.token');	
 						//$_SESSION['token'] = $this->client->getAccessToken();
 						$redirect = $this->cloud->get_url();
 						unset($_SESSION['google_token']);					
@@ -228,6 +230,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 					$this->client->setAccessToken($_SESSION['token']);
 					$this->client->setUseObjects(true);
 					
+					console::log('GoogleDrive.Auth');			
 	
 					$this->set_authUrl($this->client->createAuthUrl());
 					$this->connected = true;
@@ -467,7 +470,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				}
 				
 				if($directory_id === null) $directory_id = $this->directory_id;			
-				
+				console::log('GoogleDrive.list (DIR_ID: "'.$directory_id.'")');			
 				$parameters['q'] = '\''.$directory_id.'\' in parents';				
 				$parameters['fields'] = "items(id,title,mimeType,createdDate,modifiedDate,iconLink,webContentLink,webViewLink,quotaBytesUsed)";				
 				
@@ -559,6 +562,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$createdFile = $this->service->files->insert($file, array(							
 				'mimeType' => 'application/vnd.google-apps.folder'								
 			));			
+			
+			console::log('GoogleDrive.newDir (DIR_NAME: "'.$dirname.'")');				
 			
 			$inserted_id =  $createdFile->getId();			
 			$newChild = new Google_ChildReference();
@@ -696,6 +701,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$file->setTitle($newTitle); 
 			
 			$updatedFile = $this->service->files->update($fileId, $file);
+			
+			console::log('GoogleDrive.rename (FileID: "'.$fileId.'", NewTitle: "'.$newTitle.'")');	
+			
 			return $updatedFile;
 			
 		} catch (Exception $e) {
@@ -719,6 +727,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{		
 		try {
 			$this->service->files->delete($fileId);
+			console::log('GoogleDrive.delete (FileID: "'.$fileId.'")');	
 		} catch (Exception $e) {
 			$this->set_error_msg($e->getMessage());
 		}
@@ -748,7 +757,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$newChild = new Google_ChildReference();
 			$newChild->setId($inserted_id);
 			$this->service->children->insert($this->directory_id, $newChild);
-
+			
+			console::log('GoogleDrive.upload (FileID: "'.$file_upload['name'].'", ToDirID: "'.$this->directory_id.'")');	
+			
 			return $createdFile;
 			
 		} catch (Exception $e) {
@@ -771,6 +782,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$clipboard->set_name($fileName);
 		$clipboard->set_server(false);
 		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		
+		console::log('GoogleDrive.clipboardCopy (FileName: "'.$fileName.'", FileID: "'.param('action_param').'")');
 	}	
 			
 /*
@@ -787,7 +800,8 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$clipboard->set_mode('copy');
 		$clipboard->set_name($fileName);
 		$clipboard->set_server(true);
-		$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);			
+		$clipboard->add_clipboard(param('action_param'), param('action_param2'), $connect_id);
+		console::log('GoogleDrive.clipboardCopyServer (FileName: "'.$fileName.'", FileID: "'.param('action_param').'")');
 		$this->file_download(param('action_param'), false, true);
 	}	
 			
@@ -807,6 +821,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$clipboard->set_name($fileName);
 		$clipboard->set_server(false);
 		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		console::log('GoogleDrive.clipboardCut (FileName: "'.$fileName.'", FileID: "'.param('action_param').'")');
 	}	
 			
 /*
@@ -819,7 +834,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 		$clipboard->get_clipboard();			
 		$id_file = $clipboard->get_file_id();			
 		$fs = $clipboard->get_file_fs();	
-		$file_name = $clipboard->get_name();		
+		$file_name = $clipboard->get_name();
+
+		console::log('GoogleDrive.clipboardPaste (FileName: "'.$file_name.'", FileID: "'.$id_file.'", FS: "'.$fs.'")');		
 				
 /*.............................................. */	
 		switch($fs)
@@ -842,8 +859,17 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 									$newParent = new Google_ParentReference();
 									$newParent->setId($to_dir_id);			
 									$new_file_id = $new_file->getId();
-									$this->service->parents->insert($new_file_id, $newParent);
-									return true;
+									console::log('GoogleDrive.clipboardPaste [copy] (FileName: "'.$file_name.'", ToDIrID: "'.$to_dir_id.'")');
+									$res = $this->service->parents->insert($new_file_id, $newParent);
+									if($res != null)
+									{
+										console::log('GoogleDrive.clipboardPaste [copy] ("inserted")', 'ok');
+										return true;
+										
+									} else {
+									
+										console::log('GoogleDrive.clipboardPaste [copy] ("not inserted")', 'error');
+									}
 									
 								} catch (Exception $e) {
 									$this->set_error_msg($e->getMessage());
@@ -862,9 +888,17 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 									$newParent = new Google_ParentReference();
 									$newParent->setId($to_dir_id);								
 									$file->setParents(array($newParent));
-									
+									console::log('GoogleDrive.clipboardPaste [cut] (FileName: "'.$file_name.'", ToDirID: "'.$to_dir_id.'")');		
 									$updatedFile = $this->service->files->update($id_file, $file);
-									return true;
+									if($updatedFile != null)
+									{
+										console::log('GoogleDrive.clipboardPaste [cut] (file_updated")', 'ok');	
+										return true;
+										
+									} else {
+									
+										console::log('GoogleDrive.clipboardPaste [cut] (file_not_updated")', 'error');	
+									}									
 									
 								} catch (Exception $e) {
 									$this->set_error_msg($e->getMessage());
@@ -881,6 +915,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$basename = $file_name;	
 				if(is_dir(MY_HOME_DIR.'_Clipboard/'.$id_file))
 				{
+					console::log('GoogleDrive.clipboardPaste [check] (IS_DIR: "'.MY_HOME_DIR.'_Clipboard/'.$id_file.'")');		
 					//$this->ftp_putAll(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir_id.'/'.$basename);			 
 			 
 				} else {	
@@ -888,10 +923,14 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 				 $file = array();
 				 $file['tmp_name'] = MY_HOME_DIR.'_Clipboard/'.$id_file;
 				 $file['name'] = $basename;
+				 console::log('GoogleDrive.clipboardPaste [check] (IS_FILE: "'.MY_HOME_DIR.'_Clipboard/'.$id_file.'")');
+				 console::log('GoogleDrive.clipboardPaste [tmp_name] ("'.$file['tmp_name'].'")');
+				 console::log('GoogleDrive.clipboardPaste [name] ("'.$file['name'].'")');
 				 
 					if($this->upload_file($file))
 					{ 											
-						return true;					
+						 console::log('GoogleDrive.clipboardPaste [upload]', 'ok');
+						 return true;					
 					} 
 			  }			
 		}		 
@@ -904,6 +943,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
  	
 	public function file_download($file_id, $download_local = false, $clipboard = false)
 	{
+		console::log('GoogleDrive.Download [in_download]');
 		$file = new Google_DriveFile();
 		$file = $this->service->files->get($file_id);   
 		$downloadUrl = $file->getDownloadUrl();
@@ -913,7 +953,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$httpRequest = Google_Client::$io->authenticatedRequest($request);
 			if ($httpRequest->getResponseHttpCode() == 200) {
 				$content = $httpRequest->getResponseBody();
-						
+				 console::log('GoogleDrive.Download [getting_content]');		
 /*.............................................. */	
 				if(!empty($content))
 				{
@@ -926,31 +966,51 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 							$dir = '_Clipboard';
 							$fname = $file_id;
 						}
+						 console::log('GoogleDrive.Download [no_download_local] ("FileName'.$fname.'", DirID: "'.$dir.'")');
+						 
+						if(file_exists(MY_HOME_DIR.$dir.'/'.$fname)) @unlink(MY_HOME_DIR.$dir.'/'.$fname);
 						
 						if(file_put_contents(MY_HOME_DIR.$dir.'/'.$fname, $content)) 
 						{						
+							console::log('GoogleDrive.Download [put_contents] ("'.MY_HOME_DIR.$dir.'/'.$fname.'")', 'ok');
 							/*
 							echo '<script>phpos.windowRefresh("'.WIN_ID.'", "reset_shared:1,dir_id:'.MY_HOME_DIR.'_Download,in_shared:0,tmp_shared_id:0,shared_id:0,app_id:index,fs:local_files"); </script>';
 							*/
-							return true;							
-						}	
+							return true;	
+							
+						}	else {
+						
+							console::log('GoogleDrive.Download [put_contents error]', 'error');
+						}
 								
 /*.............................................. */	
 					} else {
 					
+						console::log('GoogleDrive.Download [download_local] ("FileName'.$fname.'", DirID: "'.$dir.'")');
+						
+						if(file_exists(PHPOS_TEMP.$fileName, $content)) @unlink(PHPOS_TEMP.$fileName, $content);
+						
 						if(file_put_contents(PHPOS_TEMP.$fileName, $content)) 
 						{								
+							console::log('GoogleDrive.Download [put_contents] ("'.MY_HOME_DIR.$dir.'/'.$fname.'")', 'ok');
 							echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('ftp_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', PHPOS_TEMP.$fileName))).'</script>';
 							return true;							
-						}					
+						}	else {
+							
+							console::log('GoogleDrive.Download [put_contents] ("ERROR")', 'error');
+						}
 					}
 				}
 			} else {
+			
+				console::log('GoogleDrive.Download [ERROR] ("no_response")', 'error');
 				// An error occurred.
 				return null;
 			}
 			
 		} else {
+			
+			console::log('GoogleDrive.Download [ERROR] ("no_download_url")', 'error');
 			// The file doesn't have any content stored on Drive.
 			return null;
 		}	

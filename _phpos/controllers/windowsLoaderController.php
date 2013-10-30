@@ -16,6 +16,7 @@
 	if(!isset($_SESSION)) 
 	{
 		session_start();
+		
 	}	
 
 	//header('Content-Type: text/html; charset=utf-8');	
@@ -50,7 +51,8 @@
  		
 	require_once(PHPOS_DIR.'config/core.php');	
 	require_once(PHPOS_DIR.'config/database.php');
-  require_once(PHPOS_DIR.'classes/class.phpos_filters.php');	
+  require_once(PHPOS_DIR.'classes/class.phpos_filters.php');
+	require_once(PHPOS_DIR.'classes/class.phpos_console.php');	
 	
 	if(file_exists(PHPOS_DIR.'config/security_key.php'))
 	{		
@@ -138,6 +140,7 @@
 		$_GET['id'] = filter::num($_POST['id']);
 	}
 
+	
 	 
 /*
 **************************
@@ -157,12 +160,15 @@
 		$apiWindow->setAPPID($app_name.'@'.filter::alfas($_GET['action']));
 		$apiWindow->updateWindow();
 	}	
-	$app_action = $apiWindow->get_app_action();
+	$app_action = $apiWindow->get_app_action();		
 	
 	define("APP_ID", $app_name);
 	define("APP_ACTION", $app_action);	
 	
 	define("WIN_TYPE", $apiWindow->getParam('wintype'));
+	
+	console::log();
+	console::log('window:init(WIN_ID:"'.WIN_ID.'" ['.WIN_TYPE.'], APP_ID: "'.APP_ID.'", APP_ACTION: "'.APP_ACTION.'")');
 	
 	 
 /*
@@ -254,5 +260,7 @@
 			}	</style>';	
 		}
 	}
+	
+	console::show();
 
 ?>

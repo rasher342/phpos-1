@@ -23,6 +23,11 @@ if(!defined('PHPOS'))	die();
 	$txt['update'] = 'Save & update';
 	$txt['app_footer_version'] = 'Version:';
 
+	// console
+	$txt['console_clean'] = 'Clear console';	
+	$txt['console_hide'] = 'Hide to tray';	
+	$txt['console_tray_title'] = 'PHPOS Console';	
+	
 // MONTHS	
 	$txt['month_1'] = 'January';
 	$txt['month_2'] = 'February';

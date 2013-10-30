@@ -23,6 +23,11 @@ if(!defined('PHPOS'))	die();
 	$txt['update'] = 'Zapisz';
 	$txt['app_footer_version'] = 'Wersja:';
 
+	// console
+	$txt['console_clean'] = 'Wyczyść ekran konsoli';	
+	$txt['console_hide'] = 'Ukryj do tray\'a';	
+	$txt['console_tray_title'] = 'Konsola PHPOS';	
+	
 // MONTHS	
 	$txt['month_1'] = 'Styczeń';
 	$txt['month_2'] = 'Luty';

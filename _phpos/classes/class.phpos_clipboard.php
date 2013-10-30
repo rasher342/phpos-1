@@ -55,6 +55,7 @@ class phpos_clipboard
  	public function set_mode($mode)
 	{
 		$_SESSION['phpos_clipboard']['mode'] = $mode;
+		console::log('Clipboard.Mode ("'.$mode.'")');
 	}
 	 
 /*
@@ -66,11 +67,13 @@ class phpos_clipboard
 		if(!$_SESSION['phpos_clipboard']['multiple'])
 		{
 			$_SESSION['phpos_clipboard']['file_name'] = $name;
+			console::log('Clipboard.Name ("'.$name.'")');
 			
 		} else {
 			
 			if(!is_array($_SESSION['phpos_clipboard']['file_name'])) $_SESSION['phpos_clipboard']['file_name'] = array();
 			$_SESSION['phpos_clipboard']['file_name'][] = $name;
+			console::log('Clipboard.Name [array] ("'.$name.'")');
 		}
 	}
 		 
@@ -81,6 +84,7 @@ class phpos_clipboard
 	public function set_server($val)
 	{
 		$_SESSION['phpos_clipboard']['server'] = $val;
+		console::log('Clipboard.Server ("'.$val.'")');
 	}
 		 
 /*
@@ -90,6 +94,7 @@ class phpos_clipboard
 	public function set_multiple($val)
 	{
 		$_SESSION['phpos_clipboard']['multiple'] = $val;
+		console::log('Clipboard.Multiple ("'.$val.'")');
 	}
 		 
 /*
@@ -99,6 +104,7 @@ class phpos_clipboard
 	public function set_source_win($id)
 	{
 		$_SESSION['phpos_clipboard']['source_win'] = $id;
+		console::log('Clipboard.SourceWin ("'.$id.'")');
 	}
 		 
 /*
@@ -127,6 +133,8 @@ class phpos_clipboard
 	{		
 		$_SESSION['phpos_clipboard']['fs'] = $fs;
 		$_SESSION['phpos_clipboard']['connect_id'] = $connect_id;
+		
+		console::log('Clipboard.Add (ID: "'.$id.'", FS: "'.$fs.'")');
 		
 		if(!$_SESSION['phpos_clipboard']['multiple'])
 		{
@@ -221,6 +229,7 @@ class phpos_clipboard
 		$_SESSION['phpos_clipboard']['multiple'] = false;	
 		$_SESSION['phpos_clipboard']['fs'] = null;
 		$_SESSION['phpos_clipboard']['connect_id'] = null;
+		console::log('Clipboard.Reset');
 	}
 	 
 /*

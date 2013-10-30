@@ -21,6 +21,8 @@ define("PHPOS_MY_HOME_ROOT", true);
 	
 	$dir_id = $my_app->get_param('dir_id');
 	$fs = $my_app->get_param('fs');
+	
+	
 	 
 /*
 **************************
@@ -57,7 +59,8 @@ define("PHPOS_MY_HOME_ROOT", true);
 		$phposFS->set_directory_id($root_id);		
 	}	
 	
-		 
+	console::log('EXPLORER.filesystem: ["'.$my_app->get_param('fs').'"] DIR_ID("'.$my_app->get_param('dir_id').'"), ROOT_ID("'.$my_app->get_param('root_id').'")');	 
+	
 /*
 **************************
 */

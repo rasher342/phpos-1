@@ -89,6 +89,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			
 				if($this->connect())
 				{
+					console::log('FTP:connect ("'.$this->ftp->get_host().'")');	 
 					$this->connection_status = 'connected';
 				} else {
 					$this->connection_status = 'connection error';
@@ -243,13 +244,12 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 		$f = $file;
 		if(is_array($file)) $f = $file['id'];
 		
-		if($this->is_directory($f))
-		{	
-			if(dirname($f) != '' && $f!='' && $f!='.')
+			
+			if($f['dirname'] != '' && $f['dirname'] != '.')
 			{
 				return true;
 			}		
-		}
+		
 	}	
 		 
 /*
@@ -323,6 +323,8 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 			$list_dirs = array();
 			$list_files = array();
 			
+			console::log('FTP:list ("'.$this->directory_id.'")');	 
+			
 			if(is_array($directory))
 			{
 				//ftp_chdir($this->conn_id, $this->directory_id);	
@@ -386,6 +388,7 @@ class phpos_fs_plugin_ftp extends phpos_filesystems
 	{
 			global $my_app;
 			$dir = $my_app->get_param('dir_id');		
+			console::log('FTP:newDir (IN_DIR: "'.$dir.'", NEW_DIR_NAME: "'.$dirname.'")');	 
 			
 			if(ftp_mkdir($this->conn_id, $dir.'/'.$dirname)) return true;	
 	}	 

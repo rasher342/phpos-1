@@ -38,6 +38,7 @@
  require_once(PHPOS_DIR.'common/functions.php'); 
  
  require_once(PHPOS_DIR.'classes/class.phpos_filters.php');
+ require_once(PHPOS_DIR.'classes/class.phpos_console.php');
  require_once(PHPOS_DIR.'classes/class.api_wintask.php');
  require_once(PHPOS_DIR.'classes/class.api_processes.php');	
  require PHPOS_DIR.'config/database.php';	

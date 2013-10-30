@@ -26,7 +26,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 		
 		$ftp_address_host = '<a onclick="'.helper_reload(
 		array(
-		'dir_id' => $this->my_app->get_param('root_id'))
+		'dir_id' => '.')
 		).'" 
 		href="javascript:void(0);"><b>'.$ftp->get_host().'</b></a>'.$separator;			
 	}
@@ -51,7 +51,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 					if($address_items[$i] != $this->filesystem->get_root_directory_id())
 					{
 						$item = $this->filesystem->get_file_info($address_items[$i]);
-						$links[] = $item['id'];	
+						if($item['id'] != '' && $item['id'] != '.') $links[] = $item['id'];	
 					}					
 				}
 				
@@ -60,7 +60,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 				
 				if($item['id'] != $this->filesystem->get_root_directory_id())
 				{
-					$links[] = $item['id'];	
+					if($item['id'] != '' && $item['id'] != '.') $links[] = $item['id'];	
 				}	
 			}	
 		}	
@@ -85,7 +85,7 @@ if(!defined("PHPOS_IN_EXPLORER"))
 						if(is_root()) $item = $this->root_homedir_address_parse($item);
 						
 						$address.= '<a 
-						onclick="'.helper_reload(array('dir_id' => $item['id'])).'" 
+						 title="'.$item['id'].'" onclick="'.helper_reload(array('dir_id' => $item['id'])).'" 
 						href="javascript:void(0);">'.$item['basename'].'</a>'.$separator;	
 					}
 				}	

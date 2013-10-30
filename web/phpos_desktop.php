@@ -55,6 +55,7 @@ error_reporting(E_ERROR);
 	require PHPOS_DIR.'config/database.php';	
 	require_once(PHPOS_DIR.'controllers/databaseController.php');	
 	require_once(PHPOS_DIR.'classes/class.phpos_filters.php');
+	require_once(PHPOS_DIR.'classes/class.phpos_console.php');
 	
 	$updater_message = null;
 	
@@ -166,10 +167,13 @@ error_reporting(E_ERROR);
 <?php require_once(PHPOS_DIR.'controllers/windowsManagerController.php'); ?>
 <?php require_once(PHPOS_DIR.'controllers/wallpaperManager.php'); ?>
 <?php require_once(PHPOS_DIR.'controllers/menu_startController.php'); ?>	
+<?php	require_once(PHPOS_DIR.'controllers/consoleController.php'); ?>
 <?php //require_once(PHPOS_DIR.'common/inc.debugger_loader.php'); ?>
 <?php require_once(PHPOS_DIR.'common/inc.desktop_loader.php'); ?>
+<?php //console::log('system:init'); ?>
 <script>
 <?php echo msg::showMessages();  ?>
 </script>
+<div id="progress_bar" class="easyui-progressbar" data-options="value:0" style="display:none;z-index:99999999;position:absolute;top:10px;right:10px;height:40px;width:400px;"></div>
 </body>
 </html>

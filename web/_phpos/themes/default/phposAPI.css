@@ -49,14 +49,25 @@ select {
 }	
 
 /* ====== DEBUGGER ====== */
-#phpos_debugger {
-	z-index:99999; 
+#phpos_console {
+	z-index:9999999; 
 	background-color: #fff; 
-	background:solid
+	background:solid;
+	position:absolute;
+	left:0px;
+	border-top:2px solid #000;
+	border-right:2px solid #000;
+	bottom:70px;
+	width:1100px;
+	height:200px;
+	
 }
-#phpos_debugger_data {
+#phpos_console_data {
 	padding:10px;
-	font-size:13px;
+	font-size:11px;
+	height:150px;
+	overflow:auto;
+
 }
 .api_debug_title {
 	font-weight:bold;

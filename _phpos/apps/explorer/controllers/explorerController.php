@@ -43,6 +43,7 @@ if(!defined('PHPOS'))	die();
 	param('shared_id', null);
 	param('parent_id', null);
 	param('action_id', null);
+	param('hide_upload_status', null);
 	param('noindex', null);
 	param('this_index', null);
 	param('prev_index', null);
@@ -95,6 +96,7 @@ if(!defined('PHPOS'))	die();
 	cache_param('cloud_id');	
 	cache_param('reset_google_token');
 	cache_param('view_files_types');	
+	cache_param('hide_upload_status');
 
 /*
 **************************
@@ -206,8 +208,7 @@ if(!defined('PHPOS'))	die();
 	include MY_APP_DIR.'controllers/explorerControllerAPI.php';
 					
 /*.............................................. */		
-	
-	include MY_APP_DIR.'controllers/explorerInitialize.php';
+
 					
 /*.............................................. */		
 	
@@ -227,6 +228,9 @@ if(!defined('PHPOS'))	die();
 	// Get left tree	
 
 	include MY_APP_DIR.'controllers/explorerControllerTree.php';
+	
+		
+	include MY_APP_DIR.'controllers/explorerInitialize.php';
 
 				
 /*.............................................. */		

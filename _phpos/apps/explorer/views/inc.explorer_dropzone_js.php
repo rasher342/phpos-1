@@ -7,12 +7,13 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.7, 2013.10.24
+	File version: 1.3.1, 2013.10.30
  
 **********************************
 */
 if(!defined('PHPOS'))	die();	
 
+console::inline(session_id());
 
 if($context_fs != 'db_mysql' && !$readonly)
 {
@@ -23,54 +24,82 @@ if($context_fs != 'db_mysql' && !$readonly)
 	createImageThumbnails: false,	autoProcessQueue: true, parallelUploads: 100,
 	init: function() {
 	
-	this.on("sending", function(file) {
+	this.on("totaluploadprogress", function(progress,progressSent,bytesSent) {
 	
-	jNotify(
-				"'.txt('uploading').'",
-				{
-					autoHide : true, 
-					clickOverlay : false,
-					MinWidth : 300,
-					TimeShown : 4000,
-					ShowTimeEffect : 1000,
-					HideTimeEffect : 600,
-					LongTrip :20,
-					HorizontalPosition : "right",
-					VerticalPosition : "bottom",
-					ShowOverlay : false
-				});
-
+	$("#progress_bar").progressbar({
+    value: Math.floor(progress)
+	});
+	
+	if(Math.floor(progress) == 100)
+	{
+	
+		$("#progress_bar").css("display", "none");
+		
+		jSuccess(
+					"'.txt('uploaded').'",
+					{
+						autoHide : true, 
+						clickOverlay : false,
+						MinWidth : 300,
+						TimeShown : 2000,
+						ShowTimeEffect : 1000,
+						HideTimeEffect : 600,
+						LongTrip :20,
+						HorizontalPosition : "right",
+						VerticalPosition : "bottom",
+						ShowOverlay : false
+					});
+					
+			var html = $("#phpos_console_data").html();
+			var new_data = "Upload success.<br />" + html;
+			$("#phpos_console_data").html(new_data);		
 			
-		
+		'.link_action('index', 'hide_upload_status:1').' 		
+		}
+	
+	});
+	
+	this.on("sending", function(file) {
+	$("#progress_bar").css("display", "block");
+	
+	var notify = 0;
+	
+	if(notify == 0)
+	{
+		jNotify(
+					"'.txt('uploading').'",
+					{
+						autoHide : true, 
+						clickOverlay : false,
+						MinWidth : 300,
+						TimeShown : 4000,
+						ShowTimeEffect : 1000,
+						HideTimeEffect : 600,
+						LongTrip :20,
+						HorizontalPosition : "right",
+						VerticalPosition : "bottom",
+						ShowOverlay : false
+					});
+			
+			notify = 1;
+
+	}
 		});
 	
-	
-	
-	
-  this.on("complete", function(file) {
-	
-	/*
-	jSuccess(
-				"'.txt('uploaded').'",
-				{
-					autoHide : true, 
-					clickOverlay : false,
-					MinWidth : 300,
-					TimeShown : 2000,
-					ShowTimeEffect : 1000,
-					HideTimeEffect : 600,
-					LongTrip :20,
-					HorizontalPosition : "right",
-					VerticalPosition : "bottom",
-					ShowOverlay : false
-				});
-		*/
-		'.helper_reload().' 		
-		
-		});
+
   } 
 	});
-';	
+	';
+	
+	
+
+	
+	
+	
+	
+	
+	
+
 				
 }			
 ?>

@@ -31,7 +31,7 @@ if(!defined('PHPOS_EXPLORER_PLUGIN')) die();
 			$tmp_title = '<span class="explorer_tree_item">'.string_cut($row['title'], 20).'</span>';			
 			if($my_app->get_param('fs') == 'ftp' && $my_app->get_param('ftp_id') == $row['id']) $tmp_title = '<span  class="explorer_tree_item_marked">'.string_cut($row['title'], 20).'</span>';
 			
-			$items.= '<li data-options="iconCls:\'icon-ftp\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.infomonit(txt('connecting_ftp_wait'),'noscript').link_action('index', 'tmp_shared_id:0,cloud_id:0,in_shared:0,workgroup_id:0,cloud_id:0,dir_id:.,ftp_id:'.$row['id'].',fs:ftp').'"><span style="color: black">'.$tmp_title.'</span></a></span>';
+			$items.= '<li data-options="iconCls:\'icon-ftp\'"><span><a title="'.$row['title'].' '.$row['host'].'"href="javascript:void(0);" onclick="'.infomonit(txt('connecting_ftp_wait'),'noscript').link_action('index', 'tmp_shared_id:0,cloud_id:0,in_shared:0,workgroup_id:0,cloud_id:0,root_id:.,dir_id:.,ftp_id:'.$row['id'].',fs:ftp').'"><span style="color: black">'.$tmp_title.'</span></a></span>';
 			
 			if($my_app->get_param('fs') == 'ftp' && $my_app->get_param('ftp_id') == $row['id']) 
 			{				
