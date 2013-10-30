@@ -31,8 +31,8 @@ You can download PHPOS for free and install on your server or try the demo onlin
 <b>Change log:</b><br><br>
 
 <b>1.31 (2013.10.30)</b><br>
-- Progress bar for uploaded<br>
-- Console addded<br>
+- Progress bar for uploader<br>
+- Console added<br>
 - Some fixes<br>
 
 <b>1.30 (2013.10.29)</b><br>
