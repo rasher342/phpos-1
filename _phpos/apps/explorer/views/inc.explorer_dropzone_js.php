@@ -24,6 +24,9 @@ if($context_fs != 'db_mysql' && !$readonly)
 	createImageThumbnails: false,	autoProcessQueue: true, parallelUploads: 100,
 	init: function() {
 	
+	
+	
+	
 	this.on("totaluploadprogress", function(progress,progressSent,bytesSent) {
 	
 	$("#progress_bar").progressbar({
@@ -34,6 +37,9 @@ if($context_fs != 'db_mysql' && !$readonly)
 	{
 	
 		$("#progress_bar").css("display", "none");
+		$("#progress_bar").progressbar({
+    value:0
+		});
 		
 		jSuccess(
 					"'.txt('uploaded').'",
