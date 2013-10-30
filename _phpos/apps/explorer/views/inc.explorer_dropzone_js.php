@@ -13,7 +13,7 @@
 */
 if(!defined('PHPOS'))	die();	
 
-console::inline(session_id());
+//console::inline(session_id());
 
 if($context_fs != 'db_mysql' && !$readonly)
 {
