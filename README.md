@@ -32,7 +32,7 @@ You can download PHPOS for free and install on your server or try the demo onlin
 
 <b>1.32 (2013.10.31)</b><br>
 - Addedd packing files to ZIP archive<br>
-- 
+
 <b>1.31 (2013.10.30)</b><br>
 - Progress bar for uploader<br>
 - Console added<br>
