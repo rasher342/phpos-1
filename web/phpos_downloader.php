@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.26
+	File version: 1.3.2, 2013.10.31
  
 **********************************
 */
@@ -33,12 +33,10 @@
 	} else {
 	
 		die('PHPOS is not installed');
-	}
-	
+	}	
 
 	$filename = base64_decode($_GET['file']);	
-	$download_type = base64_decode(strip_tags($_GET['download_type']));
-	
+	$download_type = base64_decode(strip_tags($_GET['download_type']));	
 	
 	if(!empty($download_type))
 	{
@@ -82,17 +80,9 @@
 				$file_id = $folder_dir.$file_unhashed;
 				//echo 'folder_id: '.$folder_dir.', file_unhashed: '.$file_unhashed;
 				if(file_exists($file_id)) define('CAN_DOWNLOAD', true);
-			break;
-		
-		
-		
-		
+			break;		
 		}
 	}
-
-	//echo 'folder_dir: '.$folder_dir.'<br>folder_url: '.$folder_url.'<br>file: '.$file_unhashed.'<br>file_to_download:'.$file_id;
-	
-	
 	
 	if(defined('CAN_DOWNLOAD'))
 	{
@@ -101,16 +91,4 @@
 		@readfile($file_id);
 		if($download_type == 'ftp_file') @unlink($file_id);		
 	}
-	
-/*
-$homedir = '../../web/home/szczyglis/';
-$filename = base64_decode($_GET['file']);
-$file_path = str_replace($homedir, '', $filename);
-
-$basename = basename($filename);
-
-header('Content-disposition: attachment; filename='.$basename.'');
-readfile('home/szczyglis/'.$file_path);
-*/
-
 ?>

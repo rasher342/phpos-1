@@ -261,6 +261,12 @@
 		}
 	}
 	
+	echo '<script>
+	$(function() {
+		phpos.waiting_hide_execute();
+	});
+	</script>';
+	
 	console::show();
 
 ?>

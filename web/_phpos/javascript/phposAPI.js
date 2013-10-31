@@ -734,7 +734,8 @@
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");			
+				var file_ids = a.join(";;");	
+				this.waiting_show();
 				explorer_delete_files(win_id, file_ids);
 				
 			} else {	
@@ -759,7 +760,8 @@
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");			
+				var file_ids = a.join(";;");
+				this.waiting_show();				
 				explorer_copy_multiple(win_id, file_ids);
 				
 			} else {	
@@ -784,8 +786,10 @@
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");			
+				var file_ids = a.join(";;");	
+				this.waiting_show();
 				explorer_cut_multiple(win_id, file_ids);
+				
 				
 			} else {	
 			
@@ -810,7 +814,8 @@
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");			
+				var file_ids = a.join(";;");		
+				this.waiting_show();
 				explorer_pack_multiple(win_id, file_ids);
 				
 			} else {	
@@ -836,7 +841,8 @@
 			
 			if(a.length != 0)
 			{
-				var file_ids = a.join(";;");			
+				var file_ids = a.join(";;");		
+				this.waiting_show();
 				explorer_download_multiple(win_id, file_ids);
 				
 			} else {	
@@ -844,7 +850,42 @@
 				alert('Nothing selected!');
 			}				
 		 };	
+		 		 		 
+/*
+**************************
+*/	
+	this.waiting_show = function(msg) {
+			
+			if(msg == null) msg = window.waiting_str;	
+			
+			window.hide_waiting = 0;			
+			$('#waiting_info').html('<img src="' + PHPOS_WEBROOT_URL + '_phpos/icons/loading.gif" />' + msg);
+			$('#waiting_info').delay(200).show('slow');			
+	};	
+		 		 		 		 
+/*
+**************************
+*/	
+	this.waiting_hide = function() {
+			
+			window.hide_waiting = 1;	
+	};	
 		 
+/*
+**************************
+*/	
+	this.waiting_hide_execute = function() {
+			
+			if(window.hide_waiting == 1)
+			{			
+				var status = $('#waiting_info').css('display');
+				
+				if(status != 'none')
+				{
+					$('#waiting_info').fadeIn('slow').delay(2000).fadeOut('slow');					
+				}
+			};
+	};	
 /*
 **************************
 */		
@@ -877,6 +918,7 @@ var phpos = new phposAPI;
 
 // Window render
 function phposRenderWindow(
+	//this.waiting_show();
 	window_id, 
 	window_title, 
 	window_type, 

@@ -770,9 +770,7 @@ public function addDirectoryToZip($zip, $dir, $base)
 					} else {
 					
 						$zip = $this->addDirectoryToZip($zip, base64_decode($filesArray[$i]), dirname(base64_decode($filesArray[$i])).'/');						
-					}
-					
-					
+					}					
 				}			
 				
 				$zip->close();

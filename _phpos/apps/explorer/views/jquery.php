@@ -464,7 +464,7 @@ $(document).ready(function() {
 	$(function(){
 
 		// == Get code for icons actions
-		<?php  echo $jquery_GenerateContextMenu; ?>		
+		<?php  echo $jquery_GenerateContextMenu; ?>			
 	});
 
 <?php if(!$clear_post && is_array($_SESSION['post'])) unset($_SESSION['post']); ?>

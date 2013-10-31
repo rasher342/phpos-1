@@ -23,6 +23,8 @@ if(!defined('PHPOS'))	die();
 	$txt['update'] = 'Save & update';
 	$txt['app_footer_version'] = 'Version:';
 	
+	$txt['waiting_progress'] = 'Work in progress...Please wait...';
+	
 	$txt['files_packed'] = 'Files was packed into .zip archive';
 	$txt['zip_archive_prefix'] = 'Archive';
 

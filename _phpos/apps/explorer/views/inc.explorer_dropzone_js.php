@@ -58,9 +58,11 @@ if($context_fs != 'db_mysql' && !$readonly)
 					
 			var html = $("#phpos_console_data").html();
 			var new_data = "Upload success.<br />" + html;
-			$("#phpos_console_data").html(new_data);		
+			$("#phpos_console_data").html(new_data);	
+			phpos.waiting_hide();
 			
-		'.link_action('index', 'hide_upload_status:1').' 		
+		'.link_action('index', 'hide_upload_status:1').'
+		
 		}
 	
 	});
@@ -68,29 +70,14 @@ if($context_fs != 'db_mysql' && !$readonly)
 	this.on("sending", function(file) {
 	$("#progress_bar").css("display", "block");
 	
-	var notify = 0;
-	
-	if(notify == 0)
-	{
-		jNotify(
-					"'.txt('uploading').'",
-					{
-						autoHide : true, 
-						clickOverlay : false,
-						MinWidth : 300,
-						TimeShown : 4000,
-						ShowTimeEffect : 1000,
-						HideTimeEffect : 600,
-						LongTrip :20,
-						HorizontalPosition : "right",
-						VerticalPosition : "bottom",
-						ShowOverlay : false
-					});
-			
+		var notify = 0;
+		
+		if(notify == 0)
+		{
+			phpos.waiting_show();			
 			notify = 1;
-
-	}
-		});
+		}
+	});
 	
 
   } 

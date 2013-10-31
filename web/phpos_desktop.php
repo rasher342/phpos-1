@@ -135,7 +135,13 @@ error_reporting(E_ERROR);
 <!--[if !IE]> -->
 
 <!-- <![endif]-->
-<script type="text/javascript">window.PHPOS_DIR = '<?php echo PHPOS_DIR;?>';</script>
+<script type="text/javascript">
+window.PHPOS_DIR = '<?php echo PHPOS_DIR;?>';
+window.PHPOS_WEBROOT_URL = '<?php echo PHPOS_WEBROOT_URL;?>';
+window.hide_waiting = 0;
+window.waiting_str = "<?php echo txt('waiting_progress'); ?>";
+
+</script>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<?php echo THEME_URL;?>phposAPI.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jnotify/jNotify.jquery.css" media="screen" />
@@ -174,6 +180,7 @@ error_reporting(E_ERROR);
 <script>
 <?php echo msg::showMessages();  ?>
 </script>
-<div id="progress_bar" class="easyui-progressbar" data-options="value:0" style="display:none;z-index:99999999;position:absolute;top:10px;right:10px;height:40px;width:400px;"></div>
+<div id="progress_bar" class="easyui-progressbar" data-options="value:0" style="display:none"></div>
+<div id="waiting_info" style="display:none"></div>
 </body>
 </html>

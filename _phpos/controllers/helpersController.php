@@ -787,6 +787,46 @@ if(!defined('PHPOS'))	die();
 		$phposHELPERS = array();
 		$phposHELPERS['messages'] = array();
 	
-
+					 
+/*
+**************************
+*/
+ 	
+	function helper_waiting($msg = null, $noscript = null)
+	{
+		$data = '';
+		if($msg != null) $data = '"'.$msg.'"';
+		$js = 'phpos.waiting_show('.$data.');';
+		
+		if($noscript == true)
+		{		
+			return $js;
+			
+		} else {
+		
+			echo '<script>'.$js.'</script>';
+			return $js;
+		}	
+	}
+						 
+/*
+**************************
+*/
+ 	
+	function helper_stopwaiting($force = null, $noscript = null)
+	{
+		$js = 'phpos.waiting_hide();';
+		if($force != null) $js = 'phpos.waiting_hide_execute();';		
+		
+		if($noscript == true)
+		{		
+			return $js;
+			
+		} else {
+		
+			echo '<script>'.$js.'</script>';
+			return $js;
+		}	
+	}
 	
 ?>

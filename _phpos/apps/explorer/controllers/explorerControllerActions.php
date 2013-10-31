@@ -249,7 +249,8 @@ if(globalconfig('demo_mode') != 1 || is_root())
 						} else {						
 							console::log('EXPLORER.action:PackZipList (METHOD NOT EXISTS IN THIS FS)', 'error');	
 						}
-					}						
+					}	
+				
 						
 				break;	
 			
@@ -270,6 +271,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 						} else {						
 							console::log('EXPLORER.action:PackZipList (METHOD NOT EXISTS IN THIS FS)', 'error');	
 						}
+						
 					}						
 				break;	
 /*.............................................. */			
@@ -510,6 +512,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 		}
 
 }
+		helper_stopwaiting();
 		
 /*.............................................. */	
 

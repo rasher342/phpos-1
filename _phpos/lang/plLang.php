@@ -22,6 +22,8 @@ if(!defined('PHPOS'))	die();
 	$txt['plugins'] = 'Rozszerzenia';
 	$txt['update'] = 'Zapisz';
 	$txt['app_footer_version'] = 'Wersja:';
+	
+	$txt['waiting_progress'] = 'Przetwarzanie...Proszę czekać...';
 
 	$txt['files_packed'] = 'Pliki zostały spakowane do archiwum .zip';
 	$txt['zip_archive_prefix'] = 'Archiwum';
