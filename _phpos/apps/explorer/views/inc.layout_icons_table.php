@@ -20,10 +20,10 @@ if(!defined('PHPOS'))	die();
 <?php 
 if($_SESSION['phpos_explorer_hide_right'])
 {
-	$showhide_right_link = '<a href="javascript:void(0);" onclick="'.link_action(APP_ACTION, 'hide_right:0').'"><span style="color:#686868">Show Filesystem Column</span></a>';
+	$showhide_right_link = '<img src="'.THEME_URL.'icons/arrow_small_left.png" style="padding-right:10px;width:10px;display:inline-block;vertical-align:middle"/> <a href="javascript:void(0);" onclick="'.link_action(APP_ACTION, 'hide_right:0').'"><span style="color:#686868">Show Filesystem Column</span></a>';
 } else {
 	
-	$showhide_right_link = '<a href="javascript:void(0);" onclick="'.link_action(APP_ACTION, 'hide_right:1').'"><span style="color:#686868">Hide Filesystem Column</span></a>';
+	$showhide_right_link = '<a href="javascript:void(0);" onclick="'.link_action(APP_ACTION, 'hide_right:1').'"><span style="color:#686868">Hide Filesystem Column</span></a><img src="'.THEME_URL.'icons/arrow_small_right.png" style="padding-left:10px;width:10px;display:inline-block;vertical-align:middle"/>';
 }
 
   
