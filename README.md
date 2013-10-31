@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.31 beta
+PHPOS Web Operating System<br>Version: 1.32 beta
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,9 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.32 (2013.10.31)</b><br>
+- Added packing files to ZIP archive<br>
 
 <b>1.31 (2013.10.30)</b><br>
 - Progress bar for uploader<br>
