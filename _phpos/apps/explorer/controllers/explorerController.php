@@ -43,6 +43,7 @@ if(!defined('PHPOS'))	die();
 	param('shared_id', null);
 	param('parent_id', null);
 	param('action_id', null);
+	param('hide_right', null);
 	param('hide_upload_status', null);
 	param('noindex', null);
 	param('this_index', null);
@@ -106,6 +107,14 @@ if(!defined('PHPOS'))	die();
 		$my_app->set_param('view_type', 'list');
 		cache_param('view_type');
 	}
+	
+	if($my_app->get_param('hide_right') != null)
+	{
+		$_SESSION['phpos_explorer_hide_right'] = true;
+	} else {
+		unset($_SESSION['phpos_explorer_hide_right']);
+	}
+	cache_param('hide_right');
 	
 	// Check dirs	
 	if(!is_dir(MY_HOME_DIR.'_Temp'))
