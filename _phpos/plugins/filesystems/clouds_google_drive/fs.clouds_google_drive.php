@@ -74,7 +74,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 */
  	
 	function __construct($cloud_id = null)
-	{				
+	{			
 		$this->fs_prefix = 'clouds_google_drive';	
 		
 		$this->set_root_directory_id('root');
@@ -533,7 +533,9 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 			$list_files = array();
 		}				
 		
-		$all_files = array_merge($list_dirs, $list_files);			
+		$all_files = array_merge($list_dirs, $list_files);	
+		
+		helper_stopwaiting();
 		return $all_files;					
 	}
 		 
@@ -596,7 +598,7 @@ class phpos_fs_plugin_clouds_google_drive extends phpos_filesystems
 	{
 		if($this->is_directory($file))
 		{
-			return $this->get_wait_notify('noscript').helper_reload(array('parent_id' => $this->directory_id,'shared_id' => 0, 'reset_shared' => 0, 'dir_id' => $file['id']));
+			return helper_waiting(null, true).helper_reload(array('parent_id' => $this->directory_id,'shared_id' => 0, 'reset_shared' => 0, 'dir_id' => $file['id']));
 			
 		} else {			
 							

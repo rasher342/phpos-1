@@ -30,6 +30,7 @@ if(!defined('PHPOS'))	die();
 		$succ_msg = txt('shortcuts_window_msg_upload');
 
 		$monit_success = "
+		phpos.waiting_show();	
 		jSuccess(
 			'".$succ_msg."',
 			{

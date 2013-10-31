@@ -43,6 +43,7 @@ if(!defined('PHPOS'))	die();
 		
 		
 		$monit_success = "
+		phpos.waiting_show();	
 		jSuccess(
 			'".$succ_msg."',
 			{

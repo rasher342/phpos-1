@@ -82,17 +82,14 @@ if($context_fs != 'db_mysql' && !$readonly)
 
   } 
 	});
-	';
 	
 	
-
-	
-	
-	
+	$(".upload_form").submit(function() {
+		phpos.waiting_show();	
+	});
 	
 	
 	
-
-				
+	';		
 }			
 ?>

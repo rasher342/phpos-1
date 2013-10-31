@@ -35,7 +35,7 @@ if(!defined('PHPOS'))	die();
 					is_root())))) 
 					{ ?>
 					<div id="phpos_explorer_uploader_container" class="easyui-tooltip" title="<?php echo txt('tip_explorer_upload_file');?>">
-						<form enctype="multipart/form-data" method="post" action="<?php echo helper_post('null', array('fs' => $app_param['fs'])); ?>" id="upload" style="background: transparent"> 
+						<form enctype="multipart/form-data" method="post" action="<?php echo helper_post('null', array('fs' => $app_param['fs'])); ?>" id="upload" class="upload_form" style="background: transparent"> 
 						
 							<input type="hidden" name="phpos_upload" value="1"> 
 							<input type="hidden" name="posttest" value="postyes"> 

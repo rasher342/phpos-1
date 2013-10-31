@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.3.2, 2013.10.31
+	File version: 1.3.3, 2013.10.31
  
 **********************************
 */
@@ -15,9 +15,9 @@
 
 
 /* **************************************** */
-	define('PHPOS_VERSION', '1.32');
+	define('PHPOS_VERSION', '1.33');
 	define('PHPOS_BUILD', '2013.10.31');	
-	define('PHPOS_VERSION_NAME', '1.32 beta');
+	define('PHPOS_VERSION_NAME', '1.33 beta');
 	define('PHPOS_ONLINE', 'http://phpos.pl/');
 	define('PHPOS_UPDATER', 'http://phpos.pl/updates_server.php');
 	define('PHPOS_GITHUB', 'https://github.com/phpos/phpos/');	

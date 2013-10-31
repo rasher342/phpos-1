@@ -49,6 +49,7 @@ if(!empty($_FILES))
 /*.............................................. */		
 			if(!$stop_upload)
 			{
+				helper_waiting();
 				$_FILES['file']['name'] = filter::fname($_FILES['file']['name']);
 				console::log('EXPLORER.action: Upload ("'.$_FILES['file']['name'].'")');	 
 				if($phposFS->upload_file($_FILES['file'])) 
@@ -104,6 +105,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	{
 				if($readonly != 1) // 0
 				{
+					
 					console::log('EXPLORER.action:Rename ("ID:'.$_POST['edit_id'].'", NEW_NAME:"'.filter::fname($_POST['new_folder_name']).'")');
 					if($phposFS->rename(strip_tags($_POST['edit_id']), filter::fname($_POST['new_folder_name']))) 
 					{
@@ -138,6 +140,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			{
 				if($readonly != 1) // 0
 				{
+					helper_waiting();
 					console::log('EXPLORER.action:NewDir ("NEW_DIR_NAME:"'.filter::fname($_POST['new_folder_name']).'")');
 					if($phposFS->new_dir(strip_tags(filter::fname($_POST['new_folder_name'])))) 
 					{
@@ -189,6 +192,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 			switch($action_id)
 			{			
 				case 'delete':	
+					helper_waiting();
 					console::log('EXPLORER.action:Delete ("ID:"'.param('action_param').'")');
 					if($phposFS->delete(param('action_param'))) 
 					{
@@ -205,6 +209,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 				
 				case 'explorer_link_to_folder':		
 					
+					helper_waiting();
 					console::log('EXPLORER.action:NewLinkOnDesktop ("ID:"'.base64_decode(param('action_param')).'")');
 					$shortcut = new phpos_shortcuts;					
 					$shortcut->add(base64_decode(param('action_param2')), 'app', 'explorer', 'index', 'folder_shortcut.png', array('root_id' => param('root_id'), 'workgroup_id' => param('workgroup_id'), 'workgroup_user_id' => param('workgroup_user_id'), 'in_shared' => param('in_shared'),'shared_id' => param('shared_id'),'tmp_shared_id' => param('tmp_shared_id'), 'fs' => 'local_files','dir_id' => base64_decode(param('action_param'))), 'desktop', 0, null);
@@ -258,6 +263,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	
 				case 'download_multiple':		
 					
+				
 					$file_hashes = param('action_param');
 					if(!empty($file_hashes))
 					{						
@@ -278,6 +284,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	
 				case 'copy':
 					
+					helper_waiting();
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;	
@@ -291,6 +298,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 	
 				case 'copy_multiple':
 					
+				
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;	
@@ -324,6 +332,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 
 					case 'copy_server':
 					
+					helper_waiting();
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;	
@@ -344,6 +353,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 
 				case 'cut':
 					
+					helper_waiting();
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;
@@ -357,6 +367,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 
 				case 'cut_multiple':
 					
+					helper_waiting();
 					$connect_id = null;
 					$ftp_id = param('ftp_id');
 					if(!empty($ftp_id)) $connect_id = $ftp_id;	
@@ -391,6 +402,7 @@ if(globalconfig('demo_mode') != 1 || is_root())
 
 				case 'paste':						
 				
+					helper_waiting();
 					$clipboard = new phpos_clipboard;					
 					$clipboard->get_clipboard();
 					$mode = $clipboard->get_mode();						

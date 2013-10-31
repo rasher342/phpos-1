@@ -30,6 +30,7 @@ if(!defined('PHPOS'))	die();
 
 
 		$monit_success = "
+		phpos.waiting_show();	
 		jSuccess(
 			'".txt('created')."',
 			{

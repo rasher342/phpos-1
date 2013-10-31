@@ -14,19 +14,22 @@
 if(!defined('PHPOS'))	die();
 
 $html['icons'].= '
-<div class="phpos_explorer_list_toolbar">
+<div class="phpos_explorer_list_toolbar">';
 			
-	<div class="phpos_explorer_list_toolbar_item">
-	<a href="javascript:void(0);" title="'.txt('list_download_desc').'" onclick="phpos.list_download(\''.WIN_ID.'\');">
-	<img src="'.ICONS.'/explorer_toolbar/download.png" /><br />'.txt('download').'</a>
-	</div>
+	if($my_app->get_param('fs') == 'local_files')
+	{
+		$html['icons'].= '<div class="phpos_explorer_list_toolbar_item">
+		<a href="javascript:void(0);" title="'.txt('list_download_desc').'" onclick="phpos.list_download(\''.WIN_ID.'\');">
+		<img src="'.ICONS.'/explorer_toolbar/download.png" /><br />'.txt('download').'</a>
+		</div>
+		
+		<div class="phpos_explorer_list_toolbar_item">
+		<a href="javascript:void(0);" title="'.txt('list_zip_desc').'" onclick="phpos.list_zip(\''.WIN_ID.'\');">
+		<img src="'.ICONS.'/explorer_toolbar/zip2.png" /><br />'.txt('list_pack_zip').'</a>
+		</div>';
+	}
 	
-	<div class="phpos_explorer_list_toolbar_item">
-	<a href="javascript:void(0);" title="'.txt('list_zip_desc').'" onclick="phpos.list_zip(\''.WIN_ID.'\');">
-	<img src="'.ICONS.'/explorer_toolbar/zip2.png" /><br />'.txt('list_pack_zip').'</a>
-	</div>
-	
-	<div class="phpos_explorer_list_toolbar_item">
+	$html['icons'].= '<div class="phpos_explorer_list_toolbar_item">
 	<a href="javascript:void(0);" title="'.txt('list_cut_desc').'" onclick="phpos.list_cut(\''.WIN_ID.'\');">
 	<img src="'.ICONS.'/explorer_toolbar/cut.png" /><br />'.txt('cut').'</a>
 	</div>

@@ -93,6 +93,7 @@ if(empty($link_param))
 		}
 	
 		$monit_success = "
+		phpos.waiting_show();	
 		jSuccess(
 			'".$succ_msg."',
 			{
