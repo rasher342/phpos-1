@@ -283,7 +283,10 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
  		
 	public function is_directory($file)
 	{
-		if(is_dir($file['id']))
+		$f = $file;
+		if(is_array($file)) $f = $file['id'];
+		
+		if(is_dir($f))
 		{			
 			return true;
 		}	
@@ -692,9 +695,37 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 /*
 **************************
 */
+
+
+public function addDirectoryToZip($zip, $dir, $base)
+{
+    $newFolder = str_replace($base, '', $dir);
+    $zip->addEmptyDir($newFolder);
+    foreach(glob($dir . '/*') as $file)
+    {
+        if(is_dir($file))
+        {
+            $zip = $this->addDirectoryToZip($zip, $file, $base);
+        }
+        else
+        {
+            $newFile = str_replace($base, '', $file);
+						if($newFile != 'index.php')
+						{
+							$zip->addFile($file, $newFile);
+							console::log('[FS] LocalFiles.pack_files [add_file] ("'.$newFile.'"))', 'ok');
+						}						
+        }
+    }
+    return $zip;
+}
+
+
+
  	
 	public function pack_files($filesArray, $save_to_dir = null, $download = false)
 	{
+		$zip_date = date('Y_d_m-H_i_s');
 		$c = count($filesArray);
 		if($c!=0)
 		{
@@ -706,20 +737,20 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 				{
 					if($download == true)
 					{
-						$archive_name = MY_HOME_DIR.'/_Temp/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+						$archive_name = MY_HOME_DIR.'/_Temp/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
 						console::log('[FS] LocalFiles.pack_files [download=true]');
 						
 					} else {
 					
 						global $my_app;
 						$save_to_dir = $my_app->get_param('dir_id');
-						$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+						$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
 						console::log('[FS] LocalFiles.pack_files [download=false]');
 					}
 					
 				} else {
 				
-					$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+					$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
 					console::log('[FS] LocalFiles.pack_files [custom_dir] ("'.$save_to_dir.'")');
 				}
 				
@@ -728,8 +759,20 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 				
 				for($i=0;$i<$c;$i++)
 				{
-					$zip->addFile(base64_decode($filesArray[$i]), basename(base64_decode($filesArray[$i])));		
-					console::log('[FS] LocalFiles.pack_files [add_file] ("'.basename(base64_decode($filesArray[$i])).'"))', 'ok');
+					if(!$this->is_directory(base64_decode($filesArray[$i])))
+					{					
+						if(basename(base64_decode($filesArray[$i])) != 'index.php')
+						{
+							$zip->addFile(base64_decode($filesArray[$i]), basename(base64_decode($filesArray[$i])));
+							console::log('[FS] LocalFiles.pack_files [add_file] ("'.basename(base64_decode($filesArray[$i])).'"))', 'ok');
+						}
+						
+					} else {
+					
+						$zip = $this->addDirectoryToZip($zip, base64_decode($filesArray[$i]), dirname(base64_decode($filesArray[$i])).'/');						
+					}
+					
+					
 				}			
 				
 				$zip->close();
@@ -744,10 +787,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 			} else {
 				
 				console::log('[FS] LocalFiles.pack_files [ZipPacking extensions not exists in server])', 'error');
-			}
-			
-			
-			
+			}			
 		}	
 	}
 }
