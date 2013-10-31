@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.09
+	File version: 1.3.2, 2013.10.31
  
 **********************************
 */
@@ -23,6 +23,9 @@ if(!defined('PHPOS'))	die();
 	$txt['update'] = 'Zapisz';
 	$txt['app_footer_version'] = 'Wersja:';
 
+	$txt['files_packed'] = 'Pliki zostały spakowane do archiwum .zip';
+	$txt['zip_archive_prefix'] = 'Archiwum';
+	
 	// console
 	$txt['console_clean'] = 'Wyczyść ekran konsoli';	
 	$txt['console_hide'] = 'Ukryj do tray\'a';	
@@ -100,6 +103,8 @@ if(!defined('PHPOS'))	die();
 	// Toolbar list
 	$txt['list_copy_desc'] = 'Skopiuj zaznaczone pliki/foldery do schowka';
 	$txt['list_cut_desc'] = 'Wytnij zaznaczone pliki/foldery do schowka';
+	$txt['list_zip_desc'] = 'Spakuj zaznaczone pliki do archiwum .zip';
+	$txt['list_pack_zip'] = 'Spakuj (.zip)';
 	$txt['list_delete_desc'] = 'Usuń zaznaczone pliki/foldery';
 	$txt['list_select_all'] = 'Zaznacz wszystko';
 	$txt['list_select_none'] = 'Odznacz wszystko';

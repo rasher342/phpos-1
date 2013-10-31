@@ -793,6 +793,58 @@
 			}				
 		 };	
 		 
+		 		 
+/*
+**************************
+*/	
+	this.list_zip = function(win_id) {
+
+				var a = new Array();
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
+				
+						if($(this).is(":checked")) 
+						{				
+							a.push($(this).val());					
+						}	        
+      });
+			
+			if(a.length != 0)
+			{
+				var file_ids = a.join(";;");			
+				explorer_pack_multiple(win_id, file_ids);
+				
+			} else {	
+			
+				alert('Nothing selected!');
+			}				
+		 };	
+		 
+		 		 
+/*
+**************************
+*/	
+	this.list_download = function(win_id) {
+
+				var a = new Array();
+				$("#phpos_list_table_"+win_id+" tr input[type='checkbox']").each(function(){
+				
+						if($(this).is(":checked")) 
+						{				
+							a.push($(this).val());					
+						}	        
+      });
+			
+			if(a.length != 0)
+			{
+				var file_ids = a.join(";;");			
+				explorer_download_multiple(win_id, file_ids);
+				
+			} else {	
+			
+				alert('Nothing selected!');
+			}				
+		 };	
+		 
 /*
 **************************
 */		

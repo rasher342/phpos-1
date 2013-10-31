@@ -102,7 +102,28 @@ $(document).ready(function() {
 			//phpos.windowRefresh('1', '');	
 			phpos.windowRefresh(win_id, 'action_id:cut_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
 	}
+	
 		
+/*
+**************************
+*/
+	function explorer_pack_multiple(win_id, file_ids, file_name, file_type)
+	{	
+			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
+			//phpos.windowRefresh('1', '');	
+			phpos.windowRefresh(win_id, 'action_id:pack_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+	}	
+	
+			
+/*
+**************************
+*/
+	function explorer_download_multiple(win_id, file_ids, file_name, file_type)
+	{	
+			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
+			//phpos.windowRefresh('1', '');	
+			phpos.windowRefresh(win_id, 'action_id:download_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+	}
 /*
 **************************
 */

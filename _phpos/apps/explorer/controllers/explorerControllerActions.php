@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.28
+	File version: 1.3.2, 2013.10.31
  
 **********************************
 */
@@ -230,7 +230,48 @@ if(globalconfig('demo_mode') != 1 || is_root())
 					}						
 					msg::ok(txt('file_deleted'));				
 				break;	
+				
+				
+/*.............................................. */		
+	
+				case 'pack_multiple':		
+					
+					$file_hashes = param('action_param');
+					if(!empty($file_hashes))
+					{						
+						$filesArray = explode(";;", $file_hashes);
+						console::log('EXPLORER.action:PackZipList ("Files:"'.$c.'")');	
+						if(method_exists($phposFS, 'pack_files'))
+						{						
+							if($phposFS->pack_files($filesArray, null, false)) 	
+								msg::ok(txt('files_packed'));		
+								
+						} else {						
+							console::log('EXPLORER.action:PackZipList (METHOD NOT EXISTS IN THIS FS)', 'error');	
+						}
+					}						
+						
+				break;	
 			
+/*.............................................. */		
+	
+				case 'download_multiple':		
+					
+					$file_hashes = param('action_param');
+					if(!empty($file_hashes))
+					{						
+						$filesArray = explode(";;", $file_hashes);
+						console::log('EXPLORER.action:PackZipList ("Files:"'.$c.'")');	
+						if(method_exists($phposFS, 'pack_files'))
+						{						
+							if($phposFS->pack_files($filesArray, null, true)) 	
+								msg::ok(txt('files_packed'));		
+								
+						} else {						
+							console::log('EXPLORER.action:PackZipList (METHOD NOT EXISTS IN THIS FS)', 'error');	
+						}
+					}						
+				break;	
 /*.............................................. */			
 	
 				case 'copy':

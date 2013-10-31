@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.26
+	File version: 1.3.2, 2013.10.31
  
 **********************************
 */
@@ -687,6 +687,68 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$clipboard->set_name(basename(param('action_param')));
 		$clipboard->set_server(false);
 		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+	}
+		 
+/*
+**************************
+*/
+ 	
+	public function pack_files($filesArray, $save_to_dir = null, $download = false)
+	{
+		$c = count($filesArray);
+		if($c!=0)
+		{
+			if(class_exists('ZipArchive'))
+			{
+				$zip = new ZipArchive();
+				
+				if($save_to_dir == null)
+				{
+					if($download == true)
+					{
+						$archive_name = MY_HOME_DIR.'/_Temp/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+						console::log('[FS] LocalFiles.pack_files [download=true]');
+						
+					} else {
+					
+						global $my_app;
+						$save_to_dir = $my_app->get_param('dir_id');
+						$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+						console::log('[FS] LocalFiles.pack_files [download=false]');
+					}
+					
+				} else {
+				
+					$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.date('Y_d_m-H_i_s').'.zip';
+					console::log('[FS] LocalFiles.pack_files [custom_dir] ("'.$save_to_dir.'")');
+				}
+				
+				$zip->open($archive_name,  ZipArchive::CREATE);
+				console::log('[FS] LocalFiles.pack_files [new_archive] ("'.$archive_name.'"))', 'ok');
+				
+				for($i=0;$i<$c;$i++)
+				{
+					$zip->addFile(base64_decode($filesArray[$i]), basename(base64_decode($filesArray[$i])));		
+					console::log('[FS] LocalFiles.pack_files [add_file] ("'.basename(base64_decode($filesArray[$i])).'"))', 'ok');
+				}			
+				
+				$zip->close();
+				console::log('[FS] LocalFiles.pack_files [new_archive] (close))', 'ok');
+				if($download == true)
+				{
+					console::log('[FS] LocalFiles.pack_files [start_download]');
+					echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $archive_name))).'</script>';
+				}
+				return true;
+				
+			} else {
+				
+				console::log('[FS] LocalFiles.pack_files [ZipPacking extensions not exists in server])', 'error');
+			}
+			
+			
+			
+		}	
 	}
 }
 ?>
