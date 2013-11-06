@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.3.3, 2013.11.06
  
 **********************************
 */
@@ -59,7 +59,7 @@ error_reporting(E_ERROR | E_PARSE);
  require_once(PHPOS_DIR.'classes/class.api_processes.php');
  require_once(PHPOS_DIR.'classes/class.languages.php');
  require_once(PHPOS_DIR.'controllers/helpersController.php');	
-
+ require_once(PHPOS_DIR.'classes/class.phpos_console.php'); 
  
  define('THEME_DIR', PHPOS_WEBROOT_DIR.'_phpos/themes/'.globalconfig('theme').'/');
  define('THEME_URL', PHPOS_WEBROOT_URL.'_phpos/themes/'.globalconfig('theme').'/');
@@ -130,6 +130,10 @@ error_reporting(E_ERROR | E_PARSE);
 				
 			case 'sessiondestroy':
 				session_destroy();
+			break;	
+			
+			case 'clear_console':
+				console::clear();
 			break;	
 				
 				

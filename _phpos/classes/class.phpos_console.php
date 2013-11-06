@@ -1,33 +1,89 @@
 <?php
+/*
+**********************************
+
+	PHPOS Web Operating system
+	MIT License
+	(c) 2013 Marcin Szczyglinski
+	szczyglis83@gmail.com
+	GitHUB: https://github.com/phpos/
+	File version: 1.3.3, 2013.11.06
+ 
+**********************************
+*/
+if(!defined('PHPOS'))	die();	
 
 class console 
 {
-
-
 	public static function log($str = null, $type = null)
 	{
+		
+		$ajax = '';
+		if(isset($_GET['ajax_file'])) $ajax = ' <span class="console_ajax">[AJAX]</span> ';
 		if(!is_array($_SESSION['console_log'])) $_SESSION['console_log'] = array();
+		
+		
+		
+		if(defined('WIN_ID')) $info['win_id'] = '<span class="console_winid">['.WIN_ID.']</span>';		
+		if(defined('APP_ID')) $info['app_id'] = '<span class="console_appname">['.APP_ID.'</span>';
+		if(defined('APP_ACTION')) $info['app_action'] = '<span class="console_appaction"> '.APP_ACTION.']</span>';
+		$info['time'] = '<span class="console_time">'.date('H:i:s', time()).'</span>'.$ajax;
 		
 		if(!empty($str))
 		{
-			if($type == null)
+			if(is_array($str))
 			{
-				$_SESSION['console_log'][] = "<b>".date('H:i:s', time())."</b>: ".$str."' + '<br />";
+				$tmp_str = $str;
+				$c = count($tmp_str);
 				
-			} elseif($type == 'ok') {
-				$_SESSION['console_log'][] = "<span style=\"color:#277125\"><b>".date('H:i:s', time()).": [OK]</b> ".$str."' + '</span><br />";
+				$str = '';
+			
+				if($c > 1) $str = '<div class="console_block">';	
 				
-			} elseif($type == 'error') {
-				$_SESSION['console_log'][] = "<span style=\"color:#87292d\"><b>".date('H:i:s', time()).": [ERROR]</b> ".$str."' + '</span><br />";
+				$counter = 0;
+				foreach($tmp_str as $key => $val)
+				{
+					$counter++;
+					$str.='<span class="console_key">'.htmlspecialchars($key).'</span> <span class="console_arrows ">&gt;&gt;</span> <span class="console_val">'.htmlspecialchars($val).'</span>';	
+					if($c != $counter) $str.= '<br />';					
+				}
+				
+				if($c > 1) $str.= '</div>';
+				$str.= '<div class="console_separator"></div>';
+				
+			}	elseif($str != '-') {
+			
+				$str.= '<div class="console_separator"></div>';
+			}
+			
+			if($str != '-')		
+			{				
+				if($type == null)
+				{
+					$_SESSION['console_log'][] = $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action']." ".$str;
+					
+				} elseif($type == 'ok') {
+				
+					$_SESSION['console_log'][] = $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action']." <span class=\"console_status_ok\"> <b>[OK]</b> ".$str."</span>";
+					
+				} elseif($type == 'error') {
+				
+					$_SESSION['console_log'][] = $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action']." <span class=\"console_status_err\">  <b>[ERROR]</b> ".$str."</span>";				
+				}
+				
+			} else {
+			
+				$_SESSION['console_log'][] = '<br />';
 			}
 			
 		} else {
-			$_SESSION['console_log'][] = "<br />";
+			$_SESSION['console_log'][] = '<div class="console_line"><span class="console_arrows ">@window.render</span></div>';
 		}
 	}
 	
-	public static function show()
+	public static function show($console_ajax = null)
 	{
+				
 		if(is_array($_SESSION['console_log']))
 		{
 			$a = array_reverse($_SESSION['console_log']);
@@ -36,10 +92,12 @@ class console
 			{
 				$data.= $a[$i];
 			}
+				
+			//unset($_SESSION['console_log']);		
 			
-			
-			unset($_SESSION['console_log']);
-		} 
+		}
+		
+		
 		echo "<script>
 		
 		var html = $('#phpos_console_data').html();
@@ -64,6 +122,10 @@ class console
 		</script>";		
 	}
 	
+	public static function clear()
+	{		
+		unset($_SESSION['console_log']);
+	}
 
 }
 ?>

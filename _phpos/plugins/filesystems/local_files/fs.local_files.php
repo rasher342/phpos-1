@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.3.2, 2013.10.31
+	File version: 1.3.3, 2013.11.06
  
 **********************************
 */
@@ -142,9 +142,26 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		if(mkdir($this->directory_id.'/'.$dirname, 0755)) 
 		{
 			$file = '<?php die(); ?>';
-			if(!@file_put_contents($this->directory_id.'/'.$dirname.'/index.php', $file)) return false;		
+			if(!@file_put_contents($this->directory_id.'/'.$dirname.'/index.php', $file)) return false;	
+			
+			console::log(array(
+				'@filesystem' => 'new_dir()',	
+				'directory_id' => $this->directory_id,
+				'dirname' => $dirname,
+				'chmod' => '0755'
+			), 'ok');
+			
 			return true;	
-		}		
+			
+		}	else {
+			
+			console::log(array(
+				'@filesystem' => 'new_dir()',	
+				'directory_id' => $this->directory_id,
+				'dirname' => $dirname,
+				'chmod' => '0755'
+			), 'error');
+		}
 	}	
 			 
 /*
@@ -154,7 +171,24 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	public function upload_file($file)
 	{		
 		$target_path = $this->directory_id.'/'.basename($file['name']); 
-		if(move_uploaded_file($file['tmp_name'], $target_path)) return true;	
+		if(move_uploaded_file($file['tmp_name'], $target_path)) 
+		{
+			console::log(array(
+				'@filesystem' => 'upload_file()',	
+				'file_tmp_name' => $file['tmp_name'],
+				'target' => $target_path
+			), 'ok');
+			
+			return true;	
+			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'upload_file()',	
+				'file_tmp_name' => $file['tmp_name'],
+				'target' => $target_path
+			), 'error');
+		}
 	}
 	
 			 
@@ -319,7 +353,24 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	public function rename($id_file, $new_name)
 	{
 		$dir = dirname($id_file);		
-		if(rename($id_file, $dir.'/'.$new_name)) return true;
+		if(rename($id_file, $dir.'/'.$new_name)) 
+		{
+			console::log(array(
+				'@filesystem' => 'rename()',	
+				'file_id' => $id_file,
+				'new_name' => $dir.'/'.$new_name
+			), 'ok');
+			
+			return true;
+			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'rename()',	
+				'file_id' => $id_file,
+				'new_name' => $dir.'/'.$new_name
+			), 'error');
+		}
 	}
 			 
 /*
@@ -341,12 +392,43 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
         if (basename($file) == '.' || basename($file) == '..') {
             continue;
         } else if (is_dir($file)) {
+				
             self::deleteDir($file);
+						
         } else {
-            @unlink($file);
+				
+            if(@unlink($file))
+						{
+							console::log(array(
+								'@filesystem' => 'deleteDir()',	
+								'file_id' => $file
+							), 'ok');
+			
+						} else {
+							
+							console::log(array(
+								'@filesystem' => 'deleteDir()',	
+								'file_id' => $file
+							), 'error');
+						}
         }
     }
-    rmdir($path);
+    if(@rmdir($path))
+		{
+			console::log(array(
+				'@filesystem' => 'deleteDir()',	
+				'dir_id' => $path
+			), 'ok');				
+				
+			return true;
+			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'deleteDir()',	
+				'dir_id' => $path
+			), 'error');
+		}
 	}	
 	
 			 
@@ -359,12 +441,41 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	{		
 		if(is_dir($id_file))
 		{			
-			self::deleteDir($id_file);
-			return true;
+			if(self::deleteDir($id_file))
+			{
+				console::log(array(
+				'@filesystem' => 'delete() -> deleteDir()',	
+				'file_id' => $id_file
+				), 'ok');
+				
+				return true;
+				
+			} else {
+				
+				console::log(array(
+				'@filesystem' => 'delete() -> deleteDir()',	
+				'file_id' => $id_file
+				), 'error');
+			}
 			
 		} else {		
 		
-			if(@unlink($id_file)) return true;
+			if(@unlink($id_file)) 
+			{		
+				console::log(array(
+				'@filesystem' => 'delete()',	
+				'file_id' => $id_file
+				), 'ok');
+				
+				return true;
+				
+			} else {
+				
+				console::log(array(
+				'@filesystem' => 'delete()',	
+				'file_id' => $id_file
+				), 'error');
+			}
 		}
 	}	
 			 
@@ -394,8 +505,8 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		
 		} else {
 			$icon_image = PHPOS_WEBROOT_URL.'_phpos/icons/'.$file['icon'];		
-		}		
-			
+		}			
+		
 		return $icon_image; // @returns full url
 	}	
 			 
@@ -405,6 +516,11 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
  	
 	public function set_api_file_id($file_id)
 	{
+		console::log(array(
+				'@filesystem' => 'set_api_file_id()',	
+				'file_id' => $file_id
+		), 'ok');
+			
 		$this->api_file_id = $file_id;	
 	}
 				 
@@ -417,6 +533,11 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	{
 		if(file_exists($this->api_file_id))
 		{
+			console::log(array(
+				'@filesystem' => 'get_file_content()',	
+				'file_id' => $this->api_file_id
+			), 'ok');
+				
 			$f = file_get_contents($this->api_file_id);
 			return $f;		
 		}	
@@ -431,10 +552,22 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	{
 		if(file_put_contents($this->directory_id.'/'.$file_name, $content)) 
 		{
+			console::log(array(
+				'@filesystem' => 'save_file_content()',																
+				'file_name' => $file_name,
+				'file_id' => $this->directory_id.'/'.$file_name
+				), 'ok');
+				
 			return $this->get_file_info($this->directory_id.'/'.$file_name);
 			
 		} else {
 		
+			console::log(array(
+				'@filesystem' => 'save_file_content()',																
+				'file_name' => $file_name,
+				'file_id' => $this->directory_id.'/'.$file_name
+				), 'error');
+				
 			return false;
 		}
 	}		
@@ -450,10 +583,20 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		{
 			if(file_put_contents($file_info['id'], $content)) 
 			{
+				console::log(array(
+				'@filesystem' => 'update_file_content()',																
+				'file_id' => $file_info['id']
+				), 'ok');	
+				
 				return true;
 				
 			} else {
 			
+				console::log(array(
+				'@filesystem' => 'update_file_content()',																
+				'file_id' => $file_info['id']
+				), 'error');
+				
 				return false;
 			}
 		}
@@ -504,16 +647,67 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 	public function recurse_copy($src, $dst) 
 	{     
 		 
-		 $dir = opendir($src); 
+		$dir = opendir($src); 
 		 
-    @mkdir($dst, 0755); 
+    if(!is_dir($dst))
+		{
+			if(@mkdir($dst, 0755))
+			{
+				console::log(array(
+				'@filesystem' => 'recurse_copy() -> mkdir()',																
+				'dir_name' => $dst,
+				'chmod' => '0755'
+				), 'ok');	
+				
+			} else {
+				
+				console::log(array(
+				'@filesystem' => 'recurse_copy() -> mkdir()',																
+				'dir_name' => $dst,
+				'chmod' => '0755'
+				), 'error');	
+			
+			}
+		}
+		
     while(false !== ( $file = readdir($dir)) ) { 
-        if (( $file != '.' ) && ( $file != '..' )) { 
+        if(( $file != '.' ) && ( $file != '..' )) { 
             if ( is_dir($src . '/' . $file) ) { 
-                $this->recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+                if($this->recurse_copy($src . '/' . $file,$dst . '/' . $file))
+								{
+									console::log(array(
+									'@filesystem' => 'recurse_copy() -> recurse_copy()',																
+									'source' => $src . '/' . $file,
+									'destination' => $dst . '/' . $file
+									), 'ok');	
+									
+								} else {
+									
+									console::log(array(
+									'@filesystem' => 'recurse_copy() -> recurse_copy()',																
+									'source' => $src . '/' . $file,
+									'destination' => $dst . '/' . $file
+									), 'error');	
+								}
             } 
             else { 
-                copy($src . '/' . $file,$dst . '/' . $file); 
+						
+                if(copy($src . '/' . $file,$dst . '/' . $file))
+								{	
+									console::log(array(
+									'@filesystem' => 'recurse_copy() -> copy()',																
+									'source' => $src . '/' . $file,
+									'destination' => $dst . '/' . $file
+									), 'ok');	
+								
+								} else {
+									
+									console::log(array(
+									'@filesystem' => 'recurse_copy() -> copy()',																
+									'source' => $src . '/' . $file,
+									'destination' => $dst . '/' . $file
+									), 'error');	
+								}
             } 
         } 
     } 
@@ -548,21 +742,74 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 						{						
 							if(copy($id_file, $to_dir_id.'/'.$basename))
 							{ 				
+								console::log(array(
+								'@filesystem' => 'clipboard_paste()',
+								'fs' => 'local_files',							
+								'mode' => 'copy',
+								'copy_from' => $id_file,
+								'copy_to' => $to_dir_id.'/'.$basename
+								), 'ok');
+								
 								$clipboard->reset_clipboard();							
 								return true;
 								
 							} else {  
 							
-								$clipboard->reset_clipboard();	
-								return false; 
+								console::log(array(
+								'@filesystem' => 'clipboard_paste()',
+								'fs' => 'local_files',							
+								'mode' => 'copy',
+								'copy_from' => $id_file,
+								'copy_to' => $to_dir_id.'/'.$basename
+								), 'error');
+								
+								$clipboard->reset_clipboard();									
 							} 	
 						
 						} else {
 							
 							$to_dir = $to_dir_id.'/'.$basename;
-							mkdir($to_dir, 0755);
+							
+							if(@mkdir($to_dir, 0755))
+							{
+								console::log(array(
+								'@filesystem' => 'clipboard_paste() -> mkdir()',																
+								'dir_name' => $to_dir,
+								'chmod' => '0755'
+								), 'ok');
+								
+							} else {
+								
+								console::log(array(
+								'@filesystem' => 'clipboard_paste() -> mkdir()',																
+								'dir_name' => $to_dir,
+								'chmod' => '0755'
+								), 'error');
+							}
+							
 							$clipboard->reset_clipboard();					
-							if($this->recurse_copy($id_file, $to_dir)) return true;
+							if($this->recurse_copy($id_file, $to_dir)) 
+							{
+								console::log(array(
+								'@filesystem' => 'clipboard_paste() -> recurse_copy()',
+								'fs' => 'local_files',							
+								'mode' => 'copy',								
+								'copy_from' => $id_file,
+								'copy_to_dir' => $to_dir
+								), 'ok');
+								
+								return true;
+								
+							} else {
+								
+								console::log(array(
+								'@filesystem' => 'clipboard_paste() -> recurse_copy()',
+								'fs' => 'local_files',							
+								'mode' => 'copy',								
+								'copy_from' => $id_file,
+								'copy_to_dir' => $to_dir
+								), 'error');
+							}
 						}
 						
 					break;
@@ -573,13 +820,28 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 						$basename = basename($id_file);												
 						if(rename($id_file, $to_dir_id.'/'.$basename))
 						{ 				
+							console::log(array(
+							'@filesystem' => 'clipboard_paste()',
+							'fs' => 'local_files',							
+							'mode' => 'cut',
+							'rename_from' => $id_file,
+							'rename_to' => $to_dir_id.'/'.$basename
+							), 'ok');
+							
 							$clipboard->reset_clipboard();							
 							return true;
 							
 						} else {  
 						
-							$clipboard->reset_clipboard();	
-							return false; 
+							console::log(array(
+							'@filesystem' => 'clipboard_paste()', 
+							'fs' => 'local_files',		
+							'mode' => 'cut',
+							'rename_from' => $id_file,
+							'rename_to' => $to_dir_id.'/'.$basename
+							), 'error');
+							
+							$clipboard->reset_clipboard();								
 						} 					
 					
 					break;
@@ -597,14 +859,83 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 							{						
 								if(copy($id_file, $to_dir_id.'/'.$file_name))
 								{									
-									return true;				
-								} 
-							
-							} elseif(file_exists(MY_HOME_DIR.'_Clipboard/'.$id_file)) {
+									console::log(array(
+									'@filesystem' => 'clipboard_paste()',
+									'fs' => 'other',							
+									'mode' => 'copy',								
+									'copy_from' => $id_file,
+									'copy_to' => $to_dir_id.'/'.$file_name
+									), 'ok');
 								
-								$to_dir = $to_dir_id.'/'.$file_name;
-								mkdir($to_dir, 0755);							
-								if($this->recurse_copy($id_file, $to_dir)) return true;
+									return true;	
+									
+								} else {
+									
+									console::log(array(
+									'@filesystem' => 'clipboard_paste()',
+									'fs' => 'other',							
+									'mode' => 'copy',								
+									'copy_from' => $id_file,
+									'copy_to' => $to_dir_id.'/'.$file_name
+									), 'ok');
+								
+								}
+							
+							} else {
+								
+								if(file_exists(MY_HOME_DIR.'_Clipboard/'.$id_file))
+								{
+									$to_dir = $to_dir_id.'/'.$file_name;
+									
+									if(@mkdir($to_dir, 0755))
+									{
+										console::log(array(
+										'@filesystem' => 'clipboard_paste() -> mkdir()',																
+										'dir_name' => $to_dir,
+										'chmod' => '0755'
+										), 'ok');
+										
+									} else {
+										
+										console::log(array(
+										'@filesystem' => 'clipboard_paste() -> mkdir()',																
+										'dir_name' => $to_dir,
+										'chmod' => '0755'
+										), 'error');
+									}
+									
+									if($this->recurse_copy($id_file, $to_dir)) 
+									{
+										console::log(array(
+										'@filesystem' => 'clipboard_paste() -> recurse_copy()',
+										'fs' => 'other',							
+										'mode' => 'copy',								
+										'copy_from' => $id_file,
+										'copy_to_dir' => $to_dir
+										), 'ok');
+										
+										return true;
+										
+									} else {
+									
+										console::log(array(
+										'@filesystem' => 'clipboard_paste() -> recurse_copy()',
+										'fs' => 'other',							
+										'mode' => 'copy',								
+										'copy_from' => $id_file,
+										'copy_to_dir' => $to_dir
+										), 'error');									
+									}
+									
+								} else {
+									
+									console::log(array(
+										'@filesystem' => 'clipboard_paste() -> recurse_copy()',
+										'fs' => 'other',						
+										'mode' => 'copy',								
+										'@file_not_exists' => MY_HOME_DIR.'_Clipboard/'.$id_file
+										), 'error');		
+								}
 							}
 						
 						
@@ -616,12 +947,50 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 						 
 						// unlink ftp add
 						if(ftp_get($ftp_connect->get_conn_id(), $to_dir_id.'/'.$id_file, $id_file, FTP_BINARY))
-						{ 
-								if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
-								{
-									$clipboard->reset_clipboard();						
-									return true;
-								}
+						{ 								
+							console::log(array(
+									'@filesystem' => 'clipboard_paste() -> ftp_get()',
+									'fs' => 'other',	
+									'ftp_connect_id' => $clipboard->get_file_connect_id(),
+									'mode' => 'cut',								
+									'ftp_from' => $id_file,
+									'ftp_to' => $to_dir_id.'/'.$id_file
+							), 'ok');
+							
+							if(ftp_delete($ftp_connect->get_conn_id(), $id_file))
+							{
+								console::log(array(
+									'@filesystem' => 'clipboard_paste() -> ftp_delete()',
+									'fs' => 'other',	
+									'ftp_connect_id' => $clipboard->get_file_connect_id(),
+									'mode' => 'cut',								
+									'ftp_delete_file' => $id_file									
+								), 'ok');
+							
+								$clipboard->reset_clipboard();						
+								return true;
+								
+							} else {
+								
+								console::log(array(
+									'@filesystem' => 'clipboard_paste() -> ftp_delete()',
+									'fs' => 'other',	
+									'ftp_connect_id' => $clipboard->get_file_connect_id(),
+									'mode' => 'cut',								
+									'ftp_delete_file' => $id_file									
+								), 'error');
+							}
+							
+						 } else {
+							
+								console::log(array(
+										'@filesystem' => 'clipboard_paste() -> ftp_get()',
+										'fs' => 'other',	
+										'ftp_connect_id' => $clipboard->get_file_connect_id(),
+										'mode' => 'cut',								
+										'ftp_from' => $id_file,
+										'ftp_to' => $to_dir_id.'/'.$id_file
+								), 'error');						 
 						 }
 						 
 					break;	
@@ -644,7 +1013,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$clipboard->set_mode('copy');
 		$clipboard->set_name(basename(param('action_param')));
 		$clipboard->set_server(false);
-		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		if($clipboard->add_clipboard(param('action_param'), param('action_param2'), null)) return true;	
 	}
 		 
 /*
@@ -659,7 +1028,8 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$clipboard->set_server(true);
 		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);			
 		
-		$basename = basename(param('action_param'));			
+		$basename = basename(param('action_param'));
+		$id_file = param('action_param');		
 		$to_dir_id = MY_HOME_DIR.'_Clipboard/';
 		
 		if(!is_dir($id_file))
@@ -689,7 +1059,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		$clipboard->set_source_win(WIN_ID);
 		$clipboard->set_name(basename(param('action_param')));
 		$clipboard->set_server(false);
-		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		if($clipboard->add_clipboard(param('action_param'), param('action_param2'), null)) return true;	
 	}
 		 
 /*
@@ -697,28 +1067,42 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 */
 
 
-public function addDirectoryToZip($zip, $dir, $base)
-{
-    $newFolder = str_replace($base, '', $dir);
-    $zip->addEmptyDir($newFolder);
-    foreach(glob($dir . '/*') as $file)
-    {
-        if(is_dir($file))
-        {
-            $zip = $this->addDirectoryToZip($zip, $file, $base);
-        }
-        else
-        {
-            $newFile = str_replace($base, '', $file);
+	public function addDirectoryToZip($zip, $dir, $base)
+	{
+		$newFolder = str_replace($base, '', $dir);
+		if($zip->addEmptyDir($newFolder))
+		{
+			console::log(array('@filesystem' => 'addDirectoryToZip()', 'addEmptyDir' => $newFolder), 'ok');
+			
+		} else {
+		
+			console::log(array('@filesystem' => 'addDirectoryToZip()', 'addEmptyDir' => $newFolder), 'error');
+		}
+		
+		foreach(glob($dir . '/*') as $file)
+		{
+				if(is_dir($file))
+				{
+						$zip = $this->addDirectoryToZip($zip, $file, $base);
+						
+				} else {
+				
+						$newFile = str_replace($base, '', $file);
 						if($newFile != 'index.php')
 						{
-							$zip->addFile($file, $newFile);
-							console::log('[FS] LocalFiles.pack_files [add_file] ("'.$newFile.'"))', 'ok');
+							if($zip->addFile($file, $newFile))
+							{
+								console::log(array('@filesystem' => 'addDirectoryToZip()', 'addFile' => $newFile), 'ok');
+								
+							} else {
+								
+								console::log(array('@filesystem' => 'addDirectoryToZip()', 'addFile' => $newFile), 'error');
+							}							
 						}						
-        }
-    }
-    return $zip;
-}
+				}
+		}
+		return $zip;
+	}
 
 
 
@@ -738,24 +1122,24 @@ public function addDirectoryToZip($zip, $dir, $base)
 					if($download == true)
 					{
 						$archive_name = MY_HOME_DIR.'/_Temp/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
-						console::log('[FS] LocalFiles.pack_files [download=true]');
+						console::log(array('@filesystem' => 'pack_files()', 'download' => 'true'));						
 						
 					} else {
 					
 						global $my_app;
 						$save_to_dir = $my_app->get_param('dir_id');
 						$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
-						console::log('[FS] LocalFiles.pack_files [download=false]');
+						console::log(array('@filesystem' => 'pack_files()', 'download' => 'false'));
 					}
 					
 				} else {
 				
 					$archive_name = $save_to_dir.'/'.txt('zip_archive_prefix').'-'.$zip_date.'.zip';
-					console::log('[FS] LocalFiles.pack_files [custom_dir] ("'.$save_to_dir.'")');
+					console::log(array('@filesystem' => 'pack_files()', 'saveTo' => $save_to_dir));					
 				}
 				
 				$zip->open($archive_name,  ZipArchive::CREATE);
-				console::log('[FS] LocalFiles.pack_files [new_archive] ("'.$archive_name.'"))', 'ok');
+				console::log(array('@filesystem' => 'pack_files()', 'zip' => 'open(CREATE)', 'archive' => $archive_name), 'ok');
 				
 				for($i=0;$i<$c;$i++)
 				{
@@ -763,28 +1147,55 @@ public function addDirectoryToZip($zip, $dir, $base)
 					{					
 						if(basename(base64_decode($filesArray[$i])) != 'index.php')
 						{
-							$zip->addFile(base64_decode($filesArray[$i]), basename(base64_decode($filesArray[$i])));
-							console::log('[FS] LocalFiles.pack_files [add_file] ("'.basename(base64_decode($filesArray[$i])).'"))', 'ok');
+							if($zip->addFile(base64_decode($filesArray[$i]), basename(base64_decode($filesArray[$i]))))
+							{
+								console::log(array('@filesystem' => 'pack_files()', 'addFile' => basename(base64_decode($filesArray[$i]))), 'ok'); 			
+							} else {
+							
+								console::log(array('@filesystem' => 'pack_files()', 'addFile' => basename(base64_decode($filesArray[$i]))), 'error');
+							}
 						}
 						
 					} else {
 					
-						$zip = $this->addDirectoryToZip($zip, base64_decode($filesArray[$i]), dirname(base64_decode($filesArray[$i])).'/');						
+						$dirname = base64_decode($filesArray[$i]);
+						$basedir = dirname(base64_decode($filesArray[$i])).'/';
+						$zip = $this->addDirectoryToZip($zip, $dirname, $basedir);
+						console::log(array('@filesystem' => 'pack_files()', 'addDirectory' => $dirname, 'baseDirectory' => $basedir));						
 					}					
 				}			
 				
 				$zip->close();
-				console::log('[FS] LocalFiles.pack_files [new_archive] (close))', 'ok');
+				console::log(array('@filesystem' => 'pack_files()', 'zip' => 'close()'), 'ok');
 				if($download == true)
-				{
-					console::log('[FS] LocalFiles.pack_files [start_download]');
-					echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $archive_name))).'</script>';
+				{					
+					if(file_exists($archive_name))
+					{
+						console::log(array('@filesystem' => 'pack_files()', '@download' => $archive_name), 'ok');
+						echo '<script>'.browser_url(PHPOS_WEBROOT_URL.'phpos_downloader.php?hash='.md5(PHPOS_KEY).'&download_type='.base64_encode('local_file').'&file='.base64_encode(str_replace(PHPOS_WEBROOT_DIR, '', $archive_name))).'</script>';
+						
+						return true;
+						
+					} else {
+						
+						console::log(array('@filesystem' => 'pack_files()', '@download' => $archive_name), 'error');
+					}
+				}	else {
+					
+					if(file_exists($archive_name))
+					{
+						console::log(array('@filesystem' => 'pack_files()', '@archive_saved' => $archive_name), 'ok');						
+						return true;
+						
+					} else {
+						
+						console::log(array('@filesystem' => 'pack_files()', '@archive_saved' => $archive_name), 'error');
+					}					
 				}
-				return true;
 				
 			} else {
 				
-				console::log('[FS] LocalFiles.pack_files [ZipPacking extensions not exists in server])', 'error');
+				console::log(array('@filesystem' => 'pack_files()', '@error' => 'zip extension not installed'), 'error');				
 			}			
 		}	
 	}

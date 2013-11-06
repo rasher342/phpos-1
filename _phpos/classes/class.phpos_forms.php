@@ -922,7 +922,11 @@ class phpos_forms {
 		$a = array();
 		for($i=0; $i<$c; $i++)
 		{
-			$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";		
+			//$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";	
+			//$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";	
+			//$a[] = "alert('".$i."');";	
+		$a[] = "phpos.windowRefresh('".$this->jquery_reload[$i]."','action_id:0');";					
+			//$a[] = "$('#".$this->jquery_reload[$i]."').window('refresh')";
 		}
 		
 		$j = implode(", ", $a);
@@ -1036,7 +1040,7 @@ class phpos_forms {
 		success:function(data){					
 				//".helper_reload()."
 				".$onsuccess."
-				".$this->render_jquery_reload()."
+				".$this->render_jquery_reload()."				
 					return false; 				
 		}				
 		});

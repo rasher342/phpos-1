@@ -78,7 +78,7 @@ if(file_exists(PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.ph
 		define('PHPOS_HAVE_ACCESS', $app_name);
 		$layout = new phpos_layout;				
 		// NO AJAX:	
-			if(!$_GET['ajax_include'])
+			if(!isset($_GET['ajax_include']))
 			{	
 				include PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.php';
 				

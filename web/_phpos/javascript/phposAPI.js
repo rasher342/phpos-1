@@ -1,6 +1,6 @@
 	/* ***************************
 		 phpos API jQUery
-		 v.0.0.2		
+		 v.1.3.3		
 		 ***************************
 	*/ 
 		 
@@ -59,6 +59,15 @@
 			this.managerWallpaper('action=update&wallpaper_type='+wallpaper_type+'&wallpaper='+encodeURIComponent(wallpaper_name));	
 			$.wallpaper("update", wallpaper_url + wallpaper_name);
 		 };		 
+			 
+/*
+**************************
+*/
+ 	
+	 	 
+		 this.clearConsole = function() {			
+			this.managerWindows('action=clear_console');
+		 };	
 		 
 /*
 **************************
@@ -168,6 +177,7 @@
 // Window update		 
 		 this.windowUpdate = function(id) {
 		 		  
+			//alert('aaa');
 			var json_parameters = this.windowGetJSONparams(id);
 			this.managerWindows('action=update&id=' + $(id).window('options').id + '&parameters_parsed=' + json_parameters);		 
 		 };
@@ -232,7 +242,8 @@
 // Window refresh		 
 		 this.windowRefresh = function(id, app_json_params) {
 		 
-		  if(app_json_params)
+		  
+			if(app_json_params)
 			{				
 				this.windowLoader(id, 'id=' + id + '&app_params=' + app_json_params);					
 			} else {				
@@ -886,6 +897,43 @@
 				}
 			};
 	};	
+	
+	this.console_clear = function() {
+			
+			$('#phpos_console_data').html('');
+			this.clearConsole();
+	};
+	
+	this.console_showhide = function() {
+			
+		var win_width = $(window).width() + 'px';		
+		$('#phpos_console').css('width', win_width);
+		
+		if($('#phpos_console').css('display') == 'none')
+		{
+			$('#phpos_console').css('display', 'block');
+			
+		} else {
+		
+			$('#phpos_console').css('display', 'none');		
+		}		
+	};
+	
+	this.console_minmax = function() {
+			
+			var h = $('#phpos_console').css('height');
+			
+			if(h == '300px')
+			{
+				$('#phpos_console').css('height', '130px');
+				$('#phpos_console_data').css('height', '80px');
+				
+			} else {
+			
+				$('#phpos_console').css('height', '300px');
+				$('#phpos_console_data').css('height', '250px');
+			}			
+	};
 /*
 **************************
 */		

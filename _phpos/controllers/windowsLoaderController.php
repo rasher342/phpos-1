@@ -167,8 +167,13 @@
 	
 	define("WIN_TYPE", $apiWindow->getParam('wintype'));
 	
-	console::log();
-	console::log('window:init(WIN_ID:"'.WIN_ID.'" ['.WIN_TYPE.'], APP_ID: "'.APP_ID.'", APP_ACTION: "'.APP_ACTION.'")');
+	console::log();	
+	console::log(array(
+					'WIN_ID' => WIN_ID, 
+					'APP_ID' => APP_ID, 
+					'APP_ACTION' => APP_ACTION, 
+					'wintype' => $apiWindow->getParam('wintype')					
+					));	
 	
 	 
 /*
@@ -243,8 +248,9 @@
 **************************
 */
  	
-
-	if(!$_GET['ajax_include'] &&  !$_POST['ajax_include'])
+	$console_ajax = null;
+	
+	if(!isset($_GET['ajax_file']) &&  !isset($_POST['ajax_file']))
 	{	
 		if(file_exists(PHPOS_DIR.'apps/'.$app_name.'/resources/window_icon.png'))
 		{
@@ -258,15 +264,17 @@
 			echo '<style>
 			.phpos_window_icon'.$apiWindow->getID().' { background:url("'.PHPOS_WEBROOT_URL.'_phpos/themes/default/windows/window_default_icon.png") no-repeat center center;
 			}	</style>';	
-		}
-	}
+		}	
+		
+	} 
 	
+	if(!isset($ajax_file)) console::show();
 	echo '<script>
 	$(function() {
 		phpos.waiting_hide_execute();
 	});
 	</script>';
 	
-	console::show();
+	
 
 ?>

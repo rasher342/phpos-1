@@ -48,27 +48,7 @@ select {
 	font-size:12px;
 }	
 
-/* ====== DEBUGGER ====== */
-#phpos_console {
-	z-index:9999999; 
-	background-color: #fff; 
-	background:solid;
-	position:absolute;
-	left:0px;
-	border-top:2px solid #000;
-	border-right:2px solid #000;
-	bottom:70px;
-	width:1100px;
-	height:200px;
-	
-}
-#phpos_console_data {
-	padding:10px;
-	font-size:11px;
-	height:150px;
-	overflow:auto;
 
-}
 .api_debug_title {
 	font-weight:bold;
 	color: green;
@@ -1731,4 +1711,91 @@ pre{
 	right:10px;
 	height:40px;
 	width:400px;
+}
+
+/* ====== CONSOLE ====== */
+#phpos_console {
+	z-index:9999999; 
+	background-color: #000; 
+	background:solid;
+	position:absolute;
+	left:0px;
+	border-top:2px solid #fff;
+	border-right:2px solid #fff;
+	bottom:70px;
+	width:1200px;
+	height:130px;
+	
+}
+#phpos_console_data {
+	padding:10px;
+	font-size:11px;
+	height:80px;
+	overflow:auto;
+	color: #fff;
+
+}
+.console_block {
+	font-weight: bold;
+	color:#5b5b5b;
+	padding-left:90px;
+}
+.console_time {
+	font-weight: bold;
+	color:#5b5b5b;
+}
+.console_winid {
+	color:#c07500;
+	font-weight: bold;
+}
+.console_msg {
+
+}
+.console_status_ok {
+	color:#4ce855;
+	font-weight: normal;
+}
+.console_status_err {
+	color:#e7160d;
+	font-weight: normal;
+}
+.console_appname {	
+	font-weight: bold;
+	color:#e64deb;
+}
+.console_appaction {
+	color: #97119b;	
+	font-weight: bold;
+}
+.console_ajax {	
+	font-weight: bold;
+	color:#c3c247;
+}
+.console_body {
+
+}
+.console_key {
+	color: #757575;
+	font-weight: bold;
+}
+.console_val {
+	font-weight: normal;
+	color: #fff;
+}
+.console_arrows {
+	color: #343434;
+}
+.console_line {
+	margin-top:5px;
+	margin-bottom:20px;	
+	width:1050px;
+	height:3px;
+	
+}
+.console_separator {
+	height:3px;
+	width:1050px;
+	margin-top:5px;
+	margin-bottom:5px;	
+	border-bottom: 1px dotted #222222;
 }

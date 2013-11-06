@@ -77,14 +77,7 @@ $(document).ready(function() {
 	
 	$('#phpos_tray_icon_console').click(function()
 	{
-		if($('#phpos_console').css('display') == 'none')
-		{
-			$('#phpos_console').css('display', 'block');
-			
-		} else {
-		
-			$('#phpos_console').css('display', 'none');		
-		}
+		phpos.console_showhide();
 	});
 	
 });
