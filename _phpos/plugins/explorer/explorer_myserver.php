@@ -131,4 +131,5 @@ if(APP_ACTION == 'index' && $my_app->get_param('fs') == 'db_mysql') $tmp_item = 
 	</ul>';
 
 unset($items, $tmp_header, $tmp_items, $tmp_item, $root_id, $global_fs, $tree_explorer, $filesystem_class, $my_fs, $tmp_title, $tree_local_files, $tree_db_mysql, $row, $treeFS, $dir_id, $closed);	
+
 ?>

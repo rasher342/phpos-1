@@ -925,8 +925,8 @@ class phpos_forms {
 			//$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";	
 			//$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";	
 			//$a[] = "alert('".$i."');";	
-		$a[] = "phpos.windowRefresh('".$this->jquery_reload[$i]."','action_id:0');";					
-			//$a[] = "$('#".$this->jquery_reload[$i]."').window('refresh')";
+		//$a[] = "phpos.windowRefresh('".$this->jquery_reload[$i]."','action_id:0');";					
+			$a[] = "$('#".$this->jquery_reload[$i]."').panel('refresh');";
 		}
 		
 		$j = implode(", ", $a);

@@ -1,6 +1,6 @@
 	/* ***************************
 		 phpos API jQUery
-		 v.1.3.3		
+		 v.1.3.5		
 		 ***************************
 	*/ 
 		 
@@ -251,6 +251,24 @@
 			} else {				
 				this.windowLoader(id, 'id=' + id);
 			};			 
+		 };
+		 			 
+/*
+**************************
+*/
+		 // Window refresh		 
+		 this.windowAjax = function(id, app_json_params) {
+		 
+		  
+			if(app_json_params)
+			{				
+				this.windowLoader('phpos_ajax_contener_' + id, 'id=' + id + '&ajax_include=1&ajax_file=&app_params=' + app_json_params);					
+			} else {				
+				this.windowLoader('phpos_ajax_contener_' + id, 'id=' + id + '&ajax_include=1&ajax_file=');
+			};	
+
+			this.waiting_show();		
+			
 		 };
 			 
 /*
@@ -867,13 +885,78 @@
 /*
 **************************
 */	
+	this.applyStatus = function(status, msg) {
+	
+		$('#waiting_info').prop('status_finish', status);	
+		$('#waiting_info').prop('status_msg', msg);	
+	};
+	
+		 		 		 
+/*
+**************************
+*/	
+		
+	this.showStatus = function() {
+	
+		var s = $('#waiting_info').prop('status_finish');	
+		var m = $('#waiting_info').prop('status_msg');	
+		//alert(s);
+		
+		$(document).ready(function() {
+		
+		if(s == 'ok')
+		{
+			jSuccess(
+				m,
+				{
+					autoHide : true, 
+					clickOverlay : false,
+					MinWidth : 300,
+					TimeShown : 4000,
+					ShowTimeEffect : 1000,
+					HideTimeEffect : 600,
+					LongTrip :20,
+					HorizontalPosition : "right",
+					VerticalPosition : "bottom",
+					ShowOverlay : false
+				});
+		}	
+		
+		if(s == 'error')
+		{
+			jSuccess(
+				m,
+				{
+					autoHide : true, 
+					clickOverlay : false,
+					MinWidth : 300,
+					TimeShown : 4000,
+					ShowTimeEffect : 1000,
+					HideTimeEffect : 600,
+					LongTrip :20,
+					HorizontalPosition : "right",
+					VerticalPosition : "bottom",
+					ShowOverlay : false
+				});
+		}	
+		
+		$('#waiting_info').prop('status_finish', '');	
+		$('#waiting_info').prop('status_msg', '');	
+			
+		});
+	};
+
+		 		 		 
+/*
+**************************
+*/
 	this.waiting_show = function(msg) {
 			
 			if(msg == null) msg = window.waiting_str;	
 			
 			window.hide_waiting = 0;			
 			$('#waiting_info').html('<img src="' + PHPOS_WEBROOT_URL + '_phpos/icons/loading.gif" />' + msg);
-			$('#waiting_info').delay(200).show('slow');			
+			$('#waiting_info').delay(20).show('fast');			
 	};	
 		 		 		 		 
 /*
@@ -895,7 +978,8 @@
 				
 				if(status != 'none')
 				{
-					$('#waiting_info').fadeIn('slow').delay(2000).fadeOut('slow');					
+					$('#waiting_info').fadeIn('slow').delay(20).fadeOut('fast');	
+					this.showStatus();
 				}
 			};
 	};	

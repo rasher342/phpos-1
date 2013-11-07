@@ -854,15 +854,15 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 				{
 					case 'copy':					
 						
-							if(!is_dir($id_file))
+							if(!is_dir(MY_HOME_DIR.'_Clipboard/'.$id_file))
 							{						
-								if(copy($id_file, $to_dir_id.'/'.$file_name))
+								if(copy(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir_id.'/'.$file_name))
 								{									
 									console::log(array(
 									'@filesystem' => 'clipboard_paste()',
 									'fs' => 'other',							
 									'mode' => 'copy',								
-									'copy_from' => $id_file,
+									'copy_from' => MY_HOME_DIR.'_Clipboard/'.$id_file,
 									'copy_to' => $to_dir_id.'/'.$file_name
 									), 'ok');
 								
@@ -874,7 +874,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 									'@filesystem' => 'clipboard_paste()',
 									'fs' => 'other',							
 									'mode' => 'copy',								
-									'copy_from' => $id_file,
+									'copy_from' => MY_HOME_DIR.'_Clipboard/'.$id_file,
 									'copy_to' => $to_dir_id.'/'.$file_name
 									), 'ok');
 								
@@ -903,13 +903,13 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 										), 'error');
 									}
 									
-									if($this->recurse_copy($id_file, $to_dir)) 
+									if($this->recurse_copy(MY_HOME_DIR.'_Clipboard/'.$id_file, $to_dir)) 
 									{
 										console::log(array(
 										'@filesystem' => 'clipboard_paste() -> recurse_copy()',
 										'fs' => 'other',							
 										'mode' => 'copy',								
-										'copy_from' => $id_file,
+										'copy_from' => MY_HOME_DIR.'_Clipboard/'.$id_file,
 										'copy_to_dir' => $to_dir
 										), 'ok');
 										
@@ -921,7 +921,7 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 										'@filesystem' => 'clipboard_paste() -> recurse_copy()',
 										'fs' => 'other',							
 										'mode' => 'copy',								
-										'copy_from' => $id_file,
+										'copy_from' => MY_HOME_DIR.'_Clipboard/'.$id_file,
 										'copy_to_dir' => $to_dir
 										), 'error');									
 									}
@@ -1052,9 +1052,11 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 				), 'error');	
 			}
 		
-		} else {
+		} elseif(file_exists($id_file)) {
 			
 			$to_dir = $to_dir_id.'/'.$basename;
+			
+			if(file_exists($to_dir)) @unlink($to_dir);
 			
 			if(@mkdir($to_dir, 0755))
 			{

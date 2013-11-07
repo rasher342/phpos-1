@@ -61,7 +61,7 @@ if($context_fs != 'db_mysql' && !$readonly)
 			$("#phpos_console_data").html(new_data);	
 			phpos.waiting_hide();
 			
-		'.link_action('index', 'hide_upload_status:1').'
+		'.link_action(APP_ACTION, 'hide_upload_status:1').'
 		
 		}
 	

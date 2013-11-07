@@ -1802,3 +1802,7 @@ pre{
 	margin-bottom:5px;	
 	border-bottom: 1px dotted #222222;
 }
+
+.phpos_ajax_contener {
+	display:none;
+}

@@ -67,6 +67,9 @@ if(!$explorerAPI)
 
 ?>
 		
-<?php echo $layout->end('layout'); ?>		
+<?php echo $layout->end('layout'); ?>
+
+
+		
 <?php include MY_APP_DIR.'views/inc.explorer_dropzone_js.php'; ?>
 <?php include MY_APP_DIR.'views/jquery.php'; ?>

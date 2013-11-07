@@ -29,30 +29,15 @@ $(document).ready(function() {
 
 	<?php echo $explorer->renderJs(); ?>
 	
-/*
-**************************
-*/
 
-
-// == Create new folder
-	function explorer_newfolder()
-	{
-		$.messager.prompt('Create new dir', 'Enter name of dir', function(dirname) {				
-			if(dirname) {
-				phpos.windowRefresh('<?php echo WIN_ID;?>', 'action_id:new_dir,action_param:'+dirname+',no_increment:1');
-			};
-		});
-	}
-		
-		
 
 /*
 **************************
 */
 
 	function explorer_link_to_folder(dir_id, dir_title)
-	{
-		phpos.windowRefresh('<?php echo WIN_ID;?>', 'action_id:explorer_link_to_folder,action_param:'+dir_id+',action_param2:'+dir_title+',no_increment:1');		
+	{	
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:explorer_link_to_folder,action_param:'+dir_id+',action_param2:'+dir_title+',no_increment:1');		
 	}
 		
 /*
@@ -63,7 +48,8 @@ $(document).ready(function() {
 	{	
 		$.messager.confirm('<?php echo txt('delete');?>', '<?php echo txt('delete_confirm');?>: '+file_name+ '?', function(r){
 			if (r){
-				phpos.windowRefresh(win_id, 'action_id:delete,action_param:'+file_id+',no_increment:1');	
+			
+				phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:delete,action_param:'+file_id+',no_increment:1');
 			}
 		});	
 	}
@@ -77,7 +63,8 @@ $(document).ready(function() {
 	{	
 		$.messager.confirm('<?php echo txt('delete');?>', '<?php echo txt('delete_confirm');?>?', function(r){
 			if (r){
-				phpos.windowRefresh(win_id, 'action_id:delete_list,action_param:'+file_ids+',no_increment:1');	
+		
+				phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:delete_list,action_param:'+file_ids+',no_increment:1');		
 			}
 		});	
 	}
@@ -88,9 +75,7 @@ $(document).ready(function() {
 
 	function explorer_cut(win_id, file_id, file_name, file_type)
 	{	
-		//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
-		//phpos.windowRefresh('1', '');	
-		phpos.windowRefresh(win_id, 'action_id:cut,action_param:'+file_id+',action_param2:'+file_type);		
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:cut,action_param:'+file_id+',action_param2:'+file_type);			
 	}
 		
 /*
@@ -98,9 +83,7 @@ $(document).ready(function() {
 */
 	function explorer_cut_multiple(win_id, file_ids, file_name, file_type)
 	{	
-			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
-			//phpos.windowRefresh('1', '');	
-			phpos.windowRefresh(win_id, 'action_id:cut_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+			phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:cut_multiple,action_param:'+file_ids+',action_param2:'+file_type);				
 	}
 	
 		
@@ -109,9 +92,7 @@ $(document).ready(function() {
 */
 	function explorer_pack_multiple(win_id, file_ids, file_name, file_type)
 	{	
-			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
-			//phpos.windowRefresh('1', '');	
-			phpos.windowRefresh(win_id, 'action_id:pack_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+			phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:pack_multiple,action_param:'+file_ids+',action_param2:'+file_type);			
 	}	
 	
 			
@@ -120,17 +101,15 @@ $(document).ready(function() {
 */
 	function explorer_download_multiple(win_id, file_ids, file_name, file_type)
 	{	
-			//alert('id:'+file_id+', filename:'+file_name+', type:'+file_type);	
-			//phpos.windowRefresh('1', '');	
-			phpos.windowRefresh(win_id, 'action_id:download_multiple,action_param:'+file_ids+',action_param2:'+file_type);		
+	  	phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:download_multiple,action_param:'+file_ids+',action_param2:'+file_type);	
 	}
 /*
 **************************
 */
 
 	function explorer_copy(win_id, file_id, file_name, file_type)
-	{			
-		phpos.windowRefresh(win_id, 'action_id:copy,action_param:'+file_id+',action_param2:'+file_type);		
+	{		
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:copy,action_param:'+file_id+',action_param2:'+file_type);		
 	}
 		
 /*
@@ -139,7 +118,7 @@ $(document).ready(function() {
 
 	function explorer_copy_multiple(win_id, file_ids)
 	{			
-			phpos.windowRefresh(win_id, 'action_id:copy_multiple,action_param:'+file_ids);		
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:copy_multiple,action_param:'+file_ids);				
 	}
 		
 /*
@@ -148,7 +127,8 @@ $(document).ready(function() {
 
 	function explorer_copy_server(win_id, file_id, file_name, file_type)
 	{			
-		phpos.windowRefresh(win_id, 'action_id:copy_server,action_param:'+file_id+',action_param2:'+file_type);		
+		//phpos.windowRefresh(win_id, 'action_id:copy_server,action_param:'+file_id+',action_param2:'+file_type);		
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:copy_server,action_param:'+file_id+',action_param2:'+file_type);	
 	}
 			
 /*
@@ -164,7 +144,8 @@ $(document).ready(function() {
 		{
 			loc = ',desktop_location:desktop';
 		}		
-		phpos.windowRefresh(win_id, 'action_id:paste,action_param:'+to_id+loc);	
+	
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:paste,action_param:'+to_id+loc);	
 	}
 		
 /*
@@ -180,8 +161,10 @@ $(document).ready(function() {
 		{
 			loc = ',desktop_location:desktop';
 		}		
-		phpos.windowRefresh(source_win, 'a:aaa');	
-		phpos.windowRefresh(win_id, 'action_id:paste,action_param:'+to_id+loc);	
+		//phpos.windowRefresh(source_win, 'a:aaa');	
+		
+		phpos.windowAjax('<?php echo WIN_ID;?>', 'action_id:paste,action_param:'+to_id+loc);	
+		//phpos.windowRefresh(win_id, 'action_id:paste,action_param:'+to_id+loc);	
 	}
 	
 		
@@ -210,46 +193,7 @@ $(document).ready(function() {
 		 var w = window.open(url2, "_blank");
 		//alert(file_id);
 	}
-		
-/*
-**************************
-*/
 
-
-// == File to clipoard
-	function to_clipboard(FileID, FileTitle, mode)
-	{		
-		if(mode == 'copy')
-		{
-			phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_AddToClipboardFileID_ID:'+FileID+',action_AddToClipboardFileID_Title:'+FileTitle+',no_increment:1,action_AddToClipboardFileID_mode:copy');
-		}	else {
-			phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_AddToClipboardFileID_ID:'+FileID+',action_AddToClipboardFileID_Title:'+FileTitle+',no_increment:1,action_AddToClipboardFileID_mode:cut');
-		}
-	}
-		
-/*
-**************************
-*/
-
-
-// == Paste from clipoard
-	function paste_from_clipboard(clipitem_id, to_dir_id)
-	{				
-		phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_PasteFromClipboardItemID_ID:'+clipitem_id+',action_PasteFromClipboardItemID_ToDirID:'+to_dir_id+',no_increment:1');			
-	}
-		
-/*
-**************************
-*/
-
-
-// == Delete from clipoard
-	function delete_from_clipboard(clipitem_id)
-	{				
-		phpos.windowRefresh('<?php echo $apiWindow->getID();?>', 'action_deleteClipboardEntryID_ID:'+clipitem_id+',no_increment:1');			
-	}
-	
-	
 /*
 **************************
 */

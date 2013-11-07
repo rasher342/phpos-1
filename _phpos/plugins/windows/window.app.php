@@ -76,9 +76,10 @@ if(file_exists(PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.ph
 	if($my_app->user_have_access())
 	{
 		define('PHPOS_HAVE_ACCESS', $app_name);
-		$layout = new phpos_layout;				
+		$layout = new phpos_layout;	
+		
 		// NO AJAX:	
-			if(!isset($_GET['ajax_include']))
+			if(!defined('IN_AJAX'))
 			{	
 				include PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.php';
 				
@@ -105,16 +106,13 @@ if(file_exists(PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.ph
 					require PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.php';
 					$ajax_file = PHPOS_APPS_DIR.$app_name.'/views/'.strip_tags($_GET['ajax_file']);
 					
-					if(file_exists($ajax_file))
+					if(!empty($ajax_file) && file_exists($ajax_file))
 					{
 						$layout = new phpos_layout;
 						$ajax_file = PHPOS_APPS_DIR.$app_name.'/views/'.$_GET['ajax_file'];
 						require $ajax_file;
 						
-					}	else {	
-					
-						helper::alert('error', 'AJAX file not found: '.$ajax_file);
-					}		
+					}	
 			}
 	// else no access:		
 	} else {

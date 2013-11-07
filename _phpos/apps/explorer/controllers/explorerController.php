@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.28
+	File version: 1.3.5, 2013.11.07
  
 **********************************
 */
@@ -235,107 +235,108 @@ if(!defined('PHPOS'))	die();
 */		
 	
 	// Get left tree	
-
-	include MY_APP_DIR.'controllers/explorerControllerTree.php';
-	
-		
-	include MY_APP_DIR.'controllers/explorerInitialize.php';
-
-				
-/*.............................................. */		
-
-	// Include server plugin
-	
-	if(file_exists(MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php'))
+	if(!defined('IN_AJAX'))
 	{
-		include MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php';
-	}
-	
-/*
-**************************
-*/ 	
-	
-	// Get address bars, nav bar and footer
-		
-	include MY_APP_DIR.'controllers/explorerControllerNavBar.php';
-	
-
-		
-
-/*
-***************************
-========== ICONS =========
-***************************
-*/	
-	function explorer_sort_icons($a, $b) 
-	{
-		global $my_app;
-		$sortby = $my_app->get_param('sort_by');			
-		if ($a[$sortby] == $b[$sortby]) return 0;
-		if($my_app->get_param('sort_order') == 'asc')
-		{
-			return ($a[$sortby] < $b[$sortby]) ? -1 : 1;
-		} else {
-			return ($a[$sortby] > $b[$sortby]) ? -1 : 1;
-		}
+		include MY_APP_DIR.'controllers/explorerControllerTree.php';		
 	}	
-		
-		
-		if((APP_ACTION == 'index' || APP_ACTION == 'desktop') && !$_GET['ajax_include']) 
-		{
-			switch($my_app->get_param('view_type'))
+	
+	include MY_APP_DIR.'controllers/explorerInitialize.php';
+	
+	if(!defined('IN_AJAX'))
+	{				
+		/*.............................................. */		
+
+			// Include server plugin
+			
+			if(file_exists(MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php'))
 			{
-				case 'icons':
-					include MY_APP_DIR.'controllers/explorerControllerIcons.php';
-				break;
+				include MY_APP_DIR.'controllers/explorer_'.APP_ACTION.'.php';
+			}
+			
+		/*
+		**************************
+		*/ 	
+			
+			// Get address bars, nav bar and footer
 				
-				case 'list':
-					include MY_APP_DIR.'controllers/explorerControllerList.php';
-				break;
-				
-				case 'thumbs':
-					include MY_APP_DIR.'controllers/explorerControllerThumbnails.php';
-				break;
+			include MY_APP_DIR.'controllers/explorerControllerNavBar.php';
+			
+
+			
+
+		/*
+		***************************
+		========== ICONS =========
+		***************************
+		*/	
+			function explorer_sort_icons($a, $b) 
+			{
+				global $my_app;
+				$sortby = $my_app->get_param('sort_by');			
+				if ($a[$sortby] == $b[$sortby]) return 0;
+				if($my_app->get_param('sort_order') == 'asc')
+				{
+					return ($a[$sortby] < $b[$sortby]) ? -1 : 1;
+				} else {
+					return ($a[$sortby] > $b[$sortby]) ? -1 : 1;
+				}
 			}	
-			
-			
-		} else {
+				
+				
+				if((APP_ACTION == 'index' || APP_ACTION == 'desktop') && !$_GET['ajax_include']) 
+				{
+					switch($my_app->get_param('view_type'))
+					{
+						case 'icons':
+							include MY_APP_DIR.'controllers/explorerControllerIcons.php';
+						break;
+						
+						case 'list':
+							include MY_APP_DIR.'controllers/explorerControllerList.php';
+						break;
+						
+						case 'thumbs':
+							include MY_APP_DIR.'controllers/explorerControllerThumbnails.php';
+						break;
+					}	
+					
+					
+				} else {
 
-			$js = "$('.phpos_server_icon').addClass('phpos_server_icon_mouseleave');
-			
-			$('.phpos_server_icon').mouseleave(function() {	    
-				$(this).removeClass('phpos_server_icon_mouseenter').removeClass('phpos_server_icon_mouseclick').addClass('phpos_server_icon_mouseleave');					
-			});			
-			
-			// == When mouseover on icon
-			$('.phpos_server_icon').mouseenter(function() {	
-				$(this).removeClass('phpos_server_icon_mouseleave').addClass('phpos_server_icon_mouseenter');				
-			});
-			
-			$('.phpos_server_icon').click(function() {	
-				$(this).addClass('phpos_server_icon_mouseclick');				
-			});
-			";		
+					$js = "$('.phpos_server_icon').addClass('phpos_server_icon_mouseleave');
+					
+					$('.phpos_server_icon').mouseleave(function() {	    
+						$(this).removeClass('phpos_server_icon_mouseenter').removeClass('phpos_server_icon_mouseclick').addClass('phpos_server_icon_mouseleave');					
+					});			
+					
+					// == When mouseover on icon
+					$('.phpos_server_icon').mouseenter(function() {	
+						$(this).removeClass('phpos_server_icon_mouseleave').addClass('phpos_server_icon_mouseenter');				
+					});
+					
+					$('.phpos_server_icon').click(function() {	
+						$(this).addClass('phpos_server_icon_mouseclick');				
+					});
+					";		
 		}
-		 
-/*
-**************************
-*/
- 	
-	//JS:
-	
-	jquery_onready($js);			
-	$my_app->jquery_onready(msg::showMessages());
 				 
-/*
-**************************
-*/
+		/*
+		**************************
+		*/			
+			
+			//JS:			
+			jquery_onready($js);			
+			$my_app->jquery_onready(msg::showMessages());
+						 
+		/*
+		**************************
+		*/
 
-	include MY_APP_DIR.'controllers/explorerControllerRight.php';		
-	
-	// Get menu:
-	
-	$my_app->using('menu');
-	$html['menu'] = $my_app->window->get_layout_menu_html();		
-
+			include MY_APP_DIR.'controllers/explorerControllerRight.php';		
+			
+			// Get menu:			
+			$my_app->using('menu');
+			$html['menu'] = $my_app->window->get_layout_menu_html();	
+			
+}	// !if not ajax
 ?>

@@ -140,7 +140,8 @@
 		$_GET['id'] = filter::num($_POST['id']);
 	}
 
-	
+	if(isset($_GET['ajax_file']) || isset($_POST['ajax_file']) || isset($_GET['ajax_include']) || isset($_POST['ajax_include']))
+		define('IN_AJAX', true);
 	 
 /*
 **************************
@@ -222,42 +223,45 @@
 	  define('MY_HOME_URL', PHPOS_HOME_URL.$my_user->get_home_dir_hash().'/');			
 			
 		define('PHPOS_ACCESS', true);
-		
-		
-		
 		include PHPOS_DIR.'plugins/windows/window.'.$apiWindow->getParam('wintype').'.php';	
-		echo $my_app->render_javascript_jquery();
+		
+		if(!defined('IN_AJAX'))
+		{				
+			echo $my_app->render_javascript_jquery();
+		}
 		
 		if(!$_POST['phpos_keep_result'])
 		{
 			$_SESSION['RESULT'] = NULL;			
 			$_SESSION['RESULT_STATUS'] = NULL;			
-		}		
-			
-			
+		}					
 		
 	} else {
 	
 		helper::alert('error', 'Plugin not installed: '.$apiWindow->getParam('wintype'));
 		helper::window('close');
 	}	
-
-
-	 
+	
+		 
 /*
 **************************
 */
  	
 	$console_ajax = null;
 	
-	if(!isset($_GET['ajax_file']) &&  !isset($_POST['ajax_file']))
+	if(!defined('IN_AJAX'))
 	{	
 		if(file_exists(PHPOS_DIR.'apps/'.$app_name.'/resources/window_icon.png'))
 		{
 			// Custom icon
 			echo '<style>
 			.phpos_window_icon'.$apiWindow->getID().' { background:url("'.PHPOS_URL.'apps/'.$app_name.'/resources/window_icon.png") no-repeat center center;
-			}	</style>';	
+			}	</style>';
+
+			echo '<div id="phpos_ajax_contener_'.WIN_ID.'" class="easyui-panel phpos_ajax_contener" 
+			data-options="noheader:true,border:false,loadingMessage:\'\',cache:false">
+			</div>';
+			
 		} else {
 		
 			// Default window icon
@@ -269,13 +273,10 @@
 	} 
 	
 	console::log_params($apiWindow);
-	if(!isset($ajax_file)) console::show();
+	if(!defined('IN_AJAX')) console::show();
 	echo '<script>
 	$(function() {
 		phpos.waiting_hide_execute();
 	});
 	</script>';
-	
-	
-
 ?>

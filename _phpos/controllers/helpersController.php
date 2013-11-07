@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.0.0, 2013.10.08
+	File version: 1.3.5, 2013.11.07
  
 **********************************
 */
@@ -310,7 +310,7 @@ if(!defined('PHPOS'))	die();
 		}	
 		
 		// generate and return URL
-		$url = PHPOS_DIR.'_phpos/controllers/windowsLoaderController.php?id='.$win_id.'&app_id=explorer&app_action=index&ajax_file='.$file.$params_to_link;	
+		$url = PHPOS_DIR.'_phpos/controllers/windowsLoaderController.php?id='.$win_id.'&app_id=explorer&app_action=index'.$params_to_link;	
 		
 		return $url;
 	}
@@ -828,5 +828,22 @@ if(!defined('PHPOS'))	die();
 			return $js;
 		}	
 	}
-	
+/*
+**************************
+*/	
+	function apply_status($status, $msg = null, $force = null, $noscript = null)
+	{
+		$js = 'phpos.applyStatus("'.$status.'", "'.$msg.'");';
+		if($force != null) $js = 'phpos.showStatus();';
+		
+		if($noscript == true)
+		{		
+			return $js;
+			
+		} else {
+		
+			echo '<script>'.$js.'</script>';
+			return $js;
+		}	
+	}
 ?>
