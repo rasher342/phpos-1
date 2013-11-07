@@ -1806,3 +1806,12 @@ pre{
 .phpos_ajax_contener {
 	display:none;
 }
+.phpos_callendar {
+	z-index:9999999; 
+	position:absolute;
+	bottom:100px;
+	right:20px;
+	height:200px;
+	width:200px;
+	display:none;
+}

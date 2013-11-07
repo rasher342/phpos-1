@@ -18,7 +18,31 @@ if(!defined('PHPOS'))	die();
 	$txt['demo_mode'] = 'DEMO MODE';
 	$txt['demo_mode_desc'] = '<b>PHPOS is running in demo mode.</b> You can only preview some features.<br />All features like saving data or creating files are disabled. Enjoy!';	
 	
-	$txt['new_folder'] = 'New folder';
+	$txt['calendar'] = 'Calendar';
+	$txt['calendar_weeks_0'] = 'S';
+	$txt['calendar_weeks_1'] = 'M';
+	$txt['calendar_weeks_2'] = 'T';
+	$txt['calendar_weeks_3'] = 'W';
+	$txt['calendar_weeks_4'] = 'T';
+	$txt['calendar_weeks_5'] = 'F';
+	$txt['calendar_weeks_6'] = 'S';
+	
+	$txt['calendar_month_1'] = 'Jan';
+	$txt['calendar_month_2'] = 'Febr';
+	$txt['calendar_month_3'] = 'Mar';
+	$txt['calendar_month_4'] = 'Apr';
+	$txt['calendar_month_5'] = 'May';
+	$txt['calendar_month_6'] = 'June';
+	$txt['calendar_month_7'] = 'July';
+	$txt['calendar_month_8'] = 'Aug';
+	$txt['calendar_month_9'] = 'Sep';
+	$txt['calendar_month_10'] = 'Oct';
+	$txt['calendar_month_11'] = 'Nov';
+	$txt['calendar_month_12'] = 'Dec';
+	
+	
+	
+	$txt['new_folder'] = 'New folder';	
 	$txt['plugins'] = 'Plugins';
 	$txt['update'] = 'Save & update';
 	$txt['app_footer_version'] = 'Version:';

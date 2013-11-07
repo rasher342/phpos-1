@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.5, 2013.10.15
+	File version: 1.3.5, 2013.11.07
  
 **********************************
 */
@@ -19,9 +19,9 @@ $tray_data = array();
 
 if(is_root() || is_admin())
 {
-echo '<div id="phpos_tray_icon_console" title="'.txt('console_tray_title').'" class="phpos_tray_item phpos_tray_item_mouseleave"><img src="'.ICONS.'tray/console.png" /></div>';
+echo '<div id="phpos_tray_icon_console" title="'.txt('console_tray_title').'" class="phpos_tray_item phpos_tray_item_mouseleave"><img src="'.ICONS.'tray/console.png" /></div>
+';
 }
-
 
 foreach($tray_icons as $tray_plugin)
 {
@@ -61,6 +61,8 @@ if($c != 0)
 	}
 }
 
+echo '
+<div id="phpos_tray_icon_callendar" title="'.txt('calendar').'" class="phpos_tray_item phpos_tray_item_mouseleave"><img src="'.ICONS.'tray/calendar.png" /></div>';
 ?>
 <script>
 $(document).ready(function() { 
@@ -78,6 +80,39 @@ $(document).ready(function() {
 	$('#phpos_tray_icon_console').click(function()
 	{
 		phpos.console_showhide();
+	});
+	
+	$('#phpos_tray_icon_callendar').click(function()
+	{
+		phpos.task_callendar_showhide();
+		$('#task_callendar').calendar({
+			current:new Date(),
+			weeks: [<?php 
+			echo 
+			"'".txt('calendar_weeks_0')."',
+			'".txt('calendar_weeks_1')."',
+			'".txt('calendar_weeks_2')."',
+			'".txt('calendar_weeks_3')."',
+			'".txt('calendar_weeks_4')."',
+			'".txt('calendar_weeks_5')."',
+			'".txt('calendar_weeks_6')."'";			
+			?>],
+			months: [<?php 
+			echo 
+			"'".txt('calendar_month_1')."',
+			'".txt('calendar_month_2')."',
+			'".txt('calendar_month_3')."',
+			'".txt('calendar_month_4')."',
+			'".txt('calendar_month_5')."',
+			'".txt('calendar_month_6')."',
+			'".txt('calendar_month_7')."',
+			'".txt('calendar_month_8')."',
+			'".txt('calendar_month_9')."',
+			'".txt('calendar_month_10')."',
+			'".txt('calendar_month_11')."',
+			'".txt('calendar_month_12')."'";			
+			?>]
+		});
 	});
 	
 });

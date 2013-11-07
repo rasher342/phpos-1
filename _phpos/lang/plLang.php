@@ -18,6 +18,28 @@ if(!defined('PHPOS'))	die();
 	$txt['demo_mode'] = 'Tryb demonstracyjny';
 	$txt['demo_mode_desc'] = '<b>PHPOS działa w trybie demonstracyjnym.</b> Możesz jedynie zapoznać się z kilkoma funkcjami.<br />Wszystkie funkcje takie jak zapis do plików, czy do bazy danych są obecnie wyłączone. Zapraszamy!';	
 	
+		$txt['calendar'] = 'Calendar';
+	$txt['calendar_weeks_0'] = 'N';
+	$txt['calendar_weeks_1'] = 'P';
+	$txt['calendar_weeks_2'] = 'W';
+	$txt['calendar_weeks_3'] = 'Ś';
+	$txt['calendar_weeks_4'] = 'C';
+	$txt['calendar_weeks_5'] = 'P';
+	$txt['calendar_weeks_6'] = 'S';
+	
+	$txt['calendar_month_1'] = 'Sty';
+	$txt['calendar_month_2'] = 'Lut';
+	$txt['calendar_month_3'] = 'Mar';
+	$txt['calendar_month_4'] = 'Kwi';
+	$txt['calendar_month_5'] = 'Maj';
+	$txt['calendar_month_6'] = 'Cze';
+	$txt['calendar_month_7'] = 'Lip';
+	$txt['calendar_month_8'] = 'Sie';
+	$txt['calendar_month_9'] = 'Wrz';
+	$txt['calendar_month_10'] = 'Paź';
+	$txt['calendar_month_11'] = 'Lis';
+	$txt['calendar_month_12'] = 'Gru';
+	
 	$txt['new_folder'] = 'Nowy folder';
 	$txt['plugins'] = 'Rozszerzenia';
 	$txt['update'] = 'Zapisz';

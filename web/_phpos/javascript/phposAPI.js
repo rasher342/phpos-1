@@ -1063,6 +1063,22 @@
 				$('#phpos_console_params').css('height', '450px');
 			}			
 	};
+	
+	
+	this.task_callendar_showhide = function() {	
+		
+		
+		if($('#task_callendar').css('display') == 'none')
+		{
+			$('#task_callendar').css('display', 'block');		
+			
+		} else {
+		
+			$('#task_callendar').css('display', 'none');		
+		}		
+	};
+	
+	
 /*
 **************************
 */		
