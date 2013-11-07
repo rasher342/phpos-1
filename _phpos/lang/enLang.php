@@ -56,6 +56,18 @@ if(!defined('PHPOS'))	die();
 	$txt['console_clean'] = 'Clear console';	
 	$txt['console_hide'] = 'Hide to tray';	
 	$txt['console_tray_title'] = 'PHPOS Console';	
+	$txt['console_events'] = 'Events log';	
+	$txt['console_params'] = 'App Params';	
+	$txt['console_clipboard'] = 'Clipboard';	
+	$txt['console_click_to_show_params'] = 'Click on window on left list to show app params for this window';	
+	$txt['console_legend'] = 'Legend';
+	$txt['console_legend_time'] = 'TIME';
+	$txt['console_legend_key'] = 'KEY/VARIABLE';
+	$txt['console_legend_value'] = 'VALUE';
+	$txt['console_legend_winid'] = 'WIN_ID';
+	$txt['console_legend_appid'] = 'APP_ID';
+	$txt['console_legend_appaction'] = 'APP_ACTION';
+	
 	
 // MONTHS	
 	$txt['month_1'] = 'January';

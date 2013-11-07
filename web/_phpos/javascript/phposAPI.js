@@ -984,6 +984,12 @@
 			};
 	};	
 	
+	this.console_show_params_body = function(div_id) {
+	
+		var d = $('#console_params_'+div_id).html();
+		$('#phpos_console_params_body').html(d);	
+	};
+	
 	this.console_clear = function() {
 			
 			var display_data = $('#phpos_console_data').css('display');	
@@ -992,7 +998,7 @@
 		
 			if(display_data == 'block')
 			{
-				$('#phpos_console_data').html('');
+				$('#phpos_console_data').html('');				
 				this.clearConsole('events');
 			}
 			
@@ -1004,7 +1010,7 @@
 			
 			if(display_params == 'block')
 			{
-				$('#phpos_console_params').html('');
+				$('#phpos_console_params').html('');			
 				this.clearConsole('params');
 			}			
 			
@@ -1019,7 +1025,7 @@
 		{
 			$('#phpos_console').css('display', 'block');
 			
-			var display_data = $('#phpos_console_data').css('display');	
+			var display_data = $('#phpos_console_data').css('display');			
 			var display_clipboard = $('#phpos_console_clipboard').css('display');
 			var display_params = $('#phpos_console_params').css('display');
 		
@@ -1040,7 +1046,13 @@
 		$('#phpos_console_clipboard').css('display', 'none');
 		$('#phpos_console_params').css('display', 'none');
 		
-		$('#phpos_console_' + content_type).css('display', 'block');		
+		$('#console_btn_data').css('font-weight', 'normal').css('color', '#2a2a2a');
+		$('#console_btn_clipboard').css('font-weight', 'normal').css('color', '#2a2a2a');
+		$('#console_btn_params').css('font-weight', 'normal').css('color', '#2a2a2a');
+		
+		
+		$('#phpos_console_' + content_type).css('display', 'block');	
+		$('#console_btn_' + content_type).css('font-weight', 'bold').css('color', '#be551c');	
 	
 	};
 	

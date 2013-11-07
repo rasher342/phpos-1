@@ -18,7 +18,7 @@ if(!defined('PHPOS'))	die();
 	$txt['demo_mode'] = 'Tryb demonstracyjny';
 	$txt['demo_mode_desc'] = '<b>PHPOS działa w trybie demonstracyjnym.</b> Możesz jedynie zapoznać się z kilkoma funkcjami.<br />Wszystkie funkcje takie jak zapis do plików, czy do bazy danych są obecnie wyłączone. Zapraszamy!';	
 	
-		$txt['calendar'] = 'Calendar';
+	$txt['calendar'] = 'Kalendarz';
 	$txt['calendar_weeks_0'] = 'N';
 	$txt['calendar_weeks_1'] = 'P';
 	$txt['calendar_weeks_2'] = 'W';
@@ -53,7 +53,18 @@ if(!defined('PHPOS'))	die();
 	// console
 	$txt['console_clean'] = 'Wyczyść ekran konsoli';	
 	$txt['console_hide'] = 'Ukryj do tray\'a';	
-	$txt['console_tray_title'] = 'Konsola PHPOS';	
+	$txt['console_tray_title'] = 'Konsola PHPOS';			
+	$txt['console_events'] = 'Dziennik zdarzeń';	
+	$txt['console_params'] = 'Parametry aplikacji';	
+	$txt['console_clipboard'] = 'Schowek';	
+	$txt['console_click_to_show_params'] = 'Kliknij na wpisie po lewej, aby zobaczyć parametry okna';	
+	$txt['console_legend'] = 'Legenda';
+	$txt['console_legend_time'] = 'CZAS';
+	$txt['console_legend_key'] = 'KLUCZ/ZMIENNA';
+	$txt['console_legend_value'] = 'WARTOŚĆ';
+	$txt['console_legend_winid'] = 'ID OKNA';
+	$txt['console_legend_appid'] = 'ID APLIKACJI';
+	$txt['console_legend_appaction'] = 'ID AKCJI';
 	
 // MONTHS	
 	$txt['month_1'] = 'Styczeń';

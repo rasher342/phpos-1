@@ -17,11 +17,12 @@ if(!defined('PHPOS'))	die();
 $tray_icons = glob(PHPOS_DIR.'plugins/tray/tray.*.php');
 $tray_data = array();
 
-if(is_root() || is_admin())
-{
+	
+	
+
 echo '<div id="phpos_tray_icon_console" title="'.txt('console_tray_title').'" class="phpos_tray_item phpos_tray_item_mouseleave"><img src="'.ICONS.'tray/console.png" /></div>
 ';
-}
+
 
 foreach($tray_icons as $tray_plugin)
 {

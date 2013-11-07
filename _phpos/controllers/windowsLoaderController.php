@@ -193,11 +193,10 @@
 			$my_app->set_app_action($app_action);
 			$my_app->set_window($apiWindow);
 			$my_app->load_config();		
-			
+		
 			// esc - close
-			if(WIN_ID != 1)
-			{
-								
+			if(WIN_ID != 1 && !defined('IN_AJAX'))		
+			{								
 				$keyboard = '	
 				$(document).keyup(function(e)
 				{
@@ -225,10 +224,9 @@
 		define('PHPOS_ACCESS', true);
 		include PHPOS_DIR.'plugins/windows/window.'.$apiWindow->getParam('wintype').'.php';	
 		
-		if(!defined('IN_AJAX'))
-		{				
+						
 			echo $my_app->render_javascript_jquery();
-		}
+		
 		
 		if(!$_POST['phpos_keep_result'])
 		{

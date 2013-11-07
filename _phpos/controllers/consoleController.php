@@ -16,17 +16,21 @@ if(!defined('PHPOS'))	die();
 
 ?><div style="z-index:99999999" id="phpos_console">
 <div style="text-align:right">
-<a href="javascript:void(0);" onclick="phpos.console_show_content('data');" class="easyui-linkbutton"><?php echo txt('events');?></a> 
-<a href="javascript:void(0);" onclick="phpos.console_show_content('clipboard');" class="easyui-linkbutton"><?php echo txt('clipboard');?></a> 
-<a href="javascript:void(0);" onclick="phpos.console_show_content('params');" class="easyui-linkbutton"><?php echo txt('params');?></a> 
-
- <span class="console_time">TIME</span> | <span class="console_winid">WIN_ID</span> | <span class="console_appname">APP_ID</span> | <span class="console_appaction">APP_ACTION</span> | <span class="console_key">KEY</span> | <span class="console_val">VALUE</span> 
+<a href="javascript:void(0);" onclick="phpos.console_show_content('data');" class="easyui-linkbutton"><span id="console_btn_data"><?php echo txt('console_events');?></span></a> 
+<a href="javascript:void(0);" onclick="phpos.console_show_content('clipboard');" class="easyui-linkbutton"><span id="console_btn_clipboard"><?php echo txt('console_clipboard');?></span></a> 
+<a href="javascript:void(0);" onclick="phpos.console_show_content('params');" class="easyui-linkbutton"><span id="console_btn_params"><?php echo txt('console_params');?></span></a> 
+ 
 <a href="javascript:void(0);" onclick="phpos.console_clear();" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"><?php echo txt('console_clean');?></a>
 <a href="javascript:void(0);" onclick="phpos.console_showhide();" class="easyui-linkbutton" data-options="iconCls:'icon-arrow_down'"><?php echo txt('console_hide');?></a>
-<a href="javascript:void(0);" onclick="phpos.console_minmax();" class="easyui-linkbutton" data-options="iconCls:'icon-maximize'">Min/Max</a>
+<a href="javascript:void(0);" onclick="phpos.console_minmax();" class="easyui-linkbutton" data-options="iconCls:'icon-maximize'">Min/Max</a><br /> <?php echo txt('console_legend');?> : <span class="console_time"><?php echo txt('console_legend_time');?></span> | <span class="console_winid"><?php echo txt('console_legend_winid');?></span> | <span class="console_appname"><?php echo txt('console_legend_appid');?></span> | <span class="console_appaction"><?php echo txt('console_legend_appaction');?></span> | <span class="console_key"><?php echo txt('console_legend_key');?></span> | <span class="console_val"><?php echo txt('console_legend_value');?></span>
 </div>
 <div id="phpos_console_data"></div>
 <div id="phpos_console_clipboard"></div>
-<div id="phpos_console_params"></div>
+<div id="phpos_console_params">
+
+	<div id="phpos_console_params_list"></div>
+	<div id="phpos_console_params_body"> <span class="console_arrows ">&lt;&lt;</span> <?php echo txt('console_click_to_show_params');?></div>
+	<div style="clear:both"></div>
+</div>
 </div>
 <script>$("#phpos_console").css("display", "none");</script>

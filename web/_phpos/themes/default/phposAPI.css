@@ -1799,6 +1799,10 @@ pre{
 	font-weight: normal;
 	color: #fff;
 }
+.console_index {
+	font-weight: normal;
+	color: #4087a3;
+}
 .console_arrows {
 	color: #343434;
 }
@@ -1806,12 +1810,24 @@ pre{
 	margin-top:5px;
 	margin-bottom:20px;	
 	width:1050px;
-	height:3px;
-	
+	height:3px;	
+}
+.console_params_items {
+	display:none;
+}
+#phpos_console_params_list {
+	float:left;
+	width:50%;
+	vertical-align:top;
+}
+#phpos_console_params_body {
+	float:right;
+	width:50%;
+	vertical-align:top;
 }
 .console_separator {
 	height:3px;
-	width:1050px;
+	width:100%;
 	margin-top:5px;
 	margin-bottom:5px;	
 	border-bottom: 1px dotted #222222;
