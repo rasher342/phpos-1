@@ -1,4 +1,4 @@
-PHPOS Web Operating System<br>Version: 1.33 beta
+PHPOS Web Operating System<br>Version: 1.35 beta | 2013.11.07
 ====
 <b>http://www.phpos.pl</b>  <br><b>Online demo: http://demo.phpos.pl</b> Login: demo, Password: demopass<br>
 
@@ -29,6 +29,26 @@ You can download PHPOS for free and install on your server or try the demo onlin
 </tr>
 </table>
 <b>Change log:</b><br><br>
+
+<b>1.35 (2013.11.07)</b><br>
+- system core rebuilded and optimized<br>
+- explorer engine rebuilded<br>
+- speed-up to 2x with working on files<br>
+- all operations on files are now executes in background<br>
+- notifications and progress in operations rebuilded<br>
+- new console created with full of powerful features<br>
+- files operations fixes (copy/paste/download)<br>
+- errors handling & reporting fixed and rebuilded<br>
+- filesystems fixes<br>
+- optimized ajax loader (speed up in rendering)<br>
+- rebuilded applications code<br>
+- more actions are works via ajax now <br>
+- added option to hide right panel in explorer<br>
+- added dynamic clock and calendar<br>
+- fixed bug with displaying unreaded messages in tray<br>
+- updater app now available also for admin users<br>
+- and lot of bug fixes and small features<br>
+
 
 <b>1.33 (2013.10.31)</b><br>
 - Added showing processing info<br>
