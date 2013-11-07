@@ -118,21 +118,23 @@ class console
 		if(is_array($_SESSION['console_log']))
 		{
 			$a = array_reverse($_SESSION['console_log']);
-			$c = count($a);
-			for($i=0; $i<$c; $i++)
+			$c_events = count($a);
+			for($i=0; $i<$c_events; $i++)
 			{
-				$data.= $a[$i];
-			}			
+				if($i < 20) $data.= $a[$i];
+			}	
+			unset($_SESSION['console_log']);
 		}
 		
 		if(is_array($_SESSION['console_log_params']))
 		{
 			$a = array_reverse($_SESSION['console_log_params']);
-			$c = count($a);
-			for($i=0; $i<$c; $i++)
+			$c_params = count($a);
+			for($i=0; $i<$c_params; $i++)
 			{
-				$data_params.= $a[$i];
-			}			
+				if($i < 20) $data_params.= $a[$i];
+			}	
+			unset($_SESSION['console_log_params']);
 		}
 		
 		$clipboard = new phpos_clipboard;
@@ -140,10 +142,24 @@ class console
 		
 		
 		echo "<script>
-		
 		var html_data = $('#phpos_console_data').html();
 		var html_params = $('#phpos_console_params').html();
+		";		
 		
+		if($c_params > 20)
+		{
+			echo "
+			html_params = '';
+			";
+		}
+		if($c_events > 20)
+		{
+			echo "
+			html_data = '';
+			";
+		}
+		
+		echo "
 		var new_data = '".$data."' + html_data;
 		var new_params = '".$data_params."' + html_params;
 		
