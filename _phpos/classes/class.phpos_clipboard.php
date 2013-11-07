@@ -7,7 +7,7 @@
 	(c) 2013 Marcin Szczyglinski
 	szczyglis83@gmail.com
 	GitHUB: https://github.com/phpos/
-	File version: 1.2.8, 2013.10.26
+	File version: 1.3.4, 2013.11.07
  
 **********************************
 */
@@ -279,6 +279,43 @@ class phpos_clipboard
 		print_r($_SESSION['phpos_clipboard']['file_name']);
 		
 		echo '</pre>';
+	}
+	
+	public function debug_console()
+	{
+			
+			if(defined('WIN_ID')) $info['win_id'] = '<span class=console_winid>['.WIN_ID.']</span>';		
+			if(defined('APP_ID')) $info['app_id'] = '<span class=console_appname>['.APP_ID.'</span>';
+			if(defined('APP_ACTION')) $info['app_action'] = '<span class=console_appaction> '.APP_ACTION.']</span>';
+			$info['time'] = '<span class=console_time>'.date('H:i:s', time()).'</span>'.$ajax;
+		
+		
+			$data = $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action'].'<div class=console_separator></div>';
+
+			$data.='<span class=console_key>fs</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['fs'].'</span><div class=console_separator></div>';
+			$data.='<span class=console_key>server</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['server'].'</span><div class=console_separator></div>';
+			$data.='<span class=console_key>multiple</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['multiple'].'</span><div class=console_separator></div>';
+			$data.='<span class=console_key>connect_id</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['connect_id'].'</span><div class=console_separator></div>';
+			$data.='<span class=console_key>mode</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['mode'].'</span><div class=console_separator></div>';
+			
+			if(!is_array($_SESSION['phpos_clipboard']['id']))
+			{	
+				$data.='<span class=console_key>id</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['id'].'</span><div class=console_separator></div>';
+				$data.='<span class=console_key>file_name</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['file_name'].'</span><div class=console_separator></div>';
+				
+			} else {
+				
+				$c = count($_SESSION['phpos_clipboard']['id']);
+				$data.='<br/><br/><div class=console_line>Items ['.$c.']</div>';
+				
+				for($i=0; $i<$c; $i++)
+				{
+					$data.='<span class=console_key>id ['.$i.']</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['id'][$i].'</span><div class=console_separator></div>';
+					$data.='<span class=console_key>file_name ['.$i.']</span><span class=console_arrows>&gt;&gt;</span><span class=console_val>'.$_SESSION['phpos_clipboard']['file_name'][$i].'</span><div class=console_separator></div><div class=console_line></div>';
+				}
+			}
+			
+		return $data;
 	}
 	
 }

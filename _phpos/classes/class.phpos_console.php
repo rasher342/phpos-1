@@ -135,9 +135,8 @@ class console
 			}			
 		}
 		
-		
-		
-		
+		$clipboard = new phpos_clipboard;
+		$data_clipboard = $clipboard->debug_console();	
 		
 		
 		echo "<script>
@@ -149,7 +148,7 @@ class console
 		var new_params = '".$data_params."' + html_params;
 		
 		$('#phpos_console_data').html(new_data);		
-		$('#phpos_console_clipboard').html('clipboard data here');
+		$('#phpos_console_clipboard').html('".$data_clipboard."');
 		$('#phpos_console_params').html(new_params);
 		
 		</script>";		
