@@ -79,23 +79,8 @@ class console
 		}
 	}
 	
-	public static function show($winObject)
+	public static function log_params($winObject)
 	{
-				
-		if(is_array($_SESSION['console_log']))
-		{
-			$a = array_reverse($_SESSION['console_log']);
-			$c = count($a);
-			for($i=0; $i<$c; $i++)
-			{
-				$data.= $a[$i];
-			}
-				
-			//unset($_SESSION['console_log']);		
-			
-		}
-		
-		
 		$params = $winObject->get_appParams();
 		$c = count($params);
 		$params_data = '';
@@ -104,7 +89,7 @@ class console
 		{
 			$ajax = '';
 			if(isset($_GET['ajax_file'])) $ajax = ' <span class="console_ajax">[AJAX]</span> ';
-			if(!is_array($_SESSION['console_log'])) $_SESSION['console_log'] = array();		
+			if(!is_array($_SESSION['console_log_params'])) $_SESSION['console_log_params'] = array();		
 			
 			if(defined('WIN_ID')) $info['win_id'] = '<span class="console_winid">['.WIN_ID.']</span>';		
 			if(defined('APP_ID')) $info['app_id'] = '<span class="console_appname">['.APP_ID.'</span>';
@@ -121,7 +106,37 @@ class console
 			}	
 			
 			$params_data.='<div class="console_line"><span class="console_arrows ">-------</span></div>';
+			
+			$_SESSION['console_log_params'][] = $params_data;
 		}
+	}
+	
+	
+	public static function show($winObject)
+	{
+				
+		if(is_array($_SESSION['console_log']))
+		{
+			$a = array_reverse($_SESSION['console_log']);
+			$c = count($a);
+			for($i=0; $i<$c; $i++)
+			{
+				$data.= $a[$i];
+			}			
+		}
+		
+		if(is_array($_SESSION['console_log_params']))
+		{
+			$a = array_reverse($_SESSION['console_log_params']);
+			$c = count($a);
+			for($i=0; $i<$c; $i++)
+			{
+				$data_params.= $a[$i];
+			}			
+		}
+		
+		
+		
 		
 		
 		
@@ -131,7 +146,7 @@ class console
 		var html_params = $('#phpos_console_params').html();
 		
 		var new_data = '".$data."' + html_data;
-		var new_params = '".$params_data."' + html_params;
+		var new_params = '".$data_params."' + html_params;
 		
 		$('#phpos_console_data').html(new_data);		
 		$('#phpos_console_clipboard').html('clipboard data here');
@@ -154,9 +169,20 @@ class console
 		</script>";		
 	}
 	
-	public static function clear()
+	public static function clear($witch)
 	{		
-		unset($_SESSION['console_log']);
+		switch($witch)
+		{
+			case 'events':
+				unset($_SESSION['console_log']);
+			break;
+			
+			case 'params':
+				unset($_SESSION['console_log_params']);
+			break;
+		
+		
+		}
 	}
 
 }

@@ -65,8 +65,10 @@
 */
  	
 	 	 
-		 this.clearConsole = function() {			
-			this.managerWindows('action=clear_console');
+		 this.clearConsole = function(witch) {			
+			if(witch == 'events') this.managerWindows('action=clear_console_events');
+			if(witch == 'clipboard') this.managerWindows('action=clear_console_clipboard');
+			if(witch == 'params') this.managerWindows('action=clear_console_params');
 		 };	
 		 
 /*
@@ -907,17 +909,19 @@
 			if(display_data == 'block')
 			{
 				$('#phpos_console_data').html('');
-				this.clearConsole();
+				this.clearConsole('events');
 			}
 			
 			if(display_clipboard == 'block')
 			{
 				$('#phpos_console_clipboard').html('');
+				this.clearConsole('clipoard');
 			}
 			
 			if(display_params == 'block')
 			{
 				$('#phpos_console_params').html('');
+				this.clearConsole('params');
 			}			
 			
 	};

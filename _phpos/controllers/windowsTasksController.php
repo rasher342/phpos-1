@@ -132,8 +132,16 @@ error_reporting(E_ERROR | E_PARSE);
 				session_destroy();
 			break;	
 			
-			case 'clear_console':
-				console::clear();
+			case 'clear_console_events':
+				console::clear('events');
+			break;	
+			
+			case 'clear_console_clipboard':
+				console::clear('clipboard');
+			break;	
+			
+			case 'clear_console_params':
+				console::clear('params');
 			break;	
 				
 				
