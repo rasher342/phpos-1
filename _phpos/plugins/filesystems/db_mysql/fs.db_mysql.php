@@ -136,7 +136,9 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		if(defined('DESKTOP')) 
 		{
 			$location = 'desktop';
+			
 		} else {
+		
 			$location = 'db';
 		}
 		
@@ -149,7 +151,34 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 			'file_title' => $dirname,
 			'location' => $location
 		);
-		if($sql->add($this->db_name, $data)) return true;	
+		if($sql->add($this->db_name, $data)) 
+		{
+			console::log(array(
+				'@filesystem' => 'new_dir()',	
+				'id_user' => $my_id,
+				'id_parent' => $this->directory_id,
+				'is_dir' => 1,
+				'created_at' => time(),
+				'plugin_id' => 'folder',
+				'file_title' => $dirname,
+				'location' => $location
+			), 'ok');
+			
+			return true;	
+			
+		} else {
+			
+				console::log(array(
+				'@filesystem' => 'new_dir()',	
+				'id_user' => $my_id,
+				'id_parent' => $this->directory_id,
+				'is_dir' => 1,
+				'created_at' => time(),
+				'plugin_id' => 'folder',
+				'file_title' => $dirname,
+				'location' => $location
+			), 'error');
+		}
 	}	
 			 
 /*
@@ -158,8 +187,7 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
  	
 	public function upload_file($file)
 	{		
-		$target_path = $this->directory_id.'/'.basename($file['name']); 
-		if(move_uploaded_file($file['tmp_name'], $target_path)) return true;	
+		return true;	
 	}
 	
 			 
@@ -354,6 +382,11 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 	
 	public function set_api_file_id($file_id)
 	{
+		console::log(array(
+				'@filesystem' => 'set_api_file_id()',	
+				'file_id' => $file_id
+		), 'ok');
+		
 		$this->api_file_id = $file_id;	
 	}	
 			 
@@ -366,6 +399,11 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		if(!empty($this->api_file_id))
 		{
 			$explorerAPI = new phpos_explorerAPI;
+			console::log(array(
+				'@filesystem' => 'get_file_content()',	
+				'file_id' => $this->api_file_id
+			), 'ok');
+			
 			return $explorerAPI->get_db_content($this->api_file_id);
 		}	
 	}
@@ -389,8 +427,29 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		if(false !== ($record_id = $shortcut->add($file_name, 'app', $app_data['app_id'], $app_data['app_action'], null, $app_params, 'db', $my_app->get_param('dir_id'), $content))) 
 		{
 			$file['id'] = $record_id;
-			return $this->get_file_info($file);
+			console::log(array(
+				'@filesystem' => 'save_file_content()',																
+				'file_name' => $file_name,
+				'file_id' => $record_id,
+				'app_id' => $app_data['app_id'],
+				'app_action' => $app_data['app_action'],				
+				'location' => 'db',
+				'parent_id' => $my_app->get_param('dir_id')
+			), 'ok');
+				
+			return $this->get_file_info($file);		
 			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'save_file_content()',																
+				'file_name' => $file_name,
+				'file_id' => $record_id,
+				'app_id' => $app_data['app_id'],
+				'app_action' => $app_data['app_action'],				
+				'location' => 'db',
+				'parent_id' => $my_app->get_param('dir_id')
+			), 'error');
 		}
 	}
 			 
@@ -406,10 +465,20 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 			
 			if($shortcut->update_content($file_info['id'], $content)) 
 			{
+				console::log(array(
+				'@filesystem' => 'update_file_content()',																
+				'file_id' => $file_info['id']
+				), 'ok');
+				
 				return true;
 				
 			} else {
 			
+				console::log(array(
+				'@filesystem' => 'update_file_content()',																
+				'file_id' => $file_info['id']
+				), 'error');
+				
 				return false;
 			}
 		}
@@ -455,7 +524,23 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		$my_id = logged_id();
 		$sql->cond('id_user', $my_id);
 		$sql->cond('id_file', $id_file);
-		if($sql->delete($this->db_name)) return true;	
+		
+		if($sql->delete($this->db_name)) 
+		{
+			console::log(array(
+				'@filesystem' => 'delete()',	
+				'file_id' => $id_file
+				), 'ok');
+				
+			return true;	
+			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'delete()',	
+				'file_id' => $id_file
+			), 'error');
+		}
 	}
 			 
 /*
@@ -471,7 +556,24 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		$items = array(
 			'file_title' => $new_name
 		);
-		if($sql->update($this->db_name, $items)) return true;	
+		if($sql->update($this->db_name, $items)) 
+		{
+			console::log(array(
+				'@filesystem' => 'rename()',	
+				'file_id' => $id_file,
+				'new_name' => $new_name
+			), 'ok');
+			
+			return true;
+			
+		} else {
+			
+			console::log(array(
+				'@filesystem' => 'rename()',	
+				'file_id' => $id_file,
+				'new_name' => $new_name
+			), 'error');
+		}
 	}
 	
 			 
@@ -610,7 +712,32 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 				'multilang' =>  $row['multilang']		
 				);			
 				
-				if(false !== $sql->add($this->db_files, $items))	return true;	
+				if(false !== $sql->add($this->db_files, $items))	
+				{
+					$log = array(
+					'@filesystem' => 'clipboard_paste()',	
+					'file_id' => $id_file,
+					'mode' => 'copy',
+					'to_dir_id' => $to_dir_id
+					);
+					
+					//$full_log = array_merge($log, $items);					
+					console::log($log, 'ok');
+			
+					return true;	
+				
+				} else {
+					
+					$log = array(
+					'@filesystem' => 'clipboard_paste()',	
+					'file_id' => $id_file,
+					'mode' => 'copy',
+					'to_dir_id' => $to_dir_id
+					);
+					
+					//$full_log = array_merge($log, $items);					
+					console::log($log, 'error');
+				}
 
 			break;
 			
@@ -624,9 +751,29 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 				
 				if($sql->update($this->db_files, $items))	
 				{
-						$clipboard->reset_clipboard();		
-						return true;
-				}			
+					$log = array(
+					'@filesystem' => 'clipboard_paste()',	
+					'file_id' => $id_file,
+					'to_location' => $location,
+					'mode' => 'cut',					
+					'to_dir_id' => $to_dir_id
+					);								
+					console::log($log, 'ok');
+					
+					$clipboard->reset_clipboard();		
+					return true;
+					
+				} else {
+					
+					$log = array(
+					'@filesystem' => 'clipboard_paste()',	
+					'file_id' => $id_file,	
+					'to_location' => $location,
+					'mode' => 'cut',					
+					'to_dir_id' => $to_dir_id
+					);								
+					console::log($log, 'error');
+				}
 			
 			break;
 		}		
@@ -643,7 +790,7 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		$clipboard->set_mode('copy');
 		$clipboard->set_name(basename(param('action_param')));
 		$clipboard->set_server(false);
-		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		if($clipboard->add_clipboard(param('action_param'), param('action_param2'), null)) return true;	
 	}	
 			 
 /*
@@ -657,7 +804,7 @@ class phpos_fs_plugin_db_mysql extends phpos_filesystems
 		$clipboard->set_source_win(WIN_ID);
 		$clipboard->set_name(basename(param('action_param')));
 		$clipboard->set_server(false);
-		$clipboard->add_clipboard(param('action_param'), param('action_param2'), null);	
+		if($clipboard->add_clipboard(param('action_param'), param('action_param2'), null)) return true;	
 	}
 	
 }

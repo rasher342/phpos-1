@@ -17,7 +17,6 @@ if(!defined('PHPOS_IN_EXPLORER'))
 {
 	die();
 }
-
 	 
 /*
 **************************
@@ -1036,14 +1035,62 @@ class phpos_fs_plugin_local_files extends phpos_filesystems
 		{						
 			if(copy($id_file, $to_dir_id.'/'.$basename))
 			{									
-				return true;				
-			} 
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server()',																
+				'source' => $id_file,
+				'destination' => $to_dir_id.'/'.$basename
+				), 'ok');	
+				
+				return true;		
+				
+			} else {
+			
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server()',																
+				'source' => $id_file,
+				'destination' => $to_dir_id.'/'.$basename
+				), 'error');	
+			}
 		
 		} else {
 			
 			$to_dir = $to_dir_id.'/'.$basename;
-			mkdir($to_dir, 0755);							
-			if($this->recurse_copy($id_file, $to_dir)) return true;
+			
+			if(@mkdir($to_dir, 0755))
+			{
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server() -> mkdir()',																
+				'dir_name' => $to_dir,
+				'chmod' => '0755'
+				), 'ok');
+				
+			} else {
+				
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server() -> mkdir()',																
+				'dir_name' => $to_dir,
+				'chmod' => '0755'
+				), 'error');
+			}									
+														
+			if($this->recurse_copy($id_file, $to_dir)) 
+			{
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server() -> recurse_copy()',																
+				'source' => $id_file,
+				'destination' => $to_dir
+				), 'ok');	
+				
+				return true;
+				
+			} else {
+				
+				console::log(array(
+				'@filesystem' => 'clipboard_copy_server() -> recurse_copy()',																
+				'source' => $id_file,
+				'destination' => $to_dir
+				), 'error');	
+			}
 		}
 				
 	}

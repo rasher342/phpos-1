@@ -900,8 +900,26 @@
 	
 	this.console_clear = function() {
 			
-			$('#phpos_console_data').html('');
-			this.clearConsole();
+			var display_data = $('#phpos_console_data').css('display');	
+			var display_clipboard = $('#phpos_console_clipboard').css('display');
+			var display_params = $('#phpos_console_params').css('display');
+		
+			if(display_data == 'block')
+			{
+				$('#phpos_console_data').html('');
+				this.clearConsole();
+			}
+			
+			if(display_clipboard == 'block')
+			{
+				$('#phpos_console_clipboard').html('');
+			}
+			
+			if(display_params == 'block')
+			{
+				$('#phpos_console_params').html('');
+			}			
+			
 	};
 	
 	this.console_showhide = function() {
@@ -913,25 +931,48 @@
 		{
 			$('#phpos_console').css('display', 'block');
 			
+			var display_data = $('#phpos_console_data').css('display');	
+			var display_clipboard = $('#phpos_console_clipboard').css('display');
+			var display_params = $('#phpos_console_params').css('display');
+		
+			if(display_data == 'none' && display_clipboard == 'none' && display_params == 'none')
+			{
+				this.console_show_content('data');
+			}
+			
 		} else {
 		
 			$('#phpos_console').css('display', 'none');		
 		}		
 	};
 	
+	this.console_show_content = function(content_type) {
+			
+		$('#phpos_console_data').css('display', 'none');	
+		$('#phpos_console_clipboard').css('display', 'none');
+		$('#phpos_console_params').css('display', 'none');
+		
+		$('#phpos_console_' + content_type).css('display', 'block');		
+	
+	};
+	
 	this.console_minmax = function() {
 			
 			var h = $('#phpos_console').css('height');
 			
-			if(h == '300px')
+			if(h == '500px')
 			{
 				$('#phpos_console').css('height', '130px');
 				$('#phpos_console_data').css('height', '80px');
+				$('#phpos_console_clipboard').css('height', '80px');
+				$('#phpos_console_params').css('height', '80px');
 				
 			} else {
 			
-				$('#phpos_console').css('height', '300px');
-				$('#phpos_console_data').css('height', '250px');
+				$('#phpos_console').css('height', '500px');
+				$('#phpos_console_data').css('height', '450px');
+				$('#phpos_console_clipboard').css('height', '450px');
+				$('#phpos_console_params').css('height', '450px');
 			}			
 	};
 /*

@@ -20,9 +20,7 @@ class console
 		
 		$ajax = '';
 		if(isset($_GET['ajax_file'])) $ajax = ' <span class="console_ajax">[AJAX]</span> ';
-		if(!is_array($_SESSION['console_log'])) $_SESSION['console_log'] = array();
-		
-		
+		if(!is_array($_SESSION['console_log'])) $_SESSION['console_log'] = array();		
 		
 		if(defined('WIN_ID')) $info['win_id'] = '<span class="console_winid">['.WIN_ID.']</span>';		
 		if(defined('APP_ID')) $info['app_id'] = '<span class="console_appname">['.APP_ID.'</span>';
@@ -81,7 +79,7 @@ class console
 		}
 	}
 	
-	public static function show($console_ajax = null)
+	public static function show($winObject)
 	{
 				
 		if(is_array($_SESSION['console_log']))
@@ -98,12 +96,46 @@ class console
 		}
 		
 		
+		$params = $winObject->get_appParams();
+		$c = count($params);
+		$params_data = '';
+		
+		if($c != 0)
+		{
+			$ajax = '';
+			if(isset($_GET['ajax_file'])) $ajax = ' <span class="console_ajax">[AJAX]</span> ';
+			if(!is_array($_SESSION['console_log'])) $_SESSION['console_log'] = array();		
+			
+			if(defined('WIN_ID')) $info['win_id'] = '<span class="console_winid">['.WIN_ID.']</span>';		
+			if(defined('APP_ID')) $info['app_id'] = '<span class="console_appname">['.APP_ID.'</span>';
+			if(defined('APP_ACTION')) $info['app_action'] = '<span class="console_appaction"> '.APP_ACTION.']</span>';
+			$info['time'] = '<span class="console_time">'.date('H:i:s', time()).'</span>'.$ajax;
+		
+		
+			$params_data.= $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action'].'<div class="console_separator"></div>';
+			
+			foreach($params as $k => $v)
+			{
+				if($v == null) $v = 'null';
+				$params_data.= '<span class="console_key">'.$k.'</span> <span class="console_arrows ">&gt;&gt;</span> <span class="console_val">'.htmlspecialchars($v).'</span><div class="console_separator"></div>';		
+			}	
+			
+			$params_data.='<div class="console_line"><span class="console_arrows ">-------</span></div>';
+		}
+		
+		
+		
 		echo "<script>
 		
-		var html = $('#phpos_console_data').html();
+		var html_data = $('#phpos_console_data').html();
+		var html_params = $('#phpos_console_params').html();
 		
-		var new_data = '".$data."' + html;
-		$('#phpos_console_data').html(new_data);
+		var new_data = '".$data."' + html_data;
+		var new_params = '".$params_data."' + html_params;
+		
+		$('#phpos_console_data').html(new_data);		
+		$('#phpos_console_clipboard').html('clipboard data here');
+		$('#phpos_console_params').html(new_params);
 		
 		</script>";		
 	}

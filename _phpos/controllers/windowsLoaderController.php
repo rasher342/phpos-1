@@ -268,7 +268,7 @@
 		
 	} 
 	
-	if(!isset($ajax_file)) console::show();
+	if(!isset($ajax_file)) console::show($apiWindow);
 	echo '<script>
 	$(function() {
 		phpos.waiting_hide_execute();

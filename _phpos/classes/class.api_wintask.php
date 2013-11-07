@@ -567,6 +567,15 @@ class api_wintask {
 			return $this->app_params[$param_name];
 		}
 	}
+	 
+/*
+**************************
+*/
+ 	
+	public function get_appParams()
+	{		
+		return $this->app_params;	
+	}
 
  
 /*

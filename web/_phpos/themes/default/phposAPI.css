@@ -1727,12 +1727,15 @@ pre{
 	height:130px;
 	
 }
-#phpos_console_data {
+#phpos_console_data, 
+#phpos_console_clipboard, 
+#phpos_console_params {
 	padding:10px;
 	font-size:11px;
 	height:80px;
 	overflow:auto;
 	color: #fff;
+	display:none;
 
 }
 .console_block {
