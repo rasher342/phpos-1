@@ -43,8 +43,15 @@ if(!defined('PHPOS'))	die();
 	</div>
 
 	<div id="phpos-menustart_Tray_container">
-		<?php require_once(PHPOS_DIR.'controllers/menu_startTrayController.php'); ?>	
+	<div style="height:100% auto;display:inline-block; vertical-align:middle">
+		<?php require_once(PHPOS_DIR.'controllers/menu_startTrayController.php'); ?>
+	</div>	
+	<div style="margin-top:10px;padding-left:20px;text-align:center;color:#fff;line-height:160%;height:100% auto;display:inline-block; vertical-align:middle">
+	<span id="tray_clock" style="font-weight:bold">17:43</span><br /><?php echo strtolower(txt('week_'.date('w')));?><br/><?php echo date('Y-m-d'); ?></span>
 	</div>
+	</div>
+	
+	
 	
 	<div id="phpos-menustart_Switch_container">
 	<img src="<?php echo ICONS;?>startmenu/switch_arrow_left_inactive.png" id="desktop_switch_left" title="<?php echo txt('desktop_switch_tray_to_db'); ?>"/>

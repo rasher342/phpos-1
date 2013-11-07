@@ -80,5 +80,7 @@ $.wallpaper({
 	//echo PHPOS_WEBROOT_URL.myconfig('wallpaper');?>"
 });
 	phpos.windowDesktopCreate('PHPOS DESKTOP', 'app', 'app_id:explorer@desktop, parent_id:0', 'fs:db_mysql');
+	
+	phpos.tray_clock();
 });
 </script>

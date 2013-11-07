@@ -70,6 +70,14 @@ if(!defined('PHPOS'))	die();
 	$txt['month_12'] = 'Grudzień';	
 	$txt['today'] = 'dziś';
 	
+	$txt['week_0'] = 'Niedziela';
+	$txt['week_1'] = 'Poniedziałek';
+	$txt['week_2'] = 'Wtorek';
+	$txt['week_3'] = 'Środa';
+	$txt['week_4'] = 'Czwartek';
+	$txt['week_5'] = 'Piątek';
+	$txt['week_6'] = 'Sobota';
+	
 	$txt['yes'] = 'Tak';
 	$txt['no'] = 'Nie';
 	$txt['active'] = 'Aktywny';

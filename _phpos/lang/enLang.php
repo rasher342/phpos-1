@@ -72,6 +72,15 @@ if(!defined('PHPOS'))	die();
 	$txt['month_12'] = 'December';	
 	$txt['today'] = 'today';
 	
+	$txt['week_0'] = 'Sunday';
+	$txt['week_1'] = 'Monday';
+	$txt['week_2'] = 'Tuesday';
+	$txt['week_3'] = 'Wednesday';
+	$txt['week_4'] = 'Thursday';
+	$txt['week_5'] = 'Friday';
+	$txt['week_6'] = 'Saturday';
+	
+	
 	$txt['yes'] = 'Yes';
 	$txt['no'] = 'No';
 	$txt['active'] = 'Active';

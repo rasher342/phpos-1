@@ -1078,6 +1078,32 @@
 		}		
 	};
 	
+	this.tray_clock_numbers = function(i) {	
+		
+		if (i<10)
+		{
+			i="0" + i;
+		}
+		return i;	
+	};
+	
+	this.tray_clock = function() {	
+		
+		var today=new Date();
+		var h=today.getHours();
+		var m=today.getMinutes();
+		var s=today.getSeconds();
+		
+		m=this.tray_clock_numbers(m);
+		s=this.tray_clock_numbers(s);
+		
+		var c = '';
+		c = h+":"+m+":"+s;
+		$('#tray_clock').html(c);		
+		var t = setTimeout(function(){phpos.tray_clock()},500);
+	};
+	
+	
 	
 /*
 **************************
