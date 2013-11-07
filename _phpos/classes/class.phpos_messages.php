@@ -40,7 +40,6 @@ class phpos_messages {
 		$sql->cond('receiver_deleted', '0');
 		$sql->cond('readed_at', '0');
 		$c = $sql->count_rows($this->db_msg);	
-			echo $c;
 		return $c;
 	}
 			 
