@@ -36,6 +36,7 @@ function actionOpen($menu_item)
 function actionSaveAs($menu_item)
 {	
 	$j = "
+	//alert('savingas');
 	$('#notepadform input[name=action]').val('save_as');
 	$('#notepadform').submit(); 
 	";

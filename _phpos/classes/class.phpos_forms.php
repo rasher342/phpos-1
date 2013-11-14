@@ -589,7 +589,7 @@ class phpos_forms {
 		$str ='
 		
 		
-			<textarea id="editor" title="'.$txt.'" name="'.$name.'" class="input input_mouseleave" style="height:400px; width:95%; background-color: white; padding:5px">'.$default_value.'</textarea>';				
+			<textarea id="editor_'.WIN_ID.'" title="'.$txt.'" name="'.$name.'" class="input input_mouseleave" style="height:400px; width:95%; background-color: white; padding:5px">'.$default_value.'</textarea>';				
 				
 		$str.= $this->render_tip($tip);			
 		

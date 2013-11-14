@@ -156,7 +156,7 @@ window.waiting_str = "<?php echo txt('waiting_progress'); ?>";
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jnotify/jNotify.jquery.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/contextMenu/jquery.contextMenu.js"></script>
 
-<script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/jquery.resize.min.js"></script>
+
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/config.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/phposAPI.js"></script>
 <script type="text/javascript" src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/javascript/ckeditor/ckeditor.js"></script>

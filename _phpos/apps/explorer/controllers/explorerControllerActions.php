@@ -712,6 +712,10 @@ if(globalconfig('demo_mode') != 1 || is_root())
 
 		}
 
+} elseif(!empty($action_id)) {
+	
+	echo '<script>phpos.windowRefresh("'.WIN_ID.'", "action_id:0");</script>';
+	
 }
 
 	helper_stopwaiting();

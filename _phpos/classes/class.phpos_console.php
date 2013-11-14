@@ -15,6 +15,13 @@ if(!defined('PHPOS'))	die();
 
 class console 
 {
+	public static function cut_tags($str)
+	{
+		return str_replace(array("<", ">"), array("&lt;", "&gt;"), $str);
+	}
+	
+	
+	
 	public static function log($str = null, $type = null)
 	{
 		$demo = null;
@@ -62,7 +69,7 @@ class console
 						$val = 'demo';
 					}
 					
-					$str.='<span class="console_key">'.htmlspecialchars($key).'</span> <span class="console_arrows ">&gt;&gt;</span> <span class="console_val">'.htmlspecialchars($val).'</span>';	
+					$str.='<span class="console_key">'.self::cut_tags($key).'</span> <span class="console_arrows">&gt;&gt;</span> <span class="console_val">'.self::cut_tags($val).'</span>';	
 					if($c != $counter) $str.= '<br />';					
 				}
 				
@@ -76,6 +83,7 @@ class console
 			
 			if($str != '-')		
 			{				
+				//$str = self::cut_tags($str);
 				if($type == null)
 				{
 					$_SESSION['console_log'][] = $info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action']." ".$str;
@@ -101,6 +109,8 @@ class console
 	
 	public static function log_params($winObject)
 	{
+		/*
+		
 		$demo = null;
 		if(globalconfig('demo_mode') == 1 && !is_root() && !is_admin())	$demo = 1;
 		
@@ -131,7 +141,7 @@ class console
 		
 			$this_index = count($_SESSION['console_log_params']);
 		
-			$params_data.= '<a href="javascript:void(0)" onclick="phpos.console_show_params_body('.$this_index.')">'.$info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action'].'</a><div class="console_separator"></div><div id="console_params_'.$this_index.'" class="console_params_items"> '.$info['time']." ".$info['win_id']." ".$info['app_id'].$info['app_action'].'<div class="console_separator"></div>';
+			$params_data.= '<a href="javascript:void(0)" onclick="phpos.console_show_params_body('.$this_index.')">'.$info['time'].' '.$info['win_id'].' '.$info['app_id'].$info['app_action'].'</a><div class="console_separator"></div><div id="console_params_'.$this_index.'" class="console_params_items"> '.$info['time'].' '.$info['win_id'].' '.$info['app_id'].$info['app_action'].'<div class="console_separator"></div>';
 			
 			foreach($params as $k => $v)
 			{
@@ -143,13 +153,15 @@ class console
 					$v = 'demo';
 				}
 				
-				$params_data.= '<span class="console_key">'.$k.'</span> <span class="console_arrows ">&gt;&gt;</span> <span class="console_val">'.htmlspecialchars($v).'</span><div class="console_separator"></div>';		
+				$params_data.= '<span class="console_key">'.self::cut_tags($k).'</span> <span class="console_arrows ">&gt;&gt;</span> <span class="console_val">'.self::cut_tags($v).'</span><div class="console_separator"></div>';		
 			}	
 			
 			$params_data.='</div>';
 			
 			$_SESSION['console_log_params'][] = $params_data;
 		}
+		
+		*/
 	}
 	
 	
@@ -157,6 +169,8 @@ class console
 	
 	public static function show($winObject)
 	{
+		global $my_app;
+		//return false;
 		$demo = null;
 		if(globalconfig('demo_mode') == 1 && !is_root() && !is_admin())	$demo = 1;
 		
@@ -209,7 +223,7 @@ class console
 				if($i < $max_params) 
 				{
 					$prefix = '';
-					if($a[$i] != '<br />' && $a[$i] != '<div class="console_line"><span class="console_arrows ">-------</span></div>')
+					if($a[$i] != '<br />' && $a[$i] != '<div class="console_line"><span class="console_arrows">-------</span></div>')
 					{
 						$prefix = '<span class="console_index"># '.$counter_params_this.'</span> ';
 						$counter_params_this++;
@@ -234,22 +248,28 @@ class console
 		
 		if($demo) $data_clipboard = 'This feature is hidden in demo mode';
 		
-		echo "<script>	
+		if($my_app->get_param('api_dialog') != 1 && !defined('IN_AJAX'))
+		{
+			echo "<script>	
 		
-		var new_events = '".$data."';
-		var new_params = '".$data_params."';
-		
-		$('#phpos_console_data').html(new_events);		
-		$('#phpos_console_clipboard').html('".$data_clipboard."');
-		$('#phpos_console_params_list').html(new_params);
-	
-		
-		</script>";		
+			
+			new_events = '".$data."';
+			/*
+		new_params = '".strip_tags($data_params)."';			
+			*/
+			
+			$(\"#phpos_console_data\").html(new_events);		
+			$(\"#phpos_console_clipboard\").html('".$data_clipboard."');
+			//$(\"#phpos_console_params_list\").html(new_params);		
+			
+			
+			</script>";	
+		}		
 	}
 	
 	public static function inline($str, $type = null)
 	{
-		$data = "<b>".date('H:i:s', time())."</b>: ".$str."' + '<br />";
+		$data = "<b>".date('H:i:s', time())."</b>: ".self::cut_tags($str)."' + '<br />";
 		
 		echo "<script>
 		$(document).ready(function() {

@@ -79,7 +79,7 @@ if(file_exists(PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.ph
 		$layout = new phpos_layout;	
 		
 		// NO AJAX:	
-			if(!defined('IN_AJAX'))
+			if(!defined('IN_AJAX') && $my_app->get_param('api_dialog') != 1)
 			{	
 				include PHPOS_APPS_DIR.$app_name.'/controllers/'.$app_name.'Controller.php';
 				

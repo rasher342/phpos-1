@@ -81,13 +81,13 @@ if(!defined('PHPOS'))	die();
 	$txt['month_12'] = 'Grudzień';	
 	$txt['today'] = 'dziś';
 	
-	$txt['week_0'] = 'Niedziela';
-	$txt['week_1'] = 'Poniedziałek';
-	$txt['week_2'] = 'Wtorek';
-	$txt['week_3'] = 'Środa';
-	$txt['week_4'] = 'Czwartek';
-	$txt['week_5'] = 'Piątek';
-	$txt['week_6'] = 'Sobota';
+	$txt['week_0'] = 'niedziela';
+	$txt['week_1'] = 'poniedziałek';
+	$txt['week_2'] = 'wtorek';
+	$txt['week_3'] = 'środa';
+	$txt['week_4'] = 'czwartek';
+	$txt['week_5'] = 'piątek';
+	$txt['week_6'] = 'sobota';
 	
 	$txt['yes'] = 'Tak';
 	$txt['no'] = 'Nie';

@@ -23,8 +23,8 @@ if(!defined('PHPOS'))	die();
 
 	
 		$form = new phpos_forms;
-		//$form->onsuccess(winclose(WIN_ID));
-		echo $form->form_start('explorer_api'.WIN_ID, helper_ajax(null), array('app_params' => ''));								
+		$form->onsuccess(winclose(WIN_ID));
+		echo $form->form_start('explorer_api'.WIN_ID, helper_ajax(null), array('app_params' => 'api_dialog:1'));								
 		
 		$form->reload_after_submit(array(WIN_ID));
 		

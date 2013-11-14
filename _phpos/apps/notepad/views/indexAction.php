@@ -40,9 +40,9 @@ if($my_app->get_param('file_info') !== null)
 	
 	$explorerAPI->set_file_info($file_info);
 	
-	$str_file = '<span style="color:black; font-weight:bold;font-size:16px">'.$file_info['basename'].' </span>';
+	$str_file = '<span style="color:black; font-weight:bold">'.$file_info['basename'].' </span>';
 	
-	$str_fileinfo = '<img src="'.MY_RESOURCES_URL.'db_file.png" />'.$str_file.' <b style="padding-left:30px;color:black">'.txt('last_mod').':</b> '.date('Y.m.d. H:i', $file_info['modified_at']).', <b style="color:black">'.txt('filesystem').':</b> '.txt('fs_'.$file_info['fs']);
+	$str_fileinfo = '<img src="'.MY_RESOURCES_URL.'db_file.png" style="height:15px"/>'.$str_file.' <b style="padding-left:30px;color:#000">'.txt('last_mod').':</b> '.date('Y.m.d. H:i', $file_info['modified_at']).', <b style="color:black">'.txt('filesystem').':</b> '.txt('fs_'.$file_info['fs']);
 	
 	echo "<script>$('#notepadform input[name=action]').val('save');</script>";
 	
@@ -52,7 +52,7 @@ if($my_app->get_param('file_info') !== null)
 	
 } else {
 
-	$str_fileinfo = '<img src="'.MY_RESOURCES_URL.'db_file.png" /><span style="color:black; font-weight:bold;font-size:16px">'.txt('app_notepad_new_unsaved').'</span>';	
+	$str_fileinfo = '<img src="'.MY_RESOURCES_URL.'db_file.png" style="height:15px"/><span style="color:#000; font-weight:bold">'.txt('app_notepad_new_unsaved').'</span>';	
 	
 }
 		
@@ -68,12 +68,14 @@ if($my_app->get_param('file_info') !== null)
 
 		$forma = new phpos_forms;
 
+		//forma->onsuccess('alert("succ");');
 		$forma->onsuccess($explorerAPI->savefile_dialog());
-		echo $forma->form_start('notepadform', '', array('app_params' => ''));
+		$after_reload = WIN_ID;
+		echo $forma->form_start('notepadform', helper_post_outside('null','', $after_reload), array('app_params' => ''));
 								
 		$forma->input('hidden','win_id', '', '',  WIN_ID);
 		$forma->input('hidden','action', '', '',  'save_as');
-		$forma->reload_after_submit(array('n'));
+		//$forma->reload_after_submit(array(WIN_ID));
 		
 		$forma->texteditor('txt', null, null,  $my_app->get_param('notepad'));				
 		

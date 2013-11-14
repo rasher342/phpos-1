@@ -17,6 +17,7 @@ if(!defined('PHPOS'))	die();
 	$my_app->set_param('loadAPI', null);
 	$my_app->set_param('loadFS', null);
 	$my_app->set_param('loadID', null);
+	$my_app->set_param('firstLoad', null);
 	
 	$my_app->set_param('id_file', null);
 	$my_app->set_param('notepad', null);
@@ -73,19 +74,28 @@ if(!defined('PHPOS'))	die();
 		
 		
 	if(form_submit('notepadform'))
-	{
+	{		
 		if($_POST['action'] == 'save_as')
 		{
+			console::log(array(
+			'@FORM' => 'submit(notepadform, save_as)'
+			));	
+			
 			$my_app->set_param('notepad', $_POST['txt']);	
 			cache_param('notepad');		
 			$explorerAPI->set_action('save_as');
 			$explorerAPI->cache_data_to_save($_POST['txt']);		
 			$_POST['action'] = null;
+			//echo '<script>alert("ff");</script>';
 			//echo '<script>'.$explorerAPI->savefile_dialog().'</script>';
 		}
 		
 		if($_POST['action'] == 'save')
 		{
+			console::log(array(
+			'@FORM' => 'submit(notepadform, save)'
+			));	
+			
 			$my_app->set_param('notepad', $_POST['txt']);	
 			cache_param('notepad');		
 			$explorerAPI->set_action('save');			
@@ -93,6 +103,7 @@ if(!defined('PHPOS'))	die();
 			$_POST['action'] = null;
 			//echo '<script>'.$explorerAPI->savefile_dialog().'</script>';
 		}
+		
 	}	else {	
 	
 		if($explorerAPI->data_loaded() && $_POST['action'] === null)
@@ -130,8 +141,15 @@ if(!defined('PHPOS'))	die();
 	
 	
 	cache_param('notepad');	
-	$js = " $('textarea#editor').ckeditor();";
-	$my_app->jquery_onready($js);	
+	
+	
+		$js = " 			
+			$('textarea#editor_".WIN_ID."').ckeditor();							
+		";
+		$my_app->jquery_onready($js);	
+		$my_app->set_param('firstLoad', 1);	
+		cache_param('firstLoad');			
+	
 	
 	$my_app->using('menu');
 	$html['menu'] = $my_app->window->get_layout_menu_html();		

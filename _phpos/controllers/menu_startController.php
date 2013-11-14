@@ -47,7 +47,7 @@ if(!defined('PHPOS'))	die();
 		<?php require_once(PHPOS_DIR.'controllers/menu_startTrayController.php'); ?>
 	</div>	
 	<div style="margin-top:10px;padding-left:20px;text-align:center;color:#fff;line-height:160%;height:100% auto;display:inline-block; vertical-align:middle">
-	<span id="tray_clock" style="font-weight:bold">17:43</span><br /><?php echo strtolower(txt('week_'.date('w')));?><br/><?php echo date('Y-m-d'); ?></span>
+	<span id="tray_clock" style="font-weight:bold">17:43</span><br /><?php echo txt('week_'.date('w'));?><br/><?php echo date('Y-m-d'); ?></span>
 	</div>
 	</div>
 	
