@@ -167,10 +167,12 @@
 <b>Official site of PHPOS:</b> <a href="http://www.phpos.pl" target="_blank">www.phpos.pl</a>
 </div>
 
+<?php if($_GET['noinfo'] != 'yes') { ?>
 <div id="phpos_desktop_info" style="display:none">
 <div style="width:50%; float:left">
 <img src="<?php echo PHPOS_WEBROOT_URL;?>_phpos/logo_gdrive.png"/>
 </div>
+
 <div style="text-align:left;width:50%; float:left">
 <?php echo txt('googledrive_loginscreen_info'); ?>
 </div>
@@ -178,7 +180,7 @@
 <?php //echo 'Language:'.strtoupper(cfg::get('lang'));?>
 </div>
 
-
+<?php } ?>
 <script>
 
 
